@@ -16,7 +16,7 @@
    return (
     <Router>
       <Scene key='root'>
-        <Scene key = "signinScreen" component = {SigninScreen} title = "Home" initial = {true} />
+        <Scene key = "signinScreen" component = {SigninScreen} title = "Home" initial = {true} hideNavBar={true} />
         <Scene key = "viewImageScreen" component = {ViewImageScreen} title = "About" />
       </Scene>
     </Router>

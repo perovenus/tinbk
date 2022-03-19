@@ -1,8 +1,16 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, TextInput, Button, Pressable, TouchableOpacity } from 'react-native'
-import { Actions, Router, Scene } from 'react-native-router-flux'
+import { 
+  StyleSheet,
+  Button,
+  Text, 
+  View, 
+  Image, 
+  TextInput, 
+  Pressable, 
+  TouchableOpacity, 
+  ImageBackground } from 'react-native'
+import { Actions} from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import ViewImageScreen from './ViewImageScreen';
 
 export default function SigninScreen() {
   const goToViewImageScreen = () => {
@@ -10,71 +18,67 @@ export default function SigninScreen() {
   }
 
   return (
-    <View style={styles.singinScreen}>
-      <Image
-        style={styles.logo} 
-        source={require('../assets/tinBK-logo.png')}/>
-      <View style={styles.signin}>
-        <Text style={{fontSize: 30}}>Sign in</Text>
-        <TextInput 
-          placeholder='Email'
-          style={styles.input} />
-        <TextInput
-          placeholder='Password'
-          secureTextEntry={true}
-          style={styles.input} />
-        <Pressable 
-          onPress={goToViewImageScreen}>
-          {({pressed}) => (
-            <Text
-              style={[
-                {textDecorationLine: pressed ? 'underline' : 'none'},
-                {color: pressed ? '#6c5ce7' : '#3498db'},
-                {left: '65%'}
-              ]}>
-              Forgot password?
-            </Text>
-          )}
-        </Pressable>
-        <Button title='Sign in' />
+    <ImageBackground
+      style={styles.background}
+      source={require('../assets/tinBK-background.jpg')}
+    >
+
+      <Text 
+        style={{
+          fontSize: 36,
+          color: '#2F80ED',
+          marginLeft: 20,
+        }}>
+        Đăng nhập
+      </Text>
+      <View style={styles.accountInfo}>
+        <Text style={{
+          fontSize: 15,
+          color: '#2F80ED'
+        }}>
+          Tài khoản
+        </Text>
+        <TextInput style={styles.input} />
+      
+        <Text style={{
+          marginTop: 25,
+          fontSize: 15,
+          color: '#2F80ED'
+        }}>
+          Mật khẩu
+        </Text>
+        <TextInput style={styles.input} secureTextEntry={true} />
       </View>
-      <Text style={{marginTop:15, fontSize: 20}}>Or</Text>
-      <View style={styles.loginWith}>
-        <TouchableOpacity onPress={() => alert("Login with facebook")}>
-          <FontAwesome5 name='facebook' size={50} color='#3498db'/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("Login with google")}>
-          <FontAwesome5 name='google' size={50} color='#3498db'/>
-        </TouchableOpacity>
-      </View>
-    </View>
+      <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
+      <FontAwesome5 name='google' />
+      <FontAwesome5 name='facebook-square' />
+      <Button title='Đăng nhập'/>
+      <Text>Chưa có tài khoản</Text>
+      <Text>Đăng ký</Text>
+    </ImageBackground>
   )
 }
 
 const styles = StyleSheet.create({
-  singinScreen: {
+  background: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white'    
+    paddingTop: 220
   },
-  logo:{
-    width: 200,
-    height: 200,
-    marginTop: 20
-  },
-  signin:{
-    width: '80%',
-    height: 250,
-    justifyContent: 'space-between',
+  accountInfo:{
+    marginHorizontal: 30,
+    marginTop: 20,
+    height: 175,
   },
   input: {
-    borderWidth: 2,
-    borderRadius: 12
+    width: '100%',
+    height: 50,
+    marginTop: 5,
+    borderWidth: 1,
+    borderRadius: 12,
+    borderColor: '#2F80ED',
+    fontSize: 15
   },
-  loginWith: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '40%'
+  forgotPassword: {
+
   }
 })
