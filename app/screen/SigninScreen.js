@@ -1,12 +1,10 @@
 import React from 'react'
 import { 
   StyleSheet,
-  Button,
   Text, 
   View, 
   Image, 
   TextInput, 
-  Pressable, 
   TouchableOpacity, 
   ImageBackground } from 'react-native'
 import { Actions} from 'react-native-router-flux'
@@ -50,11 +48,34 @@ export default function SigninScreen() {
         <TextInput style={styles.input} secureTextEntry={true} />
       </View>
       <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
-      <FontAwesome5 name='google' />
-      <FontAwesome5 name='facebook-square' />
-      <Button title='Đăng nhập'/>
-      <Text>Chưa có tài khoản</Text>
-      <Text>Đăng ký</Text>
+      <View style={styles.signinWith}>
+        <View style={[styles.singinWithButton, styles.elevation]}>
+          <Image 
+            style={styles.googleImage}
+            source={require('../assets/google.png')} />
+        </View>
+        <View style={[styles.singinWithButton, styles.elevation]}>
+          <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
+        </View>
+      </View>
+      <TouchableOpacity>
+        <View style={styles.loginButton}>
+          <Text style={{fontSize:24, color: 'white'}}>Đăng nhập</Text>
+        </View>
+      </TouchableOpacity>
+      <View style={styles.signup}>
+        <Text style={styles.signupButton}>Chưa có tài khoản?</Text>
+        <Text 
+          style={[
+            styles.signupButton,
+            {
+              textDecorationLine:'underline',
+              fontWeight: 'bold'
+            }
+          ]}>
+            Đăng ký
+          </Text>
+      </View>
     </ImageBackground>
   )
 }
@@ -62,7 +83,7 @@ export default function SigninScreen() {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    paddingTop: 220
+    paddingTop: 210
   },
   accountInfo:{
     marginHorizontal: 30,
@@ -79,6 +100,55 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   forgotPassword: {
-
+    alignSelf: 'flex-end',
+    marginTop: 15,
+    marginRight: 30,
+    fontSize: 14,
+    color: '#2F80ED',
+    fontWeight: 'bold'
+  },
+  signinWith: {
+    marginLeft: 30,
+    marginTop: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 110,
+  },
+  googleImage: {
+    width: 30,
+    height: 30
+  },
+  singinWithButton: {
+    width: 45,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: 'white',
+  },
+  elevation: {
+    elevation: 20,
+    shadowColor: '#52006A',
+  },
+  loginButton: {
+    marginTop: 35,
+    width: 145,
+    height: 60,
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: '#2F80ED',
+    borderColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginRight: 20
+  },
+  signup: {
+    marginLeft: 20,
+    marginTop: 20,
+  },
+  signupButton: {
+    color: 'white',
+    fontSize: 16
   }
 })
