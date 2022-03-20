@@ -17,7 +17,9 @@ export default function SigninScreen() {
   const goToSignupScreen = () => {
     Actions.signupScreen()
   }
-
+  const goToForgotScreen = () => {
+    Actions.forgotScreen()
+  }
   return (
     <ImageBackground
       style={styles.background}
@@ -52,14 +54,17 @@ export default function SigninScreen() {
       </View>
       <Pressable>
         {({pressed}) => (
-          <Text
-            style={[
-              {textDecorationLine: pressed ? 'underline' : 'none'},
-              {color: pressed ? '#6c5ce7' : '#2F80ED'},
-              styles.forgotPassword
-            ]}>
-            Quên mật khẩu?
-          </Text>
+          <TouchableOpacity>
+              <Text
+              onPress={goToForgotScreen}
+              style={[
+                {textDecorationLine: pressed ? 'underline' : 'none'},
+                {color: pressed ? '#6c5ce7' : '#2F80ED'},
+                styles.forgotPassword
+              ]}
+              >Quên mật khẩu?</Text>
+            
+          </TouchableOpacity>
         )}
       </Pressable>
       <View style={styles.signinWith}>
@@ -85,7 +90,8 @@ export default function SigninScreen() {
               styles.signupButton,
               {
                 textDecorationLine:'underline',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                marginLeft: 10
               }
             ]}>
               Đăng ký
@@ -165,6 +171,10 @@ const styles = StyleSheet.create({
   signup: {
     marginLeft: 20,
     marginTop: 20,
+    position: 'relative',
+    bottom: -30,
+    display: 'flex',
+    flexDirection: 'row',
   },
   signupButton: {
     color: 'white',

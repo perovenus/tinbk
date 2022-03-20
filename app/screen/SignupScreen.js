@@ -175,7 +175,8 @@ export default function SignupScreen() {
               styles.signinButton,
               {
                 textDecorationLine:'underline',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                marginLeft: 10
               }
             ]}>
               Đăng nhập
@@ -265,6 +266,10 @@ const styles = StyleSheet.create({
   signup: {
     marginLeft: 20,
     marginTop: 20,
+    position: 'relative',
+    bottom: -30,
+    display: 'flex',
+    flexDirection: 'row',
   },
   signinButton: {
     color: 'white',
