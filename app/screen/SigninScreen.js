@@ -6,7 +6,9 @@ import {
   Image, 
   TextInput, 
   TouchableOpacity, 
-  ImageBackground } from 'react-native'
+  ImageBackground,
+  Dimensions
+  } from 'react-native'
 import { Actions} from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -81,9 +83,13 @@ export default function SigninScreen() {
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    paddingTop: 210
+  background: { 
+    paddingTop: 200,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   accountInfo:{
     marginHorizontal: 30,
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
     shadowColor: '#52006A',
   },
   loginButton: {
-    marginTop: 35,
+    marginTop: 40,
     width: 145,
     height: 60,
     borderWidth: 1,
