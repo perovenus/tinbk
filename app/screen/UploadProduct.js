@@ -10,10 +10,13 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Actions, Router, Scene} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ViewImageScreen from './ViewImageScreen';
+
+const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 
 export default function UploadProduct() {
   const goToViewImageScreen = () => {
@@ -26,6 +29,16 @@ export default function UploadProduct() {
         style={styles.backgroundImage}
         source={require('../assets/upload-background.jpg')}>
         <Text style={styles.Title}>Đăng ký gửi bán</Text>
+        <Image
+          style={{
+            position: 'absolute',
+            width: 160,
+            height: 190,
+            left: 100,
+            top: 97,
+          }}
+          source={require('../assets/chair.jpg')}
+        />
         <View style={styles.forms}>
           <Text
             style={{
@@ -111,8 +124,8 @@ export default function UploadProduct() {
             }}>
             Độ mới
           </Text>
-          <TextInput
-            style={{
+          <SelectDropdown
+            buttonStyle={{
               position: 'absolute',
               width: '55%',
               height: 40,
@@ -122,6 +135,31 @@ export default function UploadProduct() {
               borderRadius: 10,
               borderColor: '#2F80ED',
               fontSize: 18,
+            }}
+            buttonTextStyle={{
+              color: '#000000',
+              fontWeight: '400',
+              fontSize: 18,
+            }}
+            dropdownStyle={{
+              borderWidth: 0  ,
+              borderRadius: 10,
+              fontSize: 18,
+            }}
+            data={domoi}
+            defaultValue={domoi[0]}
+            onSelect={(selectedItem, index) => {
+              console.log(selectedItem, index);
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              // text represented after item is selected
+              // if data array is an array of objects then return selectedItem.property to render after item is selected
+              return selectedItem;
+            }}
+            rowTextForSelection={(item, index) => {
+              // text represented for each item in dropdown
+              // if data array is an array of objects then return item.property to represent item in dropdown
+              return item;
             }}
           />
           <Text
