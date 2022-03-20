@@ -16,7 +16,7 @@ export default function SigninScreen() {
   const goToViewImageScreen = () => {
     Actions.viewImageScreen()
   }
-
+  
   return (
     <ImageBackground
       style={styles.background}
