@@ -10,18 +10,22 @@ import {
   Dimensions,
   Pressable
   } from 'react-native'
-import { Actions } from 'react-native-router-flux'
+import { Actions} from 'react-native-router-flux'
+import { useState } from 'react/cjs/react.development';
+import CheckBox from '@react-native-community/checkbox';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function SigninScreen() {
-  const goToSignupScreen = () => {
-    Actions.signupScreen()
+export default function SignupScreen() {
+  const goToSigninScreen = () => {
+      Actions.signinScreen()
   }
+  
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
   return (
     <ImageBackground
       style={styles.background}
-      source={require('../assets/signin-background.jpg')}
+      source={require('../assets/signup-background.jpg')}
     >
 
       <Text 
@@ -30,27 +34,63 @@ export default function SigninScreen() {
           color: '#2F80ED',
           marginLeft: 20,
         }}>
-        Đăng nhập
+        Đăng ký
       </Text>
-      <View style={styles.accountInfo}>
-        <Text style={{
-          fontSize: 15,
-          color: '#2F80ED'
-        }}>
-          Tài khoản
-        </Text>
-        <TextInput style={styles.input} />
-      
-        <Text style={{
-          marginTop: 25,
-          fontSize: 15,
-          color: '#2F80ED'
-        }}>
-          Mật khẩu
-        </Text>
-        <TextInput style={styles.input} secureTextEntry={true} />
+      <View style={styles.userInfo}>
+        <View
+            style={{
+                flexDirection:'row',
+                justifyContent:'space-between'
+            }}
+        >
+            <View style={[styles.input, {width: '45%'}]}>
+                <Text style={{
+                fontSize: 15,
+                color: '#2F80ED'
+                }}>
+                Họ và tên đệm
+                </Text>
+                <TextInput style={styles.inputText} />
+            </View>
+            <View style={[styles.input, {width: '45%'}]}>        
+                <Text style={{
+                fontSize: 15,
+                color: '#2F80ED'
+                }}>
+                Tên
+                </Text>
+                <TextInput style={styles.inputText}/>
+            </View>
+        </View>
+        <View style={styles.input}>
+            <Text style={{
+            fontSize: 15,
+            color: '#2F80ED'
+            }}>
+            Email
+            </Text>
+            <TextInput style={styles.inputText} />
+        </View>
+        <View style={styles.input}>
+            <Text style={{
+            fontSize: 15,
+            color: '#2F80ED'
+            }}>
+            Mật khẩu
+            </Text>
+            <TextInput style={styles.inputText} secureTextEntry={true} />
+        </View>
+        <View style={styles.input}>
+            <Text style={{
+            fontSize: 15,
+            color: '#2F80ED'
+            }}>
+            Nhập lại mật khẩu
+            </Text>
+            <TextInput style={styles.inputText} secureTextEntry={true}/>
+        </View>
       </View>
-      <Pressable>
+      {/* <Pressable>
         {({pressed}) => (
           <Text
             style={[
@@ -61,8 +101,13 @@ export default function SigninScreen() {
             Quên mật khẩu?
           </Text>
         )}
-      </Pressable>
-      <View style={styles.signinWith}>
+      </Pressable> */}
+        <CheckBox
+            disabled={false}
+            value={toggleCheckBox}
+            onValueChange={(newValue) => setToggleCheckBox(newValue)}
+        />
+      {/* <View style={styles.signinWith}>
         <View style={[styles.singinWithButton, styles.elevation]}>
           <Image 
             style={styles.googleImage}
@@ -79,38 +124,40 @@ export default function SigninScreen() {
       </TouchableOpacity>
       <View style={styles.signup}>
         <Text style={styles.signupButton}>Chưa có tài khoản?</Text>
-        <TouchableOpacity onPress={goToSignupScreen}>
-          <Text 
-            style={[
-              styles.signupButton,
-              {
-                textDecorationLine:'underline',
-                fontWeight: 'bold'
-              }
-            ]}>
-              Đăng ký
+        <Text 
+          style={[
+            styles.signupButton,
+            {
+              textDecorationLine:'underline',
+              fontWeight: 'bold'
+            }
+          ]}>
+            Đăng ký
           </Text>
-        </TouchableOpacity>
-      </View>
+      </View> */}
     </ImageBackground>
   )
 }
 
 const styles = StyleSheet.create({
   background: { 
-    paddingTop: 210,
+    paddingTop: 90,
     position: 'absolute',
     left: 0,
     top: 0,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  accountInfo:{
+  userInfo:{
     marginHorizontal: 30,
     marginTop: 20,
-    height: 155,
+    height: 325,
   },
   input: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  inputText: {
     width: '100%',
     height: 40,
     marginTop: 5,
