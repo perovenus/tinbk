@@ -1,26 +1,27 @@
 import React from 'react'
 import { 
   StyleSheet,
-  Button,
   Text, 
   View, 
   Image, 
   TextInput, 
-  Pressable, 
   TouchableOpacity, 
-  ImageBackground } from 'react-native'
-import { Actions} from 'react-native-router-flux'
+  ImageBackground,
+  Dimensions,
+  Pressable
+  } from 'react-native'
+import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function SigninScreen() {
-  const goToViewImageScreen = () => {
-    Actions.viewImageScreen()
+  const goToSignupScreen = () => {
+    Actions.signupScreen()
   }
   
   return (
     <ImageBackground
       style={styles.background}
-      source={require('../assets/tinBK-background.jpg')}
+      source={require('../assets/signin-background.jpg')}
     >
 
       <Text 
@@ -49,29 +50,69 @@ export default function SigninScreen() {
         </Text>
         <TextInput style={styles.input} secureTextEntry={true} />
       </View>
-      <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
-      <FontAwesome5 name='google' />
-      <FontAwesome5 name='facebook-square' />
-      <Button title='Đăng nhập'/>
-      <Text>Chưa có tài khoản</Text>
-      <Text>Đăng ký</Text>
+      <Pressable>
+        {({pressed}) => (
+          <Text
+            style={[
+              {textDecorationLine: pressed ? 'underline' : 'none'},
+              {color: pressed ? '#6c5ce7' : '#2F80ED'},
+              styles.forgotPassword
+            ]}>
+            Quên mật khẩu?
+          </Text>
+        )}
+      </Pressable>
+      <View style={styles.signinWith}>
+        <View style={[styles.singinWithButton, styles.elevation]}>
+          <Image 
+            style={styles.googleImage}
+            source={require('../assets/google.png')} />
+        </View>
+        <View style={[styles.singinWithButton, styles.elevation]}>
+          <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
+        </View>
+      </View>
+      <TouchableOpacity>
+        <View style={styles.loginButton}>
+          <Text style={{fontSize:24, color: 'white'}}>Đăng nhập</Text>
+        </View>
+      </TouchableOpacity>
+      <View style={styles.signup}>
+        <Text style={styles.signupButton}>Chưa có tài khoản?</Text>
+        <TouchableOpacity onPress={goToSignupScreen}>
+          <Text 
+            style={[
+              styles.signupButton,
+              {
+                textDecorationLine:'underline',
+                fontWeight: 'bold'
+              }
+            ]}>
+              Đăng ký
+          </Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   )
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    paddingTop: 220
+  background: { 
+    paddingTop: 210,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   accountInfo:{
     marginHorizontal: 30,
     marginTop: 20,
-    height: 175,
+    height: 155,
   },
   input: {
     width: '100%',
-    height: 50,
+    height: 40,
     marginTop: 5,
     borderWidth: 1,
     borderRadius: 12,
@@ -79,6 +120,54 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   forgotPassword: {
-
+    alignSelf: 'flex-end',
+    marginTop: 15,
+    marginRight: 30,
+    fontSize: 14,
+    fontWeight: 'bold'
+  },
+  signinWith: {
+    marginLeft: 30,
+    marginTop: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 110,
+  },
+  googleImage: {
+    width: 30,
+    height: 30
+  },
+  singinWithButton: {
+    width: 45,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: 'white',
+  },
+  elevation: {
+    elevation: 20,
+    shadowColor: '#52006A',
+  },
+  loginButton: {
+    marginTop: 45,
+    width: 145,
+    height: 60,
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: '#2F80ED',
+    borderColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginRight: 20
+  },
+  signup: {
+    marginLeft: 20,
+    marginTop: 20,
+  },
+  signupButton: {
+    color: 'white',
+    fontSize: 16
   }
 })
