@@ -9,6 +9,7 @@ import {
   Pressable,
   TouchableOpacity,
   ImageBackground,
+  SafeAreaView,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -17,6 +18,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ViewImageScreen from './ViewImageScreen';
 
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
+const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
+const khuvuc = [
+  'ĐHBK cơ sở 2',
+  'ĐHBK cơ sở 1',
+  'KTX khu A',
+  'KTX khu B',
+  'Khác (Ghi chú)',
+];
 
 export default function UploadProduct() {
   const goToViewImageScreen = () => {
@@ -24,7 +33,7 @@ export default function UploadProduct() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ImageBackground
         style={styles.backgroundImage}
         source={require('../assets/upload-background.jpg')}>
@@ -39,204 +48,245 @@ export default function UploadProduct() {
           }}
           source={require('../assets/chair.jpg')}
         />
-        <View style={styles.forms}>
-          <Text
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 208,
-              color: '#2F80ED',
-              fontWeight: '400',
-              fontSize: 18,
-            }}>
-            Tên sách
-          </Text>
-          <TextInput
-            style={{
-              position: 'absolute',
-              width: '80%',
-              height: 40,
-              left: 0,
-              top: 233,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: '#2F80ED',
-              fontSize: 18,
-            }}
-          />
-          <Text
-            style={{
-              position: 'absolute',
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <View style={styles.forms}>
+            <Text
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Tên sách
+            </Text>
+            <TextInput
+              style={{
+                position: 'absolute',
+                width: '80%',
+                height: 40,
+                left: 0,
+                top: 25,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+            />
+            <Text
+              style={{
+                position: 'absolute',
 
-              left: 0,
-              top: 283,
-              color: '#2F80ED',
-              fontWeight: '400',
-              fontSize: 18,
-            }}>
-            Số lượng
-          </Text>
-          <TextInput
-            style={{
-              position: 'absolute',
-              width: '25%',
-              height: 40,
-              left: 0,
-              top: 308,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: '#2F80ED',
-              fontSize: 18,
-            }}
-          />
-          <Text
-            style={{
-              position: 'absolute',
-              left: 123,
-              top: 283,
-              color: '#2F80ED',
-              fontWeight: '400',
-              fontSize: 18,
-            }}>
-            Giá
-          </Text>
-          <TextInput
-            style={{
-              position: 'absolute',
-              width: '44%',
-              height: 40,
-              left: 123,
-              top: 308,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: '#2F80ED',
-              fontSize: 18,
-            }}
-          />
-          <Text
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 370,
-              color: '#2F80ED',
-              fontWeight: '400',
-              fontSize: 18,
-            }}>
-            Độ mới
-          </Text>
-          <SelectDropdown
-            buttonStyle={{
-              position: 'absolute',
-              width: '55%',
-              height: 40,
-              left: 86,
-              top: 370,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: '#2F80ED',
-              fontSize: 18,
-            }}
-            buttonTextStyle={{
-              color: '#000000',
-              fontWeight: '400',
-              fontSize: 18,
-            }}
-            dropdownStyle={{
-              borderWidth: 0  ,
-              borderRadius: 10,
-              fontSize: 18,
-            }}
-            data={domoi}
-            defaultValue={domoi[0]}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              // text represented after item is selected
-              // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              // text represented for each item in dropdown
-              // if data array is an array of objects then return item.property to represent item in dropdown
-              return item;
-            }}
-          />
-          <Text
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 431,
-              color: '#2F80ED',
-              fontWeight: '400',
-              fontSize: 18,
-            }}>
-            Thể loại
-          </Text>
-          <TextInput
-            style={{
-              position: 'absolute',
-              width: '55%',
-              height: 40,
-              left: 86,
-              top: 431,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: '#2F80ED',
-              fontSize: 18,
-            }}
-          />
-          <Text
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 484,
-              color: '#2F80ED',
-              fontWeight: '400',
-              fontSize: 18,
-            }}>
-            Khu vực
-          </Text>
-          <TextInput
-            style={{
-              position: 'absolute',
-              width: '80%',
-              height: 40,
-              left: 0,
-              top: 509,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: '#2F80ED',
-              fontSize: 18,
-            }}
-          />
-          <Text
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 559,
-              color: '#2F80ED',
-              fontWeight: '400',
-              fontSize: 18,
-            }}>
-            Ghi chú
-          </Text>
-          <TextInput
-            style={{
-              position: 'absolute',
-              width: '80%',
-              height: 160,
-              left: 0,
-              top: 584,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: '#2F80ED',
-              fontSize: 18,
-            }}
-          />
-        </View>
+                left: 0,
+                top: 75,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Số lượng
+            </Text>
+            <TextInput
+              style={{
+                position: 'absolute',
+                width: '25%',
+                height: 40,
+                left: 0,
+                top: 100,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+            />
+            <Text
+              style={{
+                position: 'absolute',
+                left: 123,
+                top: 75,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Giá
+            </Text>
+            <TextInput
+              style={{
+                position: 'absolute',
+                width: '44%',
+                height: 40,
+                left: 123,
+                top: 100,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+            />
+            <Text
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 150,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Độ mới
+            </Text>
+            <SelectDropdown
+              buttonStyle={{
+                position: 'absolute',
+                width: '55%',
+                height: 40,
+                left: 86,
+                top: 150,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+              buttonTextStyle={{
+                color: '#000000',
+                fontWeight: '400',
+                fontSize: 18,
+              }}
+              dropdownStyle={{
+                borderWidth: 0,
+                borderRadius: 10,
+                fontSize: 18,
+              }}
+              data={domoi}
+              defaultValue={domoi[0]}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+            <Text
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 200,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Thể loại
+            </Text>
+            <SelectDropdown
+              buttonStyle={{
+                position: 'absolute',
+                width: '55%',
+                height: 40,
+                left: 86,
+                top: 200,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+              buttonTextStyle={{
+                color: '#000000',
+                fontWeight: '400',
+                fontSize: 18,
+              }}
+              dropdownStyle={{
+                borderWidth: 0,
+                borderRadius: 10,
+                fontSize: 18,
+              }}
+              data={theloai}
+              defaultValue={theloai[0]}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+            <Text
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 250,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Khu vực
+            </Text>
+            <SelectDropdown
+              buttonStyle={{
+                position: 'absolute',
+                width: '80%',
+                height: 40,
+                left: 0,
+                top: 275,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+              buttonTextStyle={{
+                color: '#000000',
+                fontWeight: '400',
+                fontSize: 18,
+              }}
+              dropdownStyle={{
+                borderWidth: 0,
+                borderRadius: 10,
+                fontSize: 18,
+              }}
+              data={khuvuc}
+              defaultValue={khuvuc[0]}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+
+            <Text
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 325,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Ghi chú
+            </Text>
+            <TextInput
+              style={{
+                position: 'absolute',
+                width: '80%',
+                height: 160,
+                left: 0,
+                top: 350,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+            />
+          </View>
+        </ScrollView>
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -248,10 +298,11 @@ const styles = StyleSheet.create({
   forms: {
     flex: 1,
     position: 'absolute',
-    width: 338,
-    height: 549,
+    width: 281,
+    height: 341,
     left: 40,
-    top: 97,
+    top: 320,
+    backgroundColor: 'yellow',
   },
   backgroundImage: {
     flex: 1,
