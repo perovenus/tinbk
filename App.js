@@ -9,6 +9,8 @@
  import React from 'react';
  import SigninScreen from './app/screen/SigninScreen';
  import SignupScreen from './app/screen/SignupScreen';
+ import GetOTPScreen from './app/screen/GetOTPScreen';
+ import ConfirmOTPScreen from './app/screen/ConfirmOTPScreen';
  import { Router, Scene } from 'react-native-router-flux'
  
  export default function App(props) {
@@ -17,6 +19,8 @@
       <Scene key='root'>
         <Scene key = "signinScreen" component = {SigninScreen} title = "Signin" initial = {true} hideNavBar={true} />
         <Scene key = "signupScreen" component = {SignupScreen} title = "Signup" hideNavBar={true}/>
+        <Scene key = "getOTPScreen" component = {GetOTPScreen} title = "GetOTP" hideNavBar={true}/>
+        <Scene key = "confirmOTPScreen" component = {ConfirmOTPScreen} title = "ConfirmOTP" hideNavBar={true}/>
       </Scene>
     </Router>
    );

@@ -8,12 +8,13 @@ import {
   TouchableOpacity, 
   ImageBackground,
   Dimensions,
-  Pressable
+  TouchableHighlight
   } from 'react-native'
 import { Actions} from 'react-native-router-flux'
 import { useState } from 'react/cjs/react.development';
 import CheckBox from '@react-native-community/checkbox';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+// import { TouchableHighlight } from 'react-native-gesture-handler';
 // import { color } from 'react-native-reanimated';
 
 export default function SignupScreen() {
@@ -43,7 +44,15 @@ export default function SignupScreen() {
       style={styles.background}
       source={require('../assets/signup-background.jpg')}
     >
-
+      <TouchableOpacity onPress={goToSigninScreen} style={styles.gobackButton}>
+        <View>
+          <FontAwesome5
+            name='angle-left'
+            color='white'
+            size={28} 
+          />
+        </View>
+      </TouchableOpacity>
       <Text 
         style={{
           fontSize: 36,
@@ -106,18 +115,6 @@ export default function SignupScreen() {
           <TextInput style={styles.inputText} secureTextEntry={true}/>
         </View>
       </View>
-      {/* <Pressable>
-        {({pressed}) => (
-          <Text
-            style={[
-              {textDecorationLine: pressed ? 'underline' : 'none'},
-              {color: pressed ? '#6c5ce7' : '#2F80ED'},
-              styles.forgotPassword
-            ]}>
-            Quên mật khẩu?
-          </Text>
-        )}
-      </Pressable> */}
       <View style={styles.genderSelection}>
         <View style={styles.genderCheckBox}>
           <CheckBox
@@ -269,5 +266,10 @@ const styles = StyleSheet.create({
   signinButton: {
     color: 'white',
     fontSize: 16
+  },
+  gobackButton: {
+    position: 'absolute',
+    marginLeft: 15,
+    marginTop: 21
   }
 })

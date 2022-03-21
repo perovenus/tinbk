@@ -18,12 +18,15 @@ export default function SigninScreen() {
     Actions.signupScreen()
   }
 
+  const goToGetOTPScreen = () => {
+    Actions.getOTPScreen()
+  }
+
   return (
     <ImageBackground
       style={styles.background}
       source={require('../assets/signin-background.jpg')}
     >
-
       <Text 
         style={{
           fontSize: 36,
@@ -50,7 +53,7 @@ export default function SigninScreen() {
         </Text>
         <TextInput style={styles.input} secureTextEntry={true} />
       </View>
-      <Pressable>
+      <Pressable onPress={goToGetOTPScreen}>
         {({pressed}) => (
           <Text
             style={[
