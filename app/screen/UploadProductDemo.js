@@ -37,32 +37,23 @@ export default function UploadProduct() {
       <ImageBackground
         style={styles.backgroundImage}
         source={require('../assets/upload-background.jpg')}>
-        <View
+        <Text style={styles.Title}>Đăng ký gửi bán</Text>
+        <Image
           style={{
-            width: '100%',
-            height: '100%',
-          }}>
-          <Text style={styles.Title}>Đăng ký gửi bán</Text>
-          <Image
-            style={{
-              width: 160,
-              height: 190,
-              left: 100,
-              top: 97,
-            }}
-            source={require('../assets/chair.jpg')}
-          />
-        </View>
-        <ScrollView
-          style={{
-            width: '100%',
-            height: '100%',
-            ...styles.forms,
-          }}>
-          <View>
+            position: 'absolute',
+            width: 160,
+            height: 190,
+            left: 100,
+            top: 97,
+          }}
+          source={require('../assets/chair.jpg')}
+        />
+        <View style={styles.forms}>
             <Text
               style={{
-                marginBottom: 10,
+                position: 'absolute',
+                left: 0,
+                top: 0,
                 color: '#2F80ED',
                 fontWeight: '400',
                 fontSize: 18,
@@ -71,80 +62,71 @@ export default function UploadProduct() {
             </Text>
             <TextInput
               style={{
+                position: 'absolute',
                 width: '80%',
                 height: 40,
-                marginBottom: 10,
+                left: 0,
+                top: 25,
                 borderWidth: 1,
                 borderRadius: 10,
                 borderColor: '#2F80ED',
                 fontSize: 18,
               }}
             />
-            <View>
-              <Text
-                style={{
-                  marginRight: 50,
-                  marginBottom: 10,
-                  color: '#2F80ED',
-                  fontWeight: '400',
-                  fontSize: 18,
-                }}>
-                Số lượng
-              </Text>
-              <TextInput
-                style={{
-                  width: '30%',
-                  height: 40,
-                  marginBottom: 10,
-                  marginRight: 50,
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  borderColor: '#2F80ED',
-                  fontSize: 18,
-                  textAlign: 'center',
-
-                }}
-              />
-            </View>
-            <View>
-              <Text
-                style={{
-                  marginBottom: 10,
-                  color: '#2F80ED',
-                  fontWeight: '400',
-                  fontSize: 18,
-                }}>
-                Giá
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  style={{
-                    width: '50%',
-                    height: 40,
-                    marginBottom: 10,
-                    marginRight: 30,
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    borderColor: '#2F80ED',
-                    fontSize: 18,
-                    textAlign: 'center',
-
-                  }}
-                />
-                <Text
-                  style={{
-                    top: 5,
-                    color: '#2F80ED',
-                    fontWeight: '400',
-                    fontSize: 18,
-                  }}>
-                  đồng
-                </Text>
-              </View>
-            </View>
             <Text
               style={{
-                marginBottom: 10,
+                position: 'absolute',
+
+                left: 0,
+                top: 75,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Số lượng
+            </Text>
+            <TextInput
+              style={{
+                position: 'absolute',
+                width: '25%',
+                height: 40,
+                left: 0,
+                top: 100,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+            />
+            <Text
+              style={{
+                position: 'absolute',
+                left: 123,
+                top: 75,
+                color: '#2F80ED',
+                fontWeight: '400',
+                fontSize: 18,
+              }}>
+              Giá
+            </Text>
+            <TextInput
+              style={{
+                position: 'absolute',
+                width: '44%',
+                height: 40,
+                left: 123,
+                top: 100,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#2F80ED',
+                fontSize: 18,
+              }}
+            />
+            <Text
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 150,
                 color: '#2F80ED',
                 fontWeight: '400',
                 fontSize: 18,
@@ -153,9 +135,11 @@ export default function UploadProduct() {
             </Text>
             <SelectDropdown
               buttonStyle={{
+                position: 'absolute',
                 width: '55%',
                 height: 40,
-                marginBottom: 10,
+                left: 86,
+                top: 150,
                 borderWidth: 1,
                 borderRadius: 10,
                 borderColor: '#2F80ED',
@@ -185,7 +169,9 @@ export default function UploadProduct() {
             />
             <Text
               style={{
-                marginBottom: 10,
+                position: 'absolute',
+                left: 0,
+                top: 200,
                 color: '#2F80ED',
                 fontWeight: '400',
                 fontSize: 18,
@@ -194,10 +180,11 @@ export default function UploadProduct() {
             </Text>
             <SelectDropdown
               buttonStyle={{
+                position: 'absolute',
                 width: '55%',
                 height: 40,
-                marginBottom: 10,
-
+                left: 86,
+                top: 200,
                 borderWidth: 1,
                 borderRadius: 10,
                 borderColor: '#2F80ED',
@@ -227,7 +214,9 @@ export default function UploadProduct() {
             />
             <Text
               style={{
-                marginBottom: 10,
+                position: 'absolute',
+                left: 0,
+                top: 250,
                 color: '#2F80ED',
                 fontWeight: '400',
                 fontSize: 18,
@@ -236,9 +225,11 @@ export default function UploadProduct() {
             </Text>
             <SelectDropdown
               buttonStyle={{
+                position: 'absolute',
                 width: '80%',
                 height: 40,
-                marginBottom: 10,
+                left: 0,
+                top: 275,
                 borderWidth: 1,
                 borderRadius: 10,
                 borderColor: '#2F80ED',
@@ -266,9 +257,12 @@ export default function UploadProduct() {
                 return item;
               }}
             />
+
             <Text
               style={{
-                marginBottom: 10,
+                position: 'absolute',
+                left: 0,
+                top: 325,
                 color: '#2F80ED',
                 fontWeight: '400',
                 fontSize: 18,
@@ -277,17 +271,18 @@ export default function UploadProduct() {
             </Text>
             <TextInput
               style={{
+                position: 'absolute',
                 width: '80%',
                 height: 160,
-                marginBottom: 10,
+                left: 0,
+                top: 350,
                 borderWidth: 1,
                 borderRadius: 10,
                 borderColor: '#2F80ED',
                 fontSize: 18,
               }}
             />
-          </View>
-        </ScrollView>
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );
@@ -301,10 +296,11 @@ const styles = StyleSheet.create({
   forms: {
     flex: 1,
     position: 'absolute',
-    width: '90%',
-    height: 340,
+    width: 281,
+    height: 341,
     left: 40,
     top: 320,
+    backgroundColor: 'yellow',
   },
   backgroundImage: {
     flex: 1,
