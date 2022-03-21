@@ -11,7 +11,7 @@ export default function WelcomeScreen(props) {
         
         <Image
           style ={styles.logo}
-          source={require('../assets/hutao.jpg')}
+          source={require('../assets/hutao.jng')}
         />
         <Text>Sell what you don't need</Text>
       </View>

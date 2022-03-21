@@ -65,7 +65,7 @@ const UserInfo = () => {
 
         <View style={{backgroundColor:"white", height:70, width:"100%", flexDirection:'row', paddingTop: 15, paddingLeft: 10, borderTopWidth: 2}}>
           <Fontisto name="email" style={{fontSize:40}}/>
-          <Text style={{width:"80%", paddingLeft: 20, height: 40,fontSize: 24, paddingTop:4}}>han.cao509@gmail.com</Text>
+          <Text style={{width:"60%", paddingLeft: 20, height: 40,fontSize: 24, paddingTop:4}}>han.cao509@gmail.com</Text>
         </View>
 
 
@@ -94,7 +94,7 @@ const UserInfo = () => {
           <Text style={{width:"60%", paddingLeft: 20, height: 40,fontSize: 24, paddingTop:4}}>Đổi mật khẩu</Text>
         </View>
 
-
+        
         <View style={{backgroundColor:"white", height:250, width:"100%", flexDirection:'row', paddingTop: 15, paddingLeft: 10, borderTopWidth: 2}}>
           <FontAwesome name="power-off" style={{fontSize:40}}/>
           <Text style={{width:"60%", paddingLeft: 20, height: 40,fontSize: 24, paddingTop:4}}>Đăng xuất</Text>

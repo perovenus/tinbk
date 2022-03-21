@@ -5,13 +5,13 @@ export default function WelcomeScreen(props) {
   return (
     <ImageBackground
       style={styles.background}
-      source={require('../assets/hutao.jpg')}
+      source={require('../assets/background.jpg')}
     >
       <View style ={styles.logoContainer}>
         
         <Image
           style ={styles.logo}
-          source={require('../assets/hutao.jpg')}
+          source={require('../assets/logo-red.png')}
         />
         <Text>Sell what you don't need</Text>
       </View>
