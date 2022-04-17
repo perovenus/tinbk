@@ -17,7 +17,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Actions, Router, Scene} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ViewImageScreen from './ViewImageScreen';
-import { NativeBaseProvider, Box } from "native-base";
 
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
@@ -30,6 +29,10 @@ const khuvuc = [
 ];
 
 export default function UploadProduct() {
+  const goToViewImageScreen = () => {
+    Actions.viewImageScreen();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -57,6 +60,7 @@ export default function UploadProduct() {
             height: '100%',
             ...styles.forms,
           }}>
+          <View></View>
           <View>
             <Text
               style={{
@@ -82,10 +86,7 @@ export default function UploadProduct() {
               style={{
                 flexDirection: 'row',
               }}>
-              <View
-              style={{
-                flex: 3
-              }}>
+              <View>
                 <Text
                   style={{
                     marginRight: 50,
@@ -98,6 +99,7 @@ export default function UploadProduct() {
                 </Text>
                 <TextInput
                   style={{
+                    width: '30%',
                     height: 40,
                     marginBottom: 10,
                     marginRight: 50,
@@ -106,13 +108,11 @@ export default function UploadProduct() {
                     borderColor: '#2F80ED',
                     fontSize: 18,
                     textAlign: 'center',
-                    flex: 1,
+                    flex:1,
                   }}
                 />
               </View>
-              <View style={{
-                flex: 5,
-              }}>
+              <View>
                 <Text
                   style={{
                     marginBottom: 10,
@@ -125,6 +125,7 @@ export default function UploadProduct() {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={{
+                      width: '50%',
                       height: 40,
                       marginBottom: 10,
                       marginRight: 30,
@@ -133,7 +134,6 @@ export default function UploadProduct() {
                       borderColor: '#2F80ED',
                       fontSize: 18,
                       textAlign: 'center',
-                      flex: 1,
                     }}
                   />
                   <Text
@@ -142,14 +142,12 @@ export default function UploadProduct() {
                       color: '#2F80ED',
                       fontWeight: '400',
                       fontSize: 18,
-                      right: 80,
                     }}>
                     đồng
                   </Text>
                 </View>
               </View>
             </View>
-
             <Text
               style={{
                 marginBottom: 10,

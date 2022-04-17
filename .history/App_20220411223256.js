@@ -18,6 +18,7 @@
         <Scene key = "confirmOTPScreen" component = {ConfirmOTPScreen} title = "ConfirmOTP" hideNavBar={true}/>
         <Scene key = "Tabs" component = {Tabs} title = "Tabs" hideNavBar={true}/>
         <Scene key = "uploadProduct" component = {UploadProduct} title = "UploadProduct" initial = {true} hideNavBar={true} />
+
       </Scene>
     </Router>
    );

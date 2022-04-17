@@ -17,7 +17,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Actions, Router, Scene} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ViewImageScreen from './ViewImageScreen';
-import { NativeBaseProvider, Box } from "native-base";
 
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
@@ -30,6 +29,10 @@ const khuvuc = [
 ];
 
 export default function UploadProduct() {
+  const goToViewImageScreen = () => {
+    Actions.viewImageScreen();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -84,7 +87,7 @@ export default function UploadProduct() {
               }}>
               <View
               style={{
-                flex: 3
+                flex: 1
               }}>
                 <Text
                   style={{
@@ -111,7 +114,7 @@ export default function UploadProduct() {
                 />
               </View>
               <View style={{
-                flex: 5,
+                flex: 2,
               }}>
                 <Text
                   style={{
@@ -142,7 +145,6 @@ export default function UploadProduct() {
                       color: '#2F80ED',
                       fontWeight: '400',
                       fontSize: 18,
-                      right: 80,
                     }}>
                     đồng
                   </Text>

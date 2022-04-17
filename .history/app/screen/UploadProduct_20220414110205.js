@@ -17,7 +17,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Actions, Router, Scene} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ViewImageScreen from './ViewImageScreen';
-import { NativeBaseProvider, Box } from "native-base";
 
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
@@ -30,6 +29,10 @@ const khuvuc = [
 ];
 
 export default function UploadProduct() {
+  const goToViewImageScreen = () => {
+    Actions.viewImageScreen();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -58,76 +61,44 @@ export default function UploadProduct() {
             ...styles.forms,
           }}>
           <View>
-            <Text
-              style={{
-                marginBottom: 10,
-                color: '#2F80ED',
-                fontWeight: '400',
-                fontSize: 18,
-              }}>
-              Tên sách
-            </Text>
-            <TextInput
-              style={{
-                width: '80%',
-                height: 40,
-                marginBottom: 10,
-                borderWidth: 1,
-                borderRadius: 10,
-                borderColor: '#2F80ED',
-                fontSize: 18,
-              }}
-            />
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
+            <View>
+              <Text
+                style={{
+                  marginBottom: 10,
+                  color: '#2F80ED',
+                  fontWeight: '400',
+                  fontSize: 18,
+                }}>
+                Tên sách
+              </Text>
+              <TextInput
+                style={{
+                  width: '80%',
+                  height: 40,
+                  marginBottom: 10,
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  borderColor: '#2F80ED',
+                  fontSize: 18,
+                }}
+              />
               <View
-              style={{
-                flex: 3
-              }}>
-                <Text
-                  style={{
-                    marginRight: 50,
-                    marginBottom: 10,
-                    color: '#2F80ED',
-                    fontWeight: '400',
-                    fontSize: 18,
-                  }}>
-                  Số lượng
-                </Text>
-                <TextInput
-                  style={{
-                    height: 40,
-                    marginBottom: 10,
-                    marginRight: 50,
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    borderColor: '#2F80ED',
-                    fontSize: 18,
-                    textAlign: 'center',
-                    flex: 1,
-                  }}
-                />
-              </View>
-              <View style={{
-                flex: 5,
-              }}>
-                <Text
-                  style={{
-                    marginBottom: 10,
-                    color: '#2F80ED',
-                    fontWeight: '400',
-                    fontSize: 18,
-                  }}>
-                  Giá
-                </Text>
-                <View style={{flexDirection: 'row'}}>
+                <View>
+                  <Text
+                    style={{
+                      marginRight: 50,
+                      marginBottom: 10,
+                      color: '#2F80ED',
+                      fontWeight: '400',
+                      fontSize: 18,
+                    }}>
+                    Số lượng
+                  </Text>
                   <TextInput
                     style={{
                       height: 40,
                       marginBottom: 10,
-                      marginRight: 30,
+                      marginRight: 50,
                       borderWidth: 1,
                       borderRadius: 10,
                       borderColor: '#2F80ED',
@@ -136,20 +107,44 @@ export default function UploadProduct() {
                       flex: 1,
                     }}
                   />
+                </View>
+                <View>
                   <Text
                     style={{
-                      top: 5,
+                      marginBottom: 10,
                       color: '#2F80ED',
                       fontWeight: '400',
                       fontSize: 18,
-                      right: 80,
                     }}>
-                    đồng
+                    Giá
                   </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <TextInput
+                      style={{
+                        height: 40,
+                        marginBottom: 10,
+                        marginRight: 30,
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderColor: '#2F80ED',
+                        fontSize: 18,
+                        textAlign: 'center',
+                        flex: 1,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        top: 5,
+                        color: '#2F80ED',
+                        fontWeight: '400',
+                        fontSize: 18,
+                      }}>
+                      đồng
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
-
             <Text
               style={{
                 marginBottom: 10,

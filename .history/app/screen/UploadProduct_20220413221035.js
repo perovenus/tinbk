@@ -10,14 +10,12 @@ import {
   TouchableOpacity,
   ImageBackground,
   SafeAreaView,
-  TouchableHighlight,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Actions, Router, Scene} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ViewImageScreen from './ViewImageScreen';
-import { NativeBaseProvider, Box } from "native-base";
 
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
@@ -30,6 +28,10 @@ const khuvuc = [
 ];
 
 export default function UploadProduct() {
+  const goToViewImageScreen = () => {
+    Actions.viewImageScreen();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -78,78 +80,68 @@ export default function UploadProduct() {
                 fontSize: 18,
               }}
             />
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <View
-              style={{
-                flex: 3
-              }}>
-                <Text
-                  style={{
-                    marginRight: 50,
-                    marginBottom: 10,
-                    color: '#2F80ED',
-                    fontWeight: '400',
-                    fontSize: 18,
-                  }}>
-                  Số lượng
-                </Text>
+            <View><View>
+              <Text
+                style={{
+                  marginRight: 50,
+                  marginBottom: 10,
+                  color: '#2F80ED',
+                  fontWeight: '400',
+                  fontSize: 18,
+                }}>
+                Số lượng
+              </Text>
+              <TextInput
+                style={{
+                  width: '30%',
+                  height: 40,
+                  marginBottom: 10,
+                  marginRight: 50,
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  borderColor: '#2F80ED',
+                  fontSize: 18,
+                  textAlign: 'center',
+
+                }}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  marginBottom: 10,
+                  color: '#2F80ED',
+                  fontWeight: '400',
+                  fontSize: 18,
+                }}>
+                Giá
+              </Text>
+              <View style={{flexDirection: 'row'}}>
                 <TextInput
                   style={{
+                    width: '50%',
                     height: 40,
                     marginBottom: 10,
-                    marginRight: 50,
+                    marginRight: 30,
                     borderWidth: 1,
                     borderRadius: 10,
                     borderColor: '#2F80ED',
                     fontSize: 18,
                     textAlign: 'center',
-                    flex: 1,
+
                   }}
                 />
-              </View>
-              <View style={{
-                flex: 5,
-              }}>
                 <Text
                   style={{
-                    marginBottom: 10,
+                    top: 5,
                     color: '#2F80ED',
                     fontWeight: '400',
                     fontSize: 18,
                   }}>
-                  Giá
+                  đồng
                 </Text>
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    style={{
-                      height: 40,
-                      marginBottom: 10,
-                      marginRight: 30,
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      borderColor: '#2F80ED',
-                      fontSize: 18,
-                      textAlign: 'center',
-                      flex: 1,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      top: 5,
-                      color: '#2F80ED',
-                      fontWeight: '400',
-                      fontSize: 18,
-                      right: 80,
-                    }}>
-                    đồng
-                  </Text>
-                </View>
               </View>
-            </View>
-
+            </View> </View>
             <Text
               style={{
                 marginBottom: 10,
@@ -295,24 +287,6 @@ export default function UploadProduct() {
               }}
             />
           </View>
-          <TouchableHighlight onPress={() => alert('Pressed!!!!!')}>
-            <View
-              style={{
-                width: '80%',
-                alignItems: 'center',
-                backgroundColor: '#2F80ED',
-                padding: 10,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: '#FFFFFF',
-                }}>
-                Xác Nhận
-              </Text>
-            </View>
-          </TouchableHighlight>
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>
