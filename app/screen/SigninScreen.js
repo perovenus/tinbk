@@ -12,7 +12,7 @@ import {
   } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import Tabs from './Tabs';
 export default function SigninScreen() {
   const goToSignupScreen = () => {
     Actions.signupScreen()
@@ -21,7 +21,9 @@ export default function SigninScreen() {
   const goToGetOTPScreen = () => {
     Actions.getOTPScreen()
   }
-
+  const goToHomescreen = () => {
+    Actions.Tabs()
+  }
   return (
     <ImageBackground
       style={styles.background}
@@ -75,7 +77,7 @@ export default function SigninScreen() {
           <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={goToHomescreen}>
         <View style={styles.loginButton}>
           <Text style={{fontSize:24, color: 'white'}}>Đăng nhập</Text>
         </View>
