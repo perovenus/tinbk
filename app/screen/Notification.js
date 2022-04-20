@@ -18,7 +18,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import Tabs from './Tabs'
 const Notification = () => {
 	const [status, changeStatus] = useState(0);
-	const [modalVisible, setModalVisible] = useState(true);
+	const [modalVisible, setModalVisible] = useState(false);
 	return (
 		<SafeAreaView>
 

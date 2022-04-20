@@ -31,9 +31,9 @@ export default function ProductScreen() {
     const [payStatus, setPayStatus] = useState(false);
     const [number, onChangeNumber] = React.useState(null);
     const [notificationPayment, setNotification] = useState(false);
-    const [checked, setChecked] = React.useState('first');
     const [imageActive, setimageActive] = useState(0);
-
+    const [cancelModel, setCancelModel] = useState(false);
+    const [PaymentConfirm, setPaymentConfirm] = useState(false);
     const onChangeSlide = (nativeEvent)  =>{
         if (nativeEvent) {
             const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
@@ -102,13 +102,105 @@ export default function ProductScreen() {
                     </View>
                 </Modal>
             </View>
+            {/* Model huy dang ky */}
+            <View>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={cancelModel}
+                    onRequestClose={() => {
+                        setCancelModel(!cancelModel);
+                    }}
+                >             
+                    <View style={styles.centeredView}>
+                        <View style={[styles.modalView, {display: 'flex',}]}>
+                            <Text style={{
+                                fontSize: 20,
+                                marginTop: '15%',
+                                marginBottom: 20,
+                                textAlign: 'center',
+                            }}>Bạn có chắc muốn hủy đăng ký không ?</Text>
+                            <View style={[styles.ButtonBlock, {marginTop: 0}]}>
+                            <TouchableOpacity
+                                style={[styles.button, styles.buttonClose, styles.CancelColor]}
+                                onPress={() => {
+                                    setCancelModel(!cancelModel);
+                                    setPayStatus(false);
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Có</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.button, styles.buttonClose, styles.DealColor]}
+                                onPress={() => {
+                                    setCancelModel(!cancelModel);
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Không</Text>
+                            </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
+            {/* model dang ky mua */}
+            <View>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={PaymentConfirm}
+                    onRequestClose={() => {
+                        setPaymentConfirm(!PaymentConfirm);
+                    }}
+                >             
+                    <View style={styles.centeredView}>
+                        <View style={[styles.modalView, {display: 'flex',}]}>
+                            <Text style={{
+                                fontSize: 20,
+                                marginTop: '15%',
+                                marginBottom: 20,
+                                textAlign: 'center'
+                            }}>Bạn có chắc muốn đăng ký mua sản phẩm không ?</Text>
+                            <View style={[styles.ButtonBlock, {marginTop: 0}]}>
+                            <TouchableOpacity
+                                style={[styles.button, styles.buttonClose, styles.DealColor]}
+                                onPress={() => {
+                                    setPaymentConfirm(!PaymentConfirm);
+                                    setPayStatus(true);
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Có</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.button, styles.buttonClose, styles.CancelColor]}
+                                onPress={() => {
+                                    setPaymentConfirm(!PaymentConfirm);
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Không</Text>
+                            </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
+
+
+
+
+
+
+
+
+
+
+
             <View>
                 <Modal
                     animationType="slide"
                     transparent={true}
                     visible={notificationPayment}
                     onRequestClose={() => {
-                        Alert.alert("Modal has been closed.");
                         setNotification(!notificationPayment);
                     }}
                 >             
@@ -129,6 +221,10 @@ export default function ProductScreen() {
                     </View>
                 </Modal>
             </View>
+
+
+
+
             <ScrollView
                 style={styles.scrollStyle}>
                 <View style={styles.imageView}>
@@ -211,7 +307,9 @@ export default function ProductScreen() {
                     }
                     {
                         !payStatus &&
-                        <TouchableOpacity onPress={() => setPayStatus(true)}>
+                        <TouchableOpacity onPress={() => {
+                            setPaymentConfirm(true);
+                            }}>
                         <View style={[styles.PaymentButton, styles.PayColor]}>
                             <Text style={{ color: 'white', }}>Đăng ký mua</Text>
                         </View>
@@ -219,7 +317,11 @@ export default function ProductScreen() {
                     }
                     {
                         payStatus &&
-                        <TouchableOpacity onPress={() => setPayStatus(false)}>
+                        <TouchableOpacity onPress={
+                            () => {
+                                
+                                setCancelModel(true);
+                                }}>
                         <View style={[styles.PaymentButton, styles.CancelColor]}>
                             <Text style={{ color: 'white', }}>Hủy đăng ký</Text>
                         </View>
