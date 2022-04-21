@@ -2,23 +2,88 @@ import React, { useState } from 'react'
 import {
 	SafeAreaView,
 	ScrollView,
-	StatusBar,
 	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
 	Dimensions,
 	Modal
 } from 'react-native';
-import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Feather from 'react-native-vector-icons/Feather'
-import Tabs from './Tabs'
+import Feather from 'react-native-vector-icons/Feather';
+
+
 const Notification = () => {
-	const [status, changeStatus] = useState(0);
+	var listData = [
+		{
+			id: 5,
+			type: 'time',
+			time: 'Hôm nay',
+			status: 5
+		},
+		{
+			id: 3,
+			author: "anh da đen",
+			price: "99.000 VNĐ",
+			book_name: "Cách uống nước",
+			type: 'notification',
+			status: 2
+		},
+		{
+			id: 2,
+			author: "Khánh pờ rồ",
+			book_name: "Vui vẻ cùng PPL",
+
+			type: 'notification',
+			price: "30.000 VNĐ",
+			status: 3
+		}
+		, {
+			id: 1,
+			author: "Hải dúi",
+			book_name: "Sách giải tỏa căng thẳng",
+			price: "0.000 VNĐ",
+			type: 'notification',
+			status: 0
+		},
+		{
+			id: 4,
+			author: "Hải dúi",
+			book_name: "Sách giải tỏa căng thẳng",
+			price: "0.000 VNĐ",
+			type: 'notification',
+			status: 1
+		},
+		{
+			id: 5,
+			type: 'time',
+			time: 'Hôm nay',
+			status: 5
+		},
+		{
+			id: 3,
+			author: "anh da vàng",
+			price: "99.000 VNĐ",
+			book_name: "Cách uống nước",
+			type: 'notification',
+			status: 2
+		},
+	]
 	const [modalVisible, setModalVisible] = useState(false);
+	var newstatus = {};
+	for (var i = 0; i < listData.length; i++) {
+		newstatus[listData[i]['id']] = listData[i]['status'];
+
+	}
+	const [listStatus, setListStatus] = useState(newstatus);
+	const handleClick = (idx, value) => {
+		let news = {
+			...listStatus
+		}
+		news[idx] = value;
+		setListStatus(news);
+	}
 	return (
 		<SafeAreaView>
 
@@ -67,7 +132,7 @@ const Notification = () => {
 							</View>
 							<TouchableOpacity
 								style={styles.closeModel}
-								onPress={() => {setModalVisible(!modalVisible)}}
+								onPress={() => { setModalVisible(!modalVisible) }}
 							>
 								<FontAwesome5 name='times' size={24} color='black' />
 							</TouchableOpacity>
@@ -97,94 +162,11 @@ const Notification = () => {
 
 
 
-
-
-
 			<ScrollView style={styles.body}>
-				<View style={styles.time}>
+				{/* <View style={styles.time}>
 					<Text>
 						Hôm nay
 					</Text>
-				</View>
-				<View style={styles.ProcessingNotification}>
-					<TouchableOpacity
-						onPress={() => {setModalVisible(!modalVisible)}}>
-						<Image
-							style={styles.notifiProcessingImg}
-							source={require('../assets/processing.png')} />
-					</TouchableOpacity>
-
-					<Text style={styles.textContain}>
-						Sản phẩm xxx của Nguyễn Đăng Hải đã được đăng ký mua
-					</Text>
-				</View>
-				<View>
-					{
-						(status == 0) &&
-						<View style={styles.AlertNotification}>
-							<View style={styles.container}>
-								<TouchableOpacity 
-								onPress={() => {setModalVisible(!modalVisible)}}
-								style={styles.notifiProcessingImg}>
-									<Image
-										style={{ width: '100%', height: '100%' }}
-										source={require('../assets/yellow.png')} />
-									<FontAwesome5 style={{ position: 'absolute' }} name='bell' size={18} color='white' solid />
-								</TouchableOpacity>
-
-								<Text style={styles.textContain}>
-									Nguyễn Đăng Hải muốn mua sản phầm xxx với giá 50k. Bạn có đồng ý không ?
-								</Text>
-							</View>
-							<View style={styles.buttonlist}>
-								<TouchableOpacity
-									onPress={() => changeStatus(1)}>
-									<View style={[styles.PaymentButton, styles.PayColor]}>
-										<Text style={{ color: 'white', fontSize: 18, fontFamily: 'Nunito' }}>Đồng ý</Text>
-									</View>
-								</TouchableOpacity>
-								<TouchableOpacity
-									onPress={() => changeStatus(2)}>
-									<View style={[styles.PaymentButton, styles.CancelColor]}>
-										<Text style={{ color: 'white', fontSize: 18 }}>Từ chối</Text>
-									</View>
-								</TouchableOpacity>
-							</View>
-
-						</View>
-					}
-					{
-						(status == 1) &&
-						<View style={styles.ProcessingNotification}>
-							<TouchableOpacity 
-							onPress={() => {setModalVisible(!modalVisible)}}
-							style={styles.notifiProcessingImg}>
-								<Image
-									style={{ width: '100%', height: '100%' }}
-									source={require('../assets/blue.png')} />
-								<FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
-							</TouchableOpacity>
-							<Text style={styles.textContain}>
-								Bạn đã chấp nhận bán cho Nguyễn Đăng Hải sản phẩm xxx với giá 50k.
-							</Text>
-						</View>
-					}
-					{
-						(status == 2) &&
-						<View style={styles.ProcessingNotification}>
-							<TouchableOpacity 
-							onPress={() => {setModalVisible(!modalVisible)}}
-							style={styles.notifiProcessingImg}>
-								<Image
-									style={{ width: '100%', height: '100%' }}
-									source={require('../assets/red.png')} />
-								<FontAwesome5 style={{ position: 'absolute' }} name='times-circle' size={18} color='white' solid />
-							</TouchableOpacity>
-							<Text style={styles.textContain}>
-								Bạn đã từ chối bán cho Nguyễn Đăng Hải sản phẩm xxx với giá 50k.
-							</Text>
-						</View>
-					}
 				</View>
 
 				<View style={styles.time}>
@@ -193,77 +175,115 @@ const Notification = () => {
 					</Text>
 
 				</View>
-				<View style={styles.ProcessingNotification}>
-					<TouchableOpacity
-						onPress={() => {setModalVisible(!modalVisible)}}>
-						<Image
-							style={styles.notifiProcessingImg}
-							source={require('../assets/processing.png')} />
-					</TouchableOpacity>
 
-					<Text style={styles.textContain}>
-						Sản phẩm xxx của Nguyễn Đăng Hải đã được đăng ký mua
-					</Text>
-				</View>
-
-				<View style={styles.ProcessingNotification}>
-					<TouchableOpacity 
-					onPress={() => {setModalVisible(!modalVisible)}}
-					style={styles.notifiProcessingImg}>
-						<Image
-							style={{ width: '100%', height: '100%' }}
-							source={require('../assets/red.png')} />
-						<FontAwesome5 style={{ position: 'absolute' }} name='times-circle' size={18} color='white' solid />
-					</TouchableOpacity>
-					<Text style={styles.textContain}>
-						Bạn đã từ chối bán cho Nguyễn Đăng Hải sản phẩm xxx với giá 50k.
-					</Text>
-				</View>
-				<View style={styles.ProcessingNotification}>
-					<TouchableOpacity 
-					onPress={() => {setModalVisible(!modalVisible)}}
-					style={styles.notifiProcessingImg}>
-						<Image
-							style={{ width: '100%', height: '100%' }}
-							source={require('../assets/blue.png')} />
-						<FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
-					</TouchableOpacity>
-					<Text style={styles.textContain}>
-						Bạn đã chấp nhận bán cho Nguyễn Đăng Hải sản phẩm xxx với giá 50k.
-					</Text>
-				</View>
 				<View style={styles.time}>
 					<Text>
-						Hôm kia
+						Hom kia
 					</Text>
-				</View>
-				<View style={styles.ProcessingNotification}>
-					<TouchableOpacity 
-					onPress={() => {setModalVisible(!modalVisible)}}
-					style={styles.notifiProcessingImg}>
-						<Image
-							style={{ width: '100%', height: '100%' }}
-							source={require('../assets/blue.png')} />
-						<FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
-					</TouchableOpacity>
-					<Text style={styles.textContain}>
-						Bạn đã chấp nhận bán cho Nguyễn Đăng Hải sản phẩm xxx với giá 50k.
-					</Text>
-				</View>
+				</View> */}
+				{
+					listData.map((data) => (
+						<View>
+							{
+								(listStatus[data.id] == "0") &&
+								<View style={styles.AlertNotification}>
+									<View style={styles.container}>
+										<TouchableOpacity
+											onPress={() => { setModalVisible(!modalVisible) }}
+											style={styles.notifiProcessingImg}>
+											<Image
+												style={{ width: '100%', height: '100%' }}
+												source={require('../assets/yellow.png')} />
+											<FontAwesome5 style={{ position: 'absolute' }} name='bell' size={18} color='white' solid />
+										</TouchableOpacity>
 
-				<View style={styles.ProcessingNotification}>
-					<TouchableOpacity 
-					onPress={() => {setModalVisible(!modalVisible)}}
-					style={styles.notifiProcessingImg}>
-						<Image
-							style={{ width: '100%', height: '100%' }}
-							source={require('../assets/blue.png')} />
-						<FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
-					</TouchableOpacity>
-					<Text style={styles.textContain}>
-						Bạn đã chấp nhận bán cho Nguyễn Đăng Hải sản phẩm xxx với giá 50k.
-					</Text>
-				</View>
+										<Text style={styles.textContain}>
+											{data.author} muốn mua sản phẩm {data.book_name} với giá {data.price}. bạn có đồng ý không ?
+										</Text>
+									</View>
+									<View style={styles.buttonlist}>
+										<TouchableOpacity
+											onPress={() => {
+												handleClick(data.id, 1)
+											}}>
+											<View style={[styles.PaymentButton, styles.PayColor]}>
+												<Text style={{ color: 'white', fontSize: 18, fontFamily: 'Nunito' }}>Đồng ý</Text>
+											</View>
+										</TouchableOpacity>
+										<TouchableOpacity
+											onPress={() => {
+												handleClick(data.id, 2);
+											}}
+										>
+											<View style={[styles.PaymentButton, styles.CancelColor]}>
+												<Text style={{ color: 'white', fontSize: 18 }}>Từ chối</Text>
+											</View>
+										</TouchableOpacity>
+									</View>
+
+								</View>
+							}
+							{
+								(listStatus[data.id] == "1") &&
+								<View style={styles.ProcessingNotification}>
+									<TouchableOpacity
+										onPress={() => { setModalVisible(!modalVisible) }}
+										style={styles.notifiProcessingImg}>
+										<Image
+											style={{ width: '100%', height: '100%' }}
+											source={require('../assets/blue.png')} />
+										<FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
+									</TouchableOpacity>
+									<Text style={styles.textContain}>
+										Bạn đã đồng ý bán cho {data.author} sản phẩm {data.book_name} với giá {data.price}.
+									</Text>
+								</View>
+							}
+							{
+								(listStatus[data.id] == "2") &&
+								<View style={styles.ProcessingNotification}>
+									<TouchableOpacity
+										onPress={() => { setModalVisible(!modalVisible) }}
+										style={styles.notifiProcessingImg}>
+										<Image
+											style={{ width: '100%', height: '100%' }}
+											source={require('../assets/red.png')} />
+										<FontAwesome5 style={{ position: 'absolute' }} name='times-circle' size={18} color='white' solid />
+									</TouchableOpacity>
+									<Text style={styles.textContain}>
+										Bạn đã từ chối bán cho {data.author} sản phẩm {data.book_name} với giá {data.price}.
+									</Text>
+								</View>
+							}
+							{
+								(listStatus[data.id] == "3") &&
+								<View style={styles.ProcessingNotification}>
+									<TouchableOpacity
+										onPress={() => { setModalVisible(!modalVisible) }}
+										style={styles.notifiProcessingImg}>
+										<Image
+											style={{ width: '100%', height: '100%' }}
+											source={require('../assets/green.png')} />
+										<FontAwesome5 style={{ position: 'absolute' }} name='calendar-minus' size={18} color='white' solid />
+									</TouchableOpacity>
+									<Text style={styles.textContain}>
+										Bạn đã đăng ký mua sản phẩm {data.book_name} của {data.author} với giá {data.price}.
+									</Text>
+								</View>
+							}
+							{
+								(data.type == 'time') &&
+								<View style={styles.time}>
+									<Text>
+										{data.time}
+									</Text>
+
+								</View>
+							}
+						</View>
+					))
+				}
+
 			</ScrollView>
 		</SafeAreaView>
 	)

@@ -34,6 +34,7 @@ export default function ProductScreen() {
     const [imageActive, setimageActive] = useState(0);
     const [cancelModel, setCancelModel] = useState(false);
     const [PaymentConfirm, setPaymentConfirm] = useState(false);
+
     const onChangeSlide = (nativeEvent)  =>{
         if (nativeEvent) {
             const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
