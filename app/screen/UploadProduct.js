@@ -5,13 +5,9 @@ import {
   View,
   Image,
   TextInput,
-  TextArea,
-  Button,
   Pressable,
-  TouchableOpacity,
   ImageBackground,
   SafeAreaView,
-  TouchableHighlight,
   Modal,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';

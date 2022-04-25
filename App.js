@@ -5,6 +5,8 @@
  import ConfirmOTPScreen from './app/screen/ConfirmOTPScreen';
  import ProductScreen from './app/screen/ProductInfo';
  import Notification from './app/screen/Notification'
+ import UploadProduct from './app/screen/UploadProduct';
+import ProductList from './app/screen/ProductList';
  import Tabs from './app/screen/Tabs'
  import { Router, Scene } from 'react-native-router-flux'
  

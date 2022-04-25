@@ -14,7 +14,7 @@ export default function Tabs() {
     <NavigationContainer style={{backgroundColor:'black'}}>
       <Tab.Navigator
        screenOptions={{
-        tabBarActiveTintColor: 'red',
+        tabBarActiveTintColor: '#DC4B4B',
         tabBarInactiveTintColor: 'gray',
         tabBarStyle:{
         backgroundColor:"white",
@@ -59,7 +59,7 @@ export default function Tabs() {
               <FontAwesome5 name = "plus-circle" style={{color: focused ? 'red': 'gray', width: 30, height: 30, fontSize: 25,}} />
 
              
-              <Text style={{color: focused ? 'red': 'gray', fontSize: 14}}>
+              <Text style={{color: focused ? '#DC4B4B': 'gray', fontSize: 14}}>
                 Đăng bán
               </Text>
 
@@ -76,7 +76,7 @@ export default function Tabs() {
               <FontAwesome5 name = "heart" style={{color: focused ? 'red': 'gray', width: 30, height: 30, fontSize: 25,}} />  
 
              
-              <Text style={{color: focused ? 'red': 'gray', fontSize: 14}}>
+              <Text style={{color: focused ? '#DC4B4B': 'gray', fontSize: 14}}>
                 Yêu thích
               </Text>
 
@@ -99,9 +99,8 @@ export default function Tabs() {
                   // tintColor: focused ? 'gray' :'red',
                 }}
               />
-
-             
-              <Text style={{color: focused ? 'red': 'gray', fontSize: 14}}>
+              
+              <Text style={{color: focused ? '#DC4B4B': 'gray', fontSize: 14}}>
                 Cá nhân
               </Text>
 
