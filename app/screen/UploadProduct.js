@@ -16,16 +16,22 @@ import {
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
-import BookImage from './BookImage';
-import Tab from './Tab';
-import PhotoUpload from 'react-native-photo-upload';
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
 const khuvuc = ['ĐHBK cơ sở 2', 'ĐHBK cơ sở 1', 'KTX khu A', 'KTX khu B'];
 
 export default function UploadProduct() {
   const [modalVisible, setModalVisible] = useState(false);
+  const dropdownIcon = () => {
+    return(
+      <FontAwesome5
+        name='caret-down'
+        size={20}
+        color='#2F80ED'
+        style={{left: 10}}/>
+    )
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -69,11 +75,16 @@ export default function UploadProduct() {
                 buttonStyle={styles.buttondropdown}
                 buttonTextStyle={styles.textdropdown}
                 dropdownStyle={styles.dropdown}
+                rowTextStyle={{
+                  textAlign: 'left',
+                  paddingLeft: 20,
+                }}
                 data={domoi}
                 defaultValue={domoi[0]}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
+                renderDropdownIcon={dropdownIcon}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   return selectedItem;
                 }}
@@ -93,6 +104,7 @@ export default function UploadProduct() {
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
+                renderDropdownIcon={dropdownIcon}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   return selectedItem;
                 }}
@@ -112,6 +124,7 @@ export default function UploadProduct() {
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
                 }}
+                renderDropdownIcon={dropdownIcon}
                 buttonTextAfterSelection={(selectedItem, index) => {
                   return selectedItem;
                 }}
@@ -262,9 +275,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#2F80ED',
     fontSize: 18,
+    backgroundColor:'white'
   },
-  textdropdown: {color: '#000000', fontWeight: '400', fontSize: 18},
-  dropdown: {borderWidth: 0, borderRadius: 10, fontSize: 18},
+  textdropdown: {fontWeight: '400', fontSize: 18, textAlign: 'left', paddingLeft: 10},
+  dropdown: {borderWidth: 0, borderRadius: 10, backgroundColor: 'white'},
   modalView: {
     margin: 20,
     backgroundColor: 'white',
