@@ -53,100 +53,102 @@ export default function SignupScreen() {
           />
         </View>
       </TouchableOpacity>
-      <Text 
-        style={{
-          fontSize: 36,
-          color: '#2F80ED',
-          marginLeft: 20,
-        }}>
-        Đăng ký
-      </Text>
-      <View style={styles.userInfo}>
-        <View
+      <View style={styles.userInfoContainer}>
+        <Text 
           style={{
-            flexDirection:'row',
-            justifyContent:'space-between'
-          }}
-        >
-          <View style={[styles.input, {width: '45%'}]}>
+            fontSize: 36,
+            color: '#2F80ED',
+            marginLeft: 20,
+          }}>
+          Đăng ký
+        </Text>
+        <View style={styles.userInfo}>
+          <View
+            style={{
+              flexDirection:'row',
+              justifyContent:'space-between'
+            }}
+            >
+            <View style={[styles.input, {width: '45%'}]}>
+              <Text style={{
+                fontSize: 15,
+                color: '#2F80ED'
+              }}>
+              Họ và tên đệm
+              </Text>
+              <TextInput style={styles.inputText} />
+            </View>
+            <View style={[styles.input, {width: '45%'}]}>        
+              <Text style={{
+                fontSize: 15,
+                color: '#2F80ED'
+              }}>
+              Tên
+              </Text>
+              <TextInput style={styles.inputText}/>
+            </View>
+          </View>
+          <View style={styles.input}>
             <Text style={{
-            fontSize: 15,
-            color: '#2F80ED'
+              fontSize: 15,
+              color: '#2F80ED'
             }}>
-            Họ và tên đệm
+            Email
             </Text>
             <TextInput style={styles.inputText} />
           </View>
-          <View style={[styles.input, {width: '45%'}]}>        
+          <View style={styles.input}>
             <Text style={{
-            fontSize: 15,
-            color: '#2F80ED'
+              fontSize: 15,
+              color: '#2F80ED'
             }}>
-            Tên
+            Mật khẩu
             </Text>
-            <TextInput style={styles.inputText}/>
+            <TextInput style={styles.inputText} secureTextEntry={true} />
+          </View>
+          <View style={styles.input}>
+            <Text style={{
+              fontSize: 15,
+              color: '#2F80ED'
+            }}>
+            Nhập lại mật khẩu
+            </Text>
+            <TextInput style={styles.inputText} secureTextEntry={true}/>
           </View>
         </View>
-        <View style={styles.input}>
-          <Text style={{
-          fontSize: 15,
-          color: '#2F80ED'
-          }}>
-          Email
-          </Text>
-          <TextInput style={styles.inputText} />
-        </View>
-        <View style={styles.input}>
-          <Text style={{
-          fontSize: 15,
-          color: '#2F80ED'
-          }}>
-          Mật khẩu
-          </Text>
-          <TextInput style={styles.inputText} secureTextEntry={true} />
-        </View>
-        <View style={styles.input}>
-          <Text style={{
-          fontSize: 15,
-          color: '#2F80ED'
-          }}>
-          Nhập lại mật khẩu
-          </Text>
-          <TextInput style={styles.inputText} secureTextEntry={true}/>
-        </View>
-      </View>
-      <View style={styles.genderSelection}>
-        <View style={styles.genderCheckBox}>
-          <CheckBox
-            tintColors={{true: '#2F80ED', false: '#2F80ED'}}
-            disabled={false}
-            value={male}
-            onValueChange={(newValue) => handaleMaleCheckBox(newValue)}
-          />
-          <Text style={{
-            fontSize: 17,
-            color: '#2F80ED',
-            fontWeight: 'bold'
+        <View style={styles.genderSelection}>
+          <View style={styles.genderCheckBox}>
+            <CheckBox
+              tintColors={{true: '#2F80ED', false: '#2F80ED'}}
+              disabled={false}
+              value={male}
+              onValueChange={(newValue) => handaleMaleCheckBox(newValue)}
+              />
+            <Text style={{
+              fontSize: 17,
+              color: '#2F80ED',
+              fontWeight: 'bold'
             }}
-          >
-            Nam
-          </Text>
-        </View>
-        <View style={styles.genderCheckBox}>
-          <CheckBox
-            tintColors={{true: '#2F80ED', false: '#2F80ED'}}
-            disabled={false}
-            value={female}
-            onValueChange={(newValue) => handleFemaleCheckBox(newValue)}
-          />
-          <Text style={{
-            fontSize: 17,
-            color: '#2F80ED',
-            fontWeight: 'bold'
+            >
+              Nam
+            </Text>
+          </View>
+          <View style={styles.genderCheckBox}>
+            <CheckBox
+              tintColors={{true: '#2F80ED', false: '#2F80ED'}}
+              disabled={false}
+              value={female}
+              onValueChange={(newValue) => handleFemaleCheckBox(newValue)}
+              />
+            <Text style={{
+              fontSize: 17,
+              color: '#2F80ED',
+              fontWeight: 'bold'
             }}
-          >
-            Nữ
-          </Text>
+            >
+              Nữ
+            </Text>
+          </View>
         </View>
       </View>
       <View style={styles.signinWith}>
@@ -159,12 +161,10 @@ export default function SignupScreen() {
           <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
         </View>
       </View>
-      <TouchableOpacity>
-        <View style={styles.registerButton}>
-          <Text style={{fontSize:24, color: 'white'}}>Đăng ký</Text>
-        </View>
+      <TouchableOpacity style={styles.registerButton}>
+        <Text style={{fontSize:24, color: 'white'}}>Đăng ký</Text>
       </TouchableOpacity>
-      <View style={styles.signup}>
+      <View style={styles.signin}>
         <Text style={styles.signinButton}>Đã có tài khoản?</Text>
         <TouchableOpacity onPress={goToSigninScreen}>
           <Text 
@@ -185,17 +185,18 @@ export default function SignupScreen() {
 
 const styles = StyleSheet.create({
   background: { 
-    paddingTop: 90,
-    position: 'absolute',
-    left: 0,
-    top: 0,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    justifyContent: 'flex-end'
+  },
+  userInfoContainer: {
+    position: 'absolute',
+    top: '13%',
+    width: '100%',
   },
   userInfo:{
     marginHorizontal: 30,
     marginTop: 20,
-    height: 325,
   },
   input: {
     width: '100%',
@@ -215,7 +216,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 175,
     alignSelf: 'center',
-    marginTop: 5,
     justifyContent: 'space-between',
   },
   genderCheckBox: {
@@ -225,10 +225,10 @@ const styles = StyleSheet.create({
   },
   signinWith: {
     marginLeft: 30,
-    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 110,
+    bottom: '15%',
   },
   googleImage: {
     width: 30,
@@ -247,7 +247,6 @@ const styles = StyleSheet.create({
     shadowColor: '#52006A',
   },
   registerButton: {
-    marginTop: 0,
     width: 145,
     height: 60,
     borderWidth: 1,
@@ -257,19 +256,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    marginRight: 20
+    marginRight: 20,
+    bottom: 65,
   },
-  signup: {
+  signin: {
     marginLeft: 20,
-    marginTop: 20,
+    flexDirection: 'row',
+    width: 210,
+    justifyContent: 'space-between'
   },
   signinButton: {
     color: 'white',
-    fontSize: 16
+    fontSize: 16,
+    bottom: 40
   },
   gobackButton: {
     position: 'absolute',
-    marginLeft: 15,
-    marginTop: 21
+    top: 21,
+    left: 20,
   }
 })

@@ -12,7 +12,6 @@ import {
   } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Tabs from './Tabs';
 export default function SigninScreen() {
   const goToSignupScreen = () => {
     Actions.signupScreen()
@@ -29,44 +28,46 @@ export default function SigninScreen() {
       style={styles.background}
       source={require('../assets/signin-background.jpg')}
     >
-      <Text 
-        style={{
-          fontSize: 36,
-          color: '#2F80ED',
-          marginLeft: 20,
-        }}>
-        Đăng nhập
-      </Text>
-      <View style={styles.accountInfo}>
-        <Text style={{
-          fontSize: 15,
-          color: '#2F80ED'
-        }}>
-          Tài khoản
+      <View style={styles.accountInfoContainer}>
+        <Text 
+          style={{
+            fontSize: 36,
+            color: '#2F80ED',
+            marginLeft: 20,
+          }}>
+          Đăng nhập
         </Text>
-        <TextInput style={styles.input} />
-      
-        <Text style={{
-          marginTop: 25,
-          fontSize: 15,
-          color: '#2F80ED'
-        }}>
-          Mật khẩu
-        </Text>
-        <TextInput style={styles.input} secureTextEntry={true} />
-      </View>
-      <Pressable onPress={goToGetOTPScreen}>
-        {({pressed}) => (
-          <Text
+        <View style={styles.accountInfo}>
+          <Text style={{
+            fontSize: 15,
+            color: '#2F80ED',
+          }}>
+            Tài khoản
+          </Text>
+          <TextInput style={styles.input} />
+        
+          <Text style={{
+            marginTop: 25,
+            fontSize: 15,
+            color: '#2F80ED'
+          }}>
+            Mật khẩu
+          </Text>
+          <TextInput style={styles.input} secureTextEntry={true} />
+        </View>
+        <Pressable onPress={goToGetOTPScreen}>
+          {({pressed}) => (
+            <Text
             style={[
               {textDecorationLine: pressed ? 'underline' : 'none'},
               {color: pressed ? '#6c5ce7' : '#2F80ED'},
               styles.forgotPassword
             ]}>
-            Quên mật khẩu?
-          </Text>
-        )}
-      </Pressable>
+              Quên mật khẩu?
+            </Text>
+          )}
+        </Pressable>
+      </View>
       <View style={styles.signinWith}>
         <View style={[styles.singinWithButton, styles.elevation]}>
           <Image 
@@ -77,10 +78,8 @@ export default function SigninScreen() {
           <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
         </View>
       </View>
-      <TouchableOpacity onPress={goToHomescreen}>
-        <View style={styles.loginButton}>
-          <Text style={{fontSize:24, color: 'white'}}>Đăng nhập</Text>
-        </View>
+      <TouchableOpacity style={styles.loginButton} onPress={goToHomescreen}>
+        <Text style={{fontSize:24, color: 'white'}}>Đăng nhập</Text>
       </TouchableOpacity>
       <View style={styles.signup}>
         <Text style={styles.signupButton}>Chưa có tài khoản?</Text>
@@ -103,17 +102,22 @@ export default function SigninScreen() {
 
 const styles = StyleSheet.create({
   background: { 
-    paddingTop: 210,
-    position: 'absolute',
-    left: 0,
-    top: 0,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    justifyContent: 'flex-end'
+    // justifyContent: 'space-between'
+    // justifyContent: 'center',
+  },
+  accountInfoContainer:{
+    position: 'absolute',
+    width: '100%',
+    top: '30%'
   },
   accountInfo:{
     marginHorizontal: 30,
     marginTop: 20,
-    height: 155,
+    // height: 155,
+    // backgroundColor: 'red'
   },
   input: {
     width: '100%',
@@ -133,10 +137,10 @@ const styles = StyleSheet.create({
   },
   signinWith: {
     marginLeft: 30,
-    marginTop: 25,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 110,
+    bottom: '30%',
   },
   googleImage: {
     width: 30,
@@ -155,7 +159,6 @@ const styles = StyleSheet.create({
     shadowColor: '#52006A',
   },
   loginButton: {
-    marginTop: 45,
     width: 145,
     height: 60,
     borderWidth: 1,
@@ -165,11 +168,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    marginRight: 20
+    marginRight: 20,
+    bottom: 70,
   },
   signup: {
     marginLeft: 20,
-    marginTop: 20,
+    flexDirection: 'row',
+    bottom: 40,
+    width: 210,
+    justifyContent: 'space-between',
   },
   signupButton: {
     color: 'white',

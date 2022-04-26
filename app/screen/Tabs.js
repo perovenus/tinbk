@@ -8,6 +8,7 @@ import Home from './Home';
 import UserInfo from './Userinfo';
 import Notification from './Notification';
 import ProductScreen from './ProductInfo';
+import UploadProduct from './UploadProduct';
 const Tab = createBottomTabNavigator();
 
 export default function Tabs() {
@@ -15,7 +16,7 @@ export default function Tabs() {
     <NavigationContainer style={{backgroundColor: 'black'}}>
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: 'red',
+          tabBarActiveTintColor: '#DC4B4B',
           tabBarInactiveTintColor: '#757575',
           tabBarStyle: {
             backgroundColor: 'white',
@@ -30,7 +31,7 @@ export default function Tabs() {
         }}>
         <Tab.Screen
           name="Trang chủ"
-          component={ProductScreen}
+          component={Home}
           options={{
             tabBarIcon: ({focused}) => (
               <View
@@ -42,10 +43,10 @@ export default function Tabs() {
                 <Entypo
                   name="home"
                   size={24}
-                  style={{color: focused ? 'red' : '#757575'}}
+                  style={{color: focused ? '#DC4B4B' : '#757575'}}
                 />
 
-                <Text style={{color: focused ? 'red' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
                   Trang chủ
                 </Text>
               </View>
@@ -54,7 +55,7 @@ export default function Tabs() {
         />
         <Tab.Screen
           name="Đăng bán"
-          component={UserInfo}
+          component={UploadProduct}
           options={{
             tabBarIcon: ({focused}) => (
               <View
@@ -66,10 +67,10 @@ export default function Tabs() {
                 <FontAwesome5
                   name="plus-circle"
                   size={24}
-                  style={{color: focused ? 'red' : '#757575'}}
+                  style={{color: focused ? '#DC4B4B' : '#757575'}}
                 />
 
-                <Text style={{color: focused ? 'red' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
                   Đăng bán
                 </Text>
               </View>
@@ -90,11 +91,11 @@ export default function Tabs() {
                 <FontAwesome5
                   name="bell"
                   size={24}
-                  style={{color: focused ? 'red' : '#757575'}}
+                  style={{color: focused ? '#DC4B4B' : '#757575'}}
                   solid
                 />
 
-                <Text style={{color: focused ? 'red' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
                   Thông báo
                 </Text>
               </View>
@@ -115,11 +116,11 @@ export default function Tabs() {
                 <FontAwesome5
                   name="user"
                   size={24}
-                  style={{color: focused ? 'red' : '#757575'}}
+                  style={{color: focused ? '#DC4B4B' : '#757575'}}
                   solid
                 />
 
-                <Text style={{color: focused ? 'red' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
                   Cá nhân
                 </Text>
               </View>
