@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
   },
   lefticon: {
     display: 'flex',
@@ -231,6 +230,11 @@ const styles = StyleSheet.create({
     width: 40,
   },
   righticon: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
     alignSelf: 'flex-end',
   },
   cardtext: {
@@ -238,9 +242,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     fontFamily: 'Roboto',
-  },
-  marging: {
-    marginLeft: 16,
   },
 });
 export default UserInfo;

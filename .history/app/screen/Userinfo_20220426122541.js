@@ -90,7 +90,7 @@ const UserInfo = () => {
             <FontAwesome name="angle-right" size={24} color="black" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.cardbonus}>
+        <TouchableOpacity style={styles.card}>
           <View style={styles.lefticon}>
             <FontAwesome name="lock" size={24} color="black" />
           </View>
@@ -98,7 +98,7 @@ const UserInfo = () => {
             <Text style={styles.cardtext}>Đổi mật khẩu</Text>
           </View>
           <View style={styles.righticon}>
-            <FontAwesome name="angle-right" size={24} color="black" />
+            <FontAwesome name="lock" size={24} color="black" />
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.card}>
@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
   },
   lefticon: {
     display: 'flex',
@@ -231,16 +230,17 @@ const styles = StyleSheet.create({
     width: 40,
   },
   righticon: {
-    alignSelf: 'flex-end',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
   },
   cardtext: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
     fontFamily: 'Roboto',
-  },
-  marging: {
-    marginLeft: 16,
   },
 });
 export default UserInfo;

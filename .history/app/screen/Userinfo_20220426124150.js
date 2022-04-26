@@ -79,7 +79,7 @@ const UserInfo = () => {
             <Text style={styles.cardtext}>KTX khu A đại học quốc gia</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.cardbonus}>
+        <TouchableOpacity style={styles.card}>
           <View style={styles.lefticon}>
             <FontAwesome name="shopping-cart" size={24} color="black" />
           </View>

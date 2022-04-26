@@ -80,11 +80,13 @@ const UserInfo = () => {
           </View>
         </View>
         <TouchableOpacity style={styles.cardbonus}>
-          <View style={styles.lefticon}>
-            <FontAwesome name="shopping-cart" size={24} color="black" />
-          </View>
           <View>
-            <Text style={styles.cardtext}>Sản phẩm của tôi</Text>
+            <View style={styles.lefticon}>
+              <FontAwesome name="shopping-cart" size={24} color="black" />
+            </View>
+            <View>
+              <Text style={styles.cardtext}>Sản phẩm của tôi</Text>
+            </View>
           </View>
           <View style={styles.righticon}>
             <FontAwesome name="angle-right" size={24} color="black" />
@@ -231,6 +233,11 @@ const styles = StyleSheet.create({
     width: 40,
   },
   righticon: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
     alignSelf: 'flex-end',
   },
   cardtext: {
