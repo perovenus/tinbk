@@ -1,108 +1,181 @@
-import React, {useSate} from 'react'
+import React, {useState} from 'react'
 import {
     SafeAreaView,
+    TextInput,
     ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     Image,
     TouchableOpacity,
+    TouchableHighlight,
+    Dimensions
   } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Home = () => {
 
+  const [query, setQuery] = useState('')
+
+  const handleSearch = (text) => {
+    setQuery(text)
+  }
+
    return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.homeScreen}>
 
-      <View style ={styles.header} >
+        <View style ={styles.header}>
+          <TextInput
+            autoCapitalize='none'
+            autoCorrect={false}
+            clearButtonMode='always'
+            value={query}
+            onChangeText={(queryText) => handleSearch(queryText)}
+            placeholder='Tìm kiếm...'
+            style={styles.searchbar}
+          />
+        </View>
 
 
-          <View style ={styles.startheader}>
-            <FontAwesome5 name ="angle-left" style ={styles.iconStyle}/>
-            <Text style={{color:'white', fontSize: 30, marginLeft: 10}}>Cá nhân</Text>
+      <View style={styles.body}>
+        <View style={styles.appName}>
+          <Text style={styles.appname}>tinBK</Text>
+        </View>
+
+        <View style={styles.category}>
+          <TouchableOpacity style={styles.booktype}>
+            <View>
+              <Image 
+                source={require('../assets/hakyu.jpg')}
+                style={styles.categoryImages}
+                resizeMode='contain'
+                />
+              <Text style={styles.typename}>Giáo trình</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.booktype}>
+            <View>
+              <Image 
+                source={require('../assets/hakyu.jpg')}
+                style={styles.categoryImages}
+                resizeMode='contain'
+                />
+              <Text style={styles.typename}>Bài tập</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.booktype}>
+            <View>
+              <Image 
+                source={require('../assets/hakyu.jpg')}
+                style={styles.categoryImages}
+                resizeMode='contain'
+                />
+              <Text style={styles.typename}>Tham khảo</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.booktype}>
+            <View>
+              <Image 
+                source={require('../assets/hakyu.jpg')}
+                style={styles.categoryImages}
+                resizeMode='contain'
+                />
+              <Text style={styles.typename}>Truyện</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.productlist}>
+          <View style={styles.productlistHeader}>
+            <Text style={[styles.typename, {fontSize: 15}]}>Sản phẩm mới</Text>
+            <TouchableOpacity>
+              <View style={styles.allProduct}>
+                <Text style={[styles.typename, {fontSize: 15}]}>Tất cả</Text>
+                <FontAwesome5 name='angle-right' size={24} color='#000000'/>
+              </View>
+            </TouchableOpacity>
           </View>
-
-
-          <View style ={styles.endheader}>
-            <FontAwesome5 name ="ellipsis-v" style ={styles.iconStyle} />
-          </View>
-
-
+        </View>
       </View>
-
-
-      <View style ={styles.body}>
-          <Text > Đây là body</Text>
-      </View>
-
-
-
    </SafeAreaView>
    )
 }
 const styles = StyleSheet.create({
-   header: {
-     width: '100%',
-     height: 66,
-     backgroundColor: 'rgba(47, 128, 237, 0.75)',
-     flexDirection: 'row',
-     justifyContent: 'space-between',
-   },
-   startheader :{
-     width: 200,
-     paddingTop: 15,
-     flexDirection: 'row',
-   },
-   endheader:{
-     width: 50 ,
-     paddingTop:  15,
-   },
-   body: {
-       width: '100%',
-       height: '80%',
-       backgroundColor: 'white'
-   },
-   footer: {
-       width: '100%',
-       height: 72,
-       backgroundColor: 'white',
-       flexDirection: 'row',
-   },
-   iconfooter:{
-     height: 72,
-     width: '25%',
-     flexDirection: 'column',
-     backgroundColor:'white',
-     textAlign: "center",
-     backgroundColor: 'black'
-   },
-   iconfooterstyle:{
-     color: '#757575',
-     textAlign: "center",
-     fontSize: 35,
-   },
-   iconStyle:{
-     color: 'white',
-     fontSize: 32,
-     paddingLeft: 9
-   },
-   textfooter:{
-     color: '#4D4D4D',
-     fontWeight: 'bold',
-     textAlign: 'center',
-     frontFamily:'inter',
-   },
-   imgfooter: {
-     width: 35, 
-     height: 35, 
-     justifyContent: 'space-between',
-     textAlign: "center",
-     // borderRadius: 17.5,
-     backgroundColor: 'black'
-   }
- });
+  homeScreen: {
+    flex: 1
+  },
+  header: {
+    height: 65,
+    backgroundColor: 'rgba(47,128,237,0.75)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchbar: {
+    backgroundColor: '#FFFFFF',
+    paddingLeft: 25,
+    height: 45,
+    width: '88%',
+    borderRadius: 17,
+    fontSize: 15,
+    
+  },
+  body: {
+    backgroundColor: '#EEEEEE'
+  },
+  appName: {
+    backgroundColor: '#FFFFFF',
+    height: 35,
+    justifyContent: 'center'
+  },
+  appname: {
+    color: '#2f80ed',
+    fontSize: 28,
+    fontWeight: 'bold',
+    alignSelf: 'center'
+  },
+  category: {
+    backgroundColor: '#FFFFFF',
+    height: 90,
+    marginTop: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly'
+  },
+  booktype: {
+    height: 85,
+    width: 80,
+  },
+  categoryImages: {
+    width: 60,
+    height: 68,
+    alignSelf: 'center'
+  },
+  typename: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#303030',
+    alignSelf: 'center'
+  },
+  productlist: {
+    height: Dimensions.get('window').height-190,
+    marginTop: 5,
+    backgroundColor: '#FFFFFF',
+  },
+  productlistHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 40,
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingHorizontal: 15,
+  },
+  allProduct: {
+    flexDirection: 'row',
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  }
+});
 export default Home

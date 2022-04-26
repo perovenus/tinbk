@@ -89,7 +89,8 @@ const ProductList = () => {
           value={query}
           onChangeText={(queryText) => handleSearch(queryText)}
           placeholder='Bạn muốn tìm gì'
-          style={styles.searchbar}/>
+          style={styles.searchbar}
+        />
         
         <TouchableOpacity onPress={onOpen}>
           <FontAwesome5
