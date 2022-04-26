@@ -24,20 +24,20 @@ const UserInfo = () => {
   };
   return (
     <SafeAreaView>
-      {/* NAVBAR */}
-      <View style={styles.appbar}>
-        <View style={styles.appbar_left}>
-          <Text style={styles.navbarText}>Cá nhân</Text>
-        </View>
-        <View style={styles.appbar_right}>
-          <TouchableOpacity onPress={() => setModalVisible(true)}>
-            <FontAwesome name="edit" size={34} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      {/*END NAVBAR*/}
-      {/*CONTENT*/}
       <ScrollView>
+        {/* NAVBAR */}
+        <View style={styles.appbar}>
+          <View style={styles.appbar_left}>
+            <Text style={styles.navbarText}>Cá nhân</Text>
+          </View>
+          <View style={styles.appbar_right}>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <FontAwesome name="edit" size={34} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/*END NAVBAR*/}
+        {/*CONTENT*/}
         <View style={styles.container}>
           <View>
             <Image
@@ -57,7 +57,7 @@ const UserInfo = () => {
             <Ionicons name="mail" size={24} color="black"></Ionicons>
           </View>
           <View>
-            <Text style={styles.cardtext}>han.cao509@hcmut.edu.vn</Text>
+            <Text>han.cao509@hcmut.edu.vn</Text>
           </View>
         </View>
         <View style={styles.card}>
@@ -65,7 +65,7 @@ const UserInfo = () => {
             <FontAwesome name="mobile-phone" size={24} color="black" />
           </View>
           <View>
-            <Text style={styles.cardtext}>0349362424</Text>
+            <Text>0349362424</Text>
           </View>
         </View>
         <View style={styles.card}>
@@ -76,55 +76,39 @@ const UserInfo = () => {
               color="black"></Ionicons>
           </View>
           <View>
-            <Text style={styles.cardtext}>KTX khu A đại học quốc gia</Text>
+            <Text>KTX khu A đại học quốc gia</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.cardbonus}>
+        <View style={styles.card}>
           <View style={styles.lefticon}>
             <FontAwesome name="shopping-cart" size={24} color="black" />
           </View>
           <View>
-            <Text style={styles.cardtext}>Sản phẩm của tôi</Text>
+            <Text>Sản phẩm của tôi</Text>
           </View>
-          <View style={styles.righticon}>
-            <FontAwesome name="angle-right" size={24} color="black" />
+          <View style={styles.lefticon}>
+            <FontAwesome name="shopping-cart" size={24} color="black" />
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cardbonus}>
+        </View>
+        <View style={styles.card}>
           <View style={styles.lefticon}>
             <FontAwesome name="lock" size={24} color="black" />
           </View>
           <View>
-            <Text style={styles.cardtext}>Đổi mật khẩu</Text>
+            <Text>Đổi mật khẩu</Text>
           </View>
-          <View style={styles.righticon}>
-            <FontAwesome name="angle-right" size={24} color="black" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
           <View style={styles.lefticon}>
-            <FontAwesome name="power-off" size={24} color="red" />
+            <FontAwesome name="lock" size={24} color="black" />
           </View>
-          <View>
-            <Text style={styles.cardtext}>Đăng xuất</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
+        </View>
+        <View style={styles.card}>
           <View style={styles.lefticon}>
             <FontAwesome name="power-off" size={24} color="red" />
           </View>
           <View>
             <Text>Đăng xuất</Text>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <View style={styles.lefticon}>
-            <FontAwesome name="power-off" size={24} color="red" />
-          </View>
-          <View>
-            <Text>Đăng xuất</Text>
-          </View>
-        </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -137,7 +121,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     display: 'flex',
-    position: 'relative',
   },
   appbar_left: {
     display: 'flex',
@@ -205,42 +188,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  cardbonus: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 16,
-    marginBottom: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
   lefticon: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     height: 40,
     width: 40,
-  },
-  righticon: {
-    alignSelf: 'flex-end',
-  },
-  cardtext: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black',
-    fontFamily: 'Roboto',
-  },
-  marging: {
-    marginLeft: 16,
   },
 });
 export default UserInfo;
