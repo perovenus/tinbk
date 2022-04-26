@@ -8,13 +8,57 @@ import {
     View,
     Image,
     TouchableOpacity,
-    TouchableHighlight,
+    FlatList,
     Dimensions
   } from 'react-native';
-import { Actions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux';
+import ItemInHome from './ItemInHome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+const DATA = [
+  {
+    id: '1',
+    name: 'Giải tích 1',
+    price: '10000 VNĐ',
+    location: 'KTX khu A',
+  },
+  {
+    id: '2',
+    name: 'Giải tích 2',
+    price: '20000 VNĐ',
+    location: 'KTX khu B',
+  },
+  {
+    id: '3',
+    name: 'Kinh tế chính trị Mác-Lênin',
+    price: '30000 VNĐ',
+    location: 'ĐHBK cơ sở 1',
+  },
+  {
+    id: '4',
+    name: 'Chủ nghĩa xã hội',
+    price: '40000 VNĐ',
+    location: 'ĐHBK cơ sở 2',
+  },
+  {
+    id: '5',
+    name: 'PPL',
+    price: '50000 VNĐ',
+    location: 'Quận 1',
+  },
+  {
+    id: '6',
+    name: 'Sách loz',
+    price: '300000 VNĐ',
+    location: 'KTX khu A',
+  },
+]
+
 const Home = () => {
+
+  const renderItem = ({ item }) => (
+    <ItemInHome item={item} />
+  );
 
   const [query, setQuery] = useState('')
 
@@ -96,6 +140,14 @@ const Home = () => {
               </View>
             </TouchableOpacity>
           </View>
+          <View styles={styles.productlistContainer}>
+            <FlatList
+              numColumns={2}
+              data={DATA}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
         </View>
       </View>
    </SafeAreaView>
@@ -159,7 +211,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   productlist: {
-    height: Dimensions.get('window').height-190,
+    height: Dimensions.get('window').height-185,
     marginTop: 5,
     backgroundColor: '#FFFFFF',
   },
@@ -176,6 +228,10 @@ const styles = StyleSheet.create({
     width: 60,
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  productlistContainer: {
+    height: Dimensions.get('window').height-225,
+    alignItems: 'space-evenly'
   }
 });
 export default Home

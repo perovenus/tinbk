@@ -11,9 +11,9 @@ import {
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
-const Item = ({item}) => {
+const ItemInHome = ({item}) => {
   return (
-    <View>
+    <View style={styles.itemInHome}>
       <TouchableOpacity>
         <View style={styles.container}>
           <Image
@@ -35,22 +35,26 @@ const Item = ({item}) => {
   )
 }
 
-export default Item;
+export default ItemInHome;
 
 const styles = StyleSheet.create({
+  itemInHome: {
+    width: '45%',
+    borderRadius: 15,
+    elevation: 3,
+  },
   container: {
     width: '100%',
-    height: 140,
+    height: 200,
+    marginHorizontal: 10,
     marginTop: 5,
-    marginHorizontal: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
-    flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
-    width: '35%',
-    height: '90%',
+    width: '100%',
+    height: '60%',
   },
   details: {
     width: '65%',
