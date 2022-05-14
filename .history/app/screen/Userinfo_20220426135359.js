@@ -36,6 +36,7 @@ const UserInfo = () => {
         </View>
       </View>
       {/*END NAVBAR*/}
+      {Editmodal(modalVisible, setModalVisible)}
       {/*CONTENT*/}
       <ScrollView>
         <View style={styles.container}>
@@ -130,7 +131,6 @@ const UserInfo = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      {Editmodal(modalVisible, setModalVisible)}
     </SafeAreaView>
   );
 };
