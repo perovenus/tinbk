@@ -46,7 +46,7 @@ export default function Tabs() {
                   style={{color: focused ? '#DC4B4B' : '#757575'}}
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
                   Trang chủ
                 </Text>
               </View>
@@ -70,7 +70,7 @@ export default function Tabs() {
                   style={{color: focused ? '#DC4B4B' : '#757575'}}
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
                   Đăng bán
                 </Text>
               </View>
@@ -95,7 +95,7 @@ export default function Tabs() {
                   solid
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
                   Thông báo
                 </Text>
               </View>
@@ -120,7 +120,7 @@ export default function Tabs() {
                   solid
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 14}}>
+                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
                   Cá nhân
                 </Text>
               </View>

@@ -19,7 +19,7 @@ const ItemInHome = ({item}) => {
         <View style={styles.container}>
           <Image
             resizeMode='contain'
-            source={require('../assets/hakyu.jpg')} 
+            source={require('../assets/ppl.jpg')} 
             style={styles.image}
           />
           <View style={styles.details}>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: 80,
+    width: '100%',
     height: 115,
     alignSelf: 'center',
     marginTop: 10,

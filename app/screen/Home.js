@@ -155,7 +155,8 @@ const Home = () => {
 }
 const styles = StyleSheet.create({
   homeScreen: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#FFFFFF'
   },
   header: {
     height: 65,
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   productlist: {
-    height: Dimensions.get('window').height-185,
+    height: Dimensions.get('window').height-335,
     marginTop: 5,
     backgroundColor: '#FFFFFF',
   },
@@ -230,8 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   productlistContainer: {
-    height: Dimensions.get('window').height-225,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   }
 });
 export default Home
