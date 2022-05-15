@@ -130,7 +130,6 @@ const UserInfo = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      {Editmodal(modalVisible, setModalVisible)}
     </SafeAreaView>
   );
 };
@@ -141,6 +140,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    display: 'flex',
     position: 'relative',
   },
   appbar_left: {
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,

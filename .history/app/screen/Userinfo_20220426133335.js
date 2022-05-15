@@ -54,7 +54,7 @@ const UserInfo = () => {
         </View>
         <View style={styles.card}>
           <View style={styles.lefticon}>
-            <Ionicons name="mail" size={24} color="#444"></Ionicons>
+            <Ionicons name="mail" size={24} color="#333"></Ionicons>
           </View>
           <View>
             <Text style={styles.cardtext}>han.cao509@hcmut.edu.vn</Text>
@@ -62,7 +62,7 @@ const UserInfo = () => {
         </View>
         <View style={styles.card}>
           <View style={styles.lefticon}>
-            <FontAwesome name="mobile-phone" size={24} color="#444" />
+            <FontAwesome name="mobile-phone" size={24} color="#333" />
           </View>
           <View>
             <Text style={styles.cardtext}>0349362424</Text>
@@ -73,7 +73,7 @@ const UserInfo = () => {
             <Ionicons
               name="ios-location-sharp"
               size={24}
-              color="#444"></Ionicons>
+              color="black"></Ionicons>
           </View>
           <View>
             <Text style={styles.cardtext}>KTX khu A đại học quốc gia</Text>
@@ -82,27 +82,27 @@ const UserInfo = () => {
         <TouchableOpacity style={styles.cardbonus}>
           <View style={styles.bonus}>
             <View style={styles.lefticon}>
-              <FontAwesome name="shopping-cart" size={24} color="#444" />
+              <FontAwesome name="shopping-cart" size={24} color="black" />
             </View>
             <View>
               <Text style={styles.cardtext}>Sản phẩm của tôi</Text>
             </View>
           </View>
           <View>
-            <FontAwesome name="angle-right" size={24} color="#444" />
+            <FontAwesome name="angle-right" size={24} color="black" />
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.cardbonus}>
           <View style={styles.bonus}>
             <View style={styles.lefticon}>
-              <FontAwesome name="lock" size={24} color="#444" />
+              <FontAwesome name="lock" size={24} color="black" />
             </View>
             <View>
               <Text style={styles.cardtext}>Đổi mật khẩu</Text>
             </View>
           </View>
           <View>
-            <FontAwesome name="angle-right" size={24} color="#444" />
+            <FontAwesome name="angle-right" size={24} color="black" />
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.card}>
@@ -130,7 +130,6 @@ const UserInfo = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      {Editmodal(modalVisible, setModalVisible)}
     </SafeAreaView>
   );
 };
@@ -141,6 +140,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    display: 'flex',
     position: 'relative',
   },
   appbar_left: {
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,

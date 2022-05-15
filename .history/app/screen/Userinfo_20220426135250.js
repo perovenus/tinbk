@@ -36,6 +36,7 @@ const UserInfo = () => {
         </View>
       </View>
       {/*END NAVBAR*/}
+      {Editmodal(modalVisible, setModalVisible)}
       {/*CONTENT*/}
       <ScrollView>
         <View style={styles.container}>
@@ -130,14 +131,13 @@ const UserInfo = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      {Editmodal(modalVisible, setModalVisible)}
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   appbar: {
     backgroundColor: 'rgba(47,128,237,0.76)',
-    height: 70,
+    height: 80,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
