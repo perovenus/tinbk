@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
+  Dimensions,
   StyleSheet,
   Text,
   useColorScheme,
@@ -23,7 +23,7 @@ const UserInfo = () => {
     birthday: '02/05/2001',
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.userinfoscreen}>
       {/* NAVBAR */}
       <View style={styles.appbar}>
         <View style={styles.appbar_left}>
@@ -37,14 +37,15 @@ const UserInfo = () => {
       </View>
       {/*END NAVBAR*/}
       {/*CONTENT*/}
-      <ScrollView>
+      <ScrollView style={styles.body}>
         <View style={styles.container}>
-          <View>
+          {/* <View> */}
             <Image
+              // resizeMode='contain'
               source={require('../assets/hutao.jpg')}
               style={styles.avatar}
             />
-          </View>
+          {/* </View> */}
           <View style={styles.info}>
             <Text style={styles.infoText}>Tên: {data['name']}</Text>
             <Text style={styles.infoText}>Giới tính: {data['gender']} </Text>
@@ -113,28 +114,17 @@ const UserInfo = () => {
             <Text style={styles.cardtext}>Đăng xuất</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <View style={styles.lefticon}>
-            <FontAwesome name="power-off" size={24} color="red" />
-          </View>
-          <View>
-            <Text>Đăng xuất</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <View style={styles.lefticon}>
-            <FontAwesome name="power-off" size={24} color="red" />
-          </View>
-          <View>
-            <Text>Đăng xuất</Text>
-          </View>
-        </TouchableOpacity>
+        
       </ScrollView>
       {Editmodal(modalVisible, setModalVisible)}
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
+  userinfoscreen:{
+    flex: 1,
+    backgroundColor: '#FFFFFF'
+  },
   appbar: {
     backgroundColor: 'rgba(47,128,237,0.76)',
     height: 70,
@@ -144,13 +134,13 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   appbar_left: {
-    display: 'flex',
+    // display: 'flex',
     justifyContent: 'center',
     opacity: 1,
     marginLeft: 16,
   },
   appbar_right: {
-    display: 'flex',
+    // display: 'flex',
     justifyContent: 'center',
     opacity: 1,
     marginRight: 16,
@@ -161,6 +151,9 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: 1.2,
   },
+  body:{
+    height: Dimensions.get('window').height - 210,
+  },
   container: {
     height: '100%',
     flex: 1,
@@ -168,26 +161,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     padding: 16,
   },
   avatar: {
-    flex: 1,
-    height: 160,
-    width: 160,
-    borderRadius: 80,
+    height: 120,
+    width: 120,
+    borderRadius: 60,
     borderWidth: 1,
+    borderColor: '#BBCEE7'
   },
   info: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
     padding: 20,
     height: 160,
   },
   infoText: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: 'black',
     marginBottom: 5,
     fontFamily: 'Roboto',
@@ -196,7 +184,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 16,
-    borderWidth: 1,
+    marginHorizontal: 5,
+    borderTopWidth: 2,
     borderColor: '#F0F0F0',
     paddingHorizontal: 16,
     flexDirection: 'row',
@@ -211,7 +200,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 16,
-    borderWidth: 1,
+    marginHorizontal: 5,
+    borderTopWidth: 2,
     borderColor: '#F0F0F0',
     paddingHorizontal: 16,
     flexDirection: 'row',
