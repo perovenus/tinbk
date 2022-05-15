@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   },
   productlistContainer: {
     height: Dimensions.get('window').height-225,
-    alignItems: 'space-evenly'
+    justifyContent: 'space-between'
   }
 });
 export default Home

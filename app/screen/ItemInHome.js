@@ -1,4 +1,4 @@
-import { faAlignJustify } from '@fortawesome/free-solid-svg-icons'
+import { faAlignJustify, faDiceSix } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
 import {
@@ -6,15 +6,16 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  Text
+  Text,
+  Dimensions
 } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 const ItemInHome = ({item}) => {
   return (
-    <View style={styles.itemInHome}>
-      <TouchableOpacity>
+    // <View style={styles.itemInHome}>
+      <TouchableOpacity style={styles.itemInHome}>
         <View style={styles.container}>
           <Image
             resizeMode='contain'
@@ -24,14 +25,13 @@ const ItemInHome = ({item}) => {
           <View style={styles.details}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.price}>{item.price}</Text>
-            <Text style={styles.location}>{item.location}</Text>
           </View>
         </View>
+        <TouchableOpacity style={styles.buybutton}>
+          <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/>
+        </TouchableOpacity>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buybutton}>
-        <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/>
-      </TouchableOpacity>
-    </View>
+    // </View>
   )
 }
 
@@ -39,47 +39,45 @@ export default ItemInHome;
 
 const styles = StyleSheet.create({
   itemInHome: {
-    width: '45%',
-    borderRadius: 15,
-    elevation: 3,
+    width: 165,
+    height: 200,
+    borderRadius: 10,
+    elevation: 1, 
+    marginLeft: (Dimensions.get('window').width - 165*2) / 3,
+    marginVertical: 5,
   },
   container: {
-    width: '100%',
-    height: 200,
-    marginHorizontal: 10,
-    marginTop: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-    alignItems: 'center',
+    height: '100%',
+    // alignItems: 'center',
+    paddingHorizontal: 20,
   },
   image: {
-    width: '100%',
-    height: '60%',
+    width: 80,
+    height: 115,
+    alignSelf: 'center',
+    marginTop: 10,
   },
   details: {
-    width: '65%',
-    height: '90%',
+    // width: '65%',
+    // height: '90%',
+    height: 65,
+    justifyContent: 'flex-end'
   },
   name: {
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: '400',
     color: 'rgb(36, 36, 36)',
+    marginBottom: 5,
   },
   price: {
-    fontSize: 20,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#303030',
-    marginTop: 5,
-  },
-  location: {
-    fontSize: 15,
-    marginTop: 40,
-    color: '#5A5A5A'
-
+    // bottom: 5,
   },
   buybutton: {
     position: 'absolute',
-    top: '75%',
-    left: '86%',
+    left: 125,
+    top: 165,
   }
 })
