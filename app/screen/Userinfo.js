@@ -5,7 +5,6 @@ import {
   Dimensions,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   Image,
   TouchableOpacity,
@@ -122,8 +121,9 @@ const UserInfo = () => {
 };
 const styles = StyleSheet.create({
   userinfoscreen:{
-    flex: 1,
-    backgroundColor: '#FFFFFF'
+    // flex: 1,
+    backgroundColor: '#FFFFFF',
+    height: Dimensions.get('window').height - 95,
   },
   appbar: {
     backgroundColor: 'rgba(47,128,237,0.76)',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
   },
   body:{
-    height: Dimensions.get('window').height - 210,
+    
   },
   container: {
     height: '100%',
