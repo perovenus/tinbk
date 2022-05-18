@@ -18,11 +18,20 @@ import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ModalProps } from 'react-native-modal';
 import { RadioButton } from 'react-native-paper';
-export default function ProductScreen() {
+export default function ProductScreen(ProductId) {
     // const goToSignupScreen = () => {
     //     Actions.signupScreen()
     // }
-
+    const ProductInfo = {
+        'name' : 'Thanh gươm diệt quỷ chap 3345',
+        'price' : '30000',
+        'status' : 'Like new (99.9%)',
+        'seller' : 'Nguyễn Đăng Hải',
+        'phone' : '0836585244',
+        'address' : 'tòa nhà A20 KTX khu A',
+        'imagelist' : [require('../assets/a.png'),require('../assets/hakyu.jpg'),require('../assets/t1.jpg')],
+        'sellerAvatar' : require('../assets/jerry.png')
+    }
     // const goToGetOTPScreen = () => {
     //     Actions.getOTPScreen()
     // }
@@ -43,19 +52,30 @@ export default function ProductScreen() {
             }
         }
     }
-    
+    const goToPreviousScreen = () =>{
+        Actions.pop();
+        return true;
+    }
     return (
         <ImageBackground
             style={styles.background}
             source={require('../assets/Product-Background.png')}>
             <View style={styles.NavigationTop}>
-                <View style={styles.angleleft}>
+                <TouchableOpacity 
+                    style={styles.angleleft}
+                    onPress={goToPreviousScreen}
+                >
                     <FontAwesome5 name='angle-left' size={34} color='white' />
-                </View>
+                </TouchableOpacity>
 
             </View>
             {/* Modal tra gia */}
-            <View>
+            <View
+            styles = {
+                {
+                    
+                }
+            }>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -65,19 +85,28 @@ export default function ProductScreen() {
                     }}
                 >
                     <TouchableOpacity
+                    activeOpacity={1}
                     style={{
                         backgroundColor: 'rgba(0,0,0,0.5)',
                         width: '100%',
                         height: '100%',
-                        position: 'absolute',
-                        zIndex: 1
+                        // position: 'absolute',
+                        zIndex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     }}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    </TouchableOpacity>
+                    onPress={() => setModalVisible(false)}>
                     
-                    <View style={styles.centeredView}>
+                    <View
+                    onStartShouldSetResponder={(event) => true}
+                    onTouchEnd={(e) => {
+                      e.stopPropagation();
+                    }}
+                    style={styles.centeredView}>
+                        
                         <View style={styles.modalView}>
-                            <Text style={styles.initPrice}>Giá khởi điểm:<Text style={{color: 'red'}}> 30.000 VNĐ</Text></Text>
+                            <Text style={styles.initPrice}>Giá khởi điểm:<Text style={{color: 'red'}}> {ProductInfo['price']} VNĐ</Text></Text>
                             <Text style={styles.modalText}>Nhập giá bạn yêu cầu :</Text>
                             <View style={styles.inputcontainer}>
                                 <TextInput
@@ -101,6 +130,9 @@ export default function ProductScreen() {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    </TouchableOpacity>
+                    
+                    
                 </Modal>
             </View>
             {/* Model huy dang ky */}
@@ -111,9 +143,26 @@ export default function ProductScreen() {
                     visible={cancelModel}
                     onRequestClose={() => {
                         setCancelModel(!cancelModel);
+                    }}>
+                    <TouchableOpacity
+                    activeOpacity={1}
+                    style={{
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        width: '100%',
+                        height: '100%',
+                        // position: 'absolute',
+                        zIndex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     }}
-                >             
-                    <View style={styles.centeredView}>
+                    onPress={() => setCancelModel(false)}>
+                        <View
+                        onStartShouldSetResponder={(event) => true}
+                        onTouchEnd={(e) => {
+                          e.stopPropagation();
+                        }}
+                        style={styles.centeredView}>
                         <View style={[styles.modalView, {display: 'flex',}]}>
                             <Text style={{
                                 fontSize: 20,
@@ -142,10 +191,13 @@ export default function ProductScreen() {
                             </View>
                         </View>
                     </View>
+                    </TouchableOpacity>     
+                    
                 </Modal>
             </View>
             {/* model dang ky mua */}
-            <View>
+            <View
+            >
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -153,8 +205,26 @@ export default function ProductScreen() {
                     onRequestClose={() => {
                         setPaymentConfirm(!PaymentConfirm);
                     }}
-                >             
-                    <View style={styles.centeredView}>
+                >       
+                <TouchableOpacity
+                    activeOpacity={1}
+                    style={{
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        width: '100%',
+                        height: '100%',
+                        // position: 'absolute',
+                        zIndex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    onPress={() => setPaymentConfirm(false)}>
+                        <View
+                        onStartShouldSetResponder={(event) => true}
+                        onTouchEnd={(e) => {
+                          e.stopPropagation();
+                        }}
+                        style={styles.centeredView}>
                         <View style={[styles.modalView, {display: 'flex',}]}>
                             <Text style={{
                                 fontSize: 20,
@@ -183,6 +253,8 @@ export default function ProductScreen() {
                             </View>
                         </View>
                     </View>
+                        </TouchableOpacity>      
+                    
                 </Modal>
             </View>
 
@@ -204,8 +276,27 @@ export default function ProductScreen() {
                     onRequestClose={() => {
                         setNotification(!notificationPayment);
                     }}
-                >             
-                    <View style={styles.centeredView}>
+                >         
+
+                <TouchableOpacity
+                    activeOpacity={1}
+                    style={{
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        width: '100%',
+                        height: '100%',
+                        // position: 'absolute',
+                        zIndex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    onPress={() => setNotification(false)}>
+                        <View
+                        onStartShouldSetResponder={(event) => true}
+                        onTouchEnd={(e) => {
+                          e.stopPropagation();
+                        }}
+                        style={styles.centeredView}>
                         <View style={[styles.modalView, {display: 'flex',}]}>
                             <Text style={{
                                 fontSize: 20,
@@ -220,6 +311,8 @@ export default function ProductScreen() {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    </TouchableOpacity>
+                    
                 </Modal>
             </View>
 
@@ -235,46 +328,34 @@ export default function ProductScreen() {
                     horizontal 
                     
                     pagingEnabled>
-                        <Image
-                            style={styles.mangastyle}
-                            source={require('../assets/a.png')} />
-                        <Image
-                            style={styles.mangastyle}
-                            source={require('../assets/hakyu.jpg')} />
-                        <Image
-                            style={styles.mangastyle}
-                            source={require('../assets/t1.jpg')} />
+                        {
+                            ProductInfo['imagelist'].map((image) => (
+                            <Image
+                                style={styles.mangastyle}
+                                source={image} />
+                            ))
+                        }
+                       
                     </ScrollView>
                 </View>
                 <View style={styles.radioList}>
-                    <RadioButton
-                        value= {0}
-                        status={imageActive == 0? 'checked' : 'unchecked'}
-                        // onPress= {() => setimageActive(0)}
-                        color='black'
-                    />
-                    <RadioButton
-                        value={0}
-                        status={imageActive == 1? 'checked' : 'unchecked'}
-                        // onPress= {() => setimageActive(1)}
-                        color='black'
-                    />
-                    <RadioButton
-                        value='third'
-                        status={imageActive == 2? 'checked' : 'unchecked'}
-                        // onPress= {() => setimageActive(2)}
-                        color='black'
-                    />
+                    {
+                        Array.from({length:ProductInfo['imagelist'].length},(v,k)=>k).map((number) => (
+                        <RadioButton
+                            status={imageActive == number? 'checked' : 'unchecked'}
+                            color='black'/>
+                        ))
+                    }
                 </View>
                 <View style={styles.ProductInfoBlock}>
                     <Text style={styles.ProductTitle}>
-                        Thanh Gươm diệt quỷ và cái quần què gì đó
+                        {ProductInfo['name']}
                     </Text>
                     <Text style={styles.ProductPrice}>
-                        Giá : 30000 VNĐ
+                        Giá : {ProductInfo['price']} VNĐ
                     </Text>
                     <Text style={styles.ProductStatus}>
-                        Tình trạng : Like new (99% bao mới lun)
+                        Tình trạng : {ProductInfo['status']}
                     </Text>
                 </View>
                 <View style={styles.line}></View>
@@ -284,13 +365,13 @@ export default function ProductScreen() {
                     <View style={styles.avatar}>
                         <Image
                             style={styles.sellerImg}
-                            source={require('../assets/jerry.png')} />
+                            source={ProductInfo['sellerAvatar']} />
                     </View>
 
                     <View style={styles.SellerInfo}>
-                        <Text style={{ color: 'black' }}>Chủ sở hữu : Nguyễn Đăng Hải</Text>
-                        <Text style={{ color: 'black' }}>Số điện thoại : 0xxx xxx xxx</Text>
-                        <Text style={{ color: 'black' }}>Địa chỉ giao dịch : KTX Khu B</Text>
+                        <Text style={{ color: 'black' }}>Chủ sở hữu : {ProductInfo['seller']}</Text>
+                        <Text style={{ color: 'black' }}>Số điện thoại : {ProductInfo['phone']}</Text>
+                        <Text style={{ color: 'black' }}>Địa chỉ giao dịch : {ProductInfo['address']}</Text>
                     </View>
                 </View>
                 <View style={styles.line}></View>
@@ -331,7 +412,7 @@ export default function ProductScreen() {
                     
                 </View>
             </ScrollView>
-            <View style={styles.NavigationBotton}>
+            {/* <View style={styles.NavigationBotton}> */}
                 {/* <TouchableOpacity>
                     <View style={styles.Navigationbtn}>
                         <FontAwesome5 name='home' size={24} color='#757575' />
@@ -357,7 +438,7 @@ export default function ProductScreen() {
                     </View>
                 </TouchableOpacity> */}
 
-            </View>
+            {/* </View> */}
         </ImageBackground>
     )
 }
@@ -476,16 +557,16 @@ const styles = StyleSheet.create({
     CancelColor: {
         backgroundColor: '#C52929',
     },
-    NavigationBotton: {
-        height: 72,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        width: '100%',
-        // borderTopWidth: 1,
-        // borderTopColor: '#D7CFCF'
-    },
+    // NavigationBotton: {
+    //     height: 72,
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //     alignItems: 'center',
+    //     justifyContent: 'space-around',
+    //     width: '100%',
+    //     // borderTopWidth: 1,
+    //     // borderTopColor: '#D7CFCF'
+    // },
     Navigationbtn: {
         display: 'flex',
         justifyContent: 'center',
@@ -506,15 +587,22 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     centeredView: {
-        flex: 1,
+        // flex: 1,
+        flexDirection: 'row',
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22,
         zIndex: 2,
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        // position: 'absolute',
+        width: '100%',
+        height: 174,
     },
     modalView: {
         width: '80%',
-        height: 174,
+        height: '100%',
         backgroundColor: "white",
         borderRadius: 20,
         alignItems: "center",
@@ -525,7 +613,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
     },
     button: {
         borderRadius: 5,
