@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445912089945",
+    "project_id": "tinbk-48003",
+    "storage_bucket": "tinbk-48003.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445912089945:android:7a9338cb7a8492a3447848",
+        "android_client_info": {
+          "package_name": "com.project2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445912089945-a379oenp2odug5shmbdisd40pdop1ll3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsRSUqIIxXqRwXGkbobGmRX0_dJzJ75dA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445912089945-a379oenp2odug5shmbdisd40pdop1ll3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

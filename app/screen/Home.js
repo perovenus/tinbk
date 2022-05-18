@@ -14,6 +14,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import ItemInHome from './ItemInHome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import firestore from '@react-native-firebase/firestore';
 
 const DATA = [
   {
@@ -65,7 +66,6 @@ const Home = () => {
   const handleSearch = (text) => {
     setQuery(text)
   }
-
    return (
       <SafeAreaView style={styles.homeScreen}>
 

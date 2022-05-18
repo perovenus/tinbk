@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   userinfoscreen:{
     // flex: 1,
     backgroundColor: '#FFFFFF',
-    height: Dimensions.get('window').height - 95,
+    height: Dimensions.get('window').height - 90,
   },
   appbar: {
     backgroundColor: 'rgba(47,128,237,0.76)',
