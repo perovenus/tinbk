@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { 
   StyleSheet,
   Text, 
@@ -11,11 +11,9 @@ import {
   TouchableHighlight
   } from 'react-native'
 import { Actions} from 'react-native-router-flux'
-import { useState } from 'react/cjs/react.development';
 import CheckBox from '@react-native-community/checkbox';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-// import { TouchableHighlight } from 'react-native-gesture-handler';
-// import { color } from 'react-native-reanimated';
+import auth from '@react-native-firebase/auth';
 
 export default function SignupScreen() {
   const goToSigninScreen = () => {
@@ -24,6 +22,13 @@ export default function SignupScreen() {
   
   const [male, setToggleMaleCheckBox] = useState(false)
   const [female, setToggleFemaleCheckBox] = useState(false)
+
+  const [middleName, setMiddleName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
 
   const handaleMaleCheckBox = (newValue) => {
     if (male == false) {
@@ -37,6 +42,30 @@ export default function SignupScreen() {
       setToggleFemaleCheckBox(newValue)
       setToggleMaleCheckBox(!newValue)
     }
+  }
+
+  const handleSignUp = () => {
+    // console.log(middleName)
+    // console.log(firstName)
+    // console.log(email)
+    // console.log(password)
+    // console.log(confirmPassword)
+    auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      console.log('User account created & signed in!');
+    })
+    .catch(error => {
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('That email address is already in use!');
+      }
+
+      if (error.code === 'auth/invalid-email') {
+        console.log('That email address is invalid!');
+      }
+
+      console.error(error);
+    });
   }
 
   return (
@@ -76,7 +105,10 @@ export default function SignupScreen() {
               }}>
               Họ và tên đệm
               </Text>
-              <TextInput style={styles.inputText} />
+              <TextInput 
+                style={styles.inputText}
+                onChangeText = {(text) => setMiddleName(text)}
+              />
             </View>
             <View style={[styles.input, {width: '45%'}]}>        
               <Text style={{
@@ -85,7 +117,10 @@ export default function SignupScreen() {
               }}>
               Tên
               </Text>
-              <TextInput style={styles.inputText}/>
+              <TextInput 
+                style={styles.inputText}
+                onChangeText = {(text) => setFirstName(text)}
+              />
             </View>
           </View>
           <View style={styles.input}>
@@ -95,7 +130,10 @@ export default function SignupScreen() {
             }}>
             Email
             </Text>
-            <TextInput style={styles.inputText} />
+            <TextInput 
+              style={styles.inputText}
+              onChangeText = {(text) => setEmail(text)}
+            />
           </View>
           <View style={styles.input}>
             <Text style={{
@@ -104,7 +142,10 @@ export default function SignupScreen() {
             }}>
             Mật khẩu
             </Text>
-            <TextInput style={styles.inputText} secureTextEntry={true} />
+            <TextInput 
+              style={styles.inputText} secureTextEntry={true}
+              onChangeText = {(text) => setPassword(text)}  
+            />
           </View>
           <View style={styles.input}>
             <Text style={{
@@ -113,7 +154,10 @@ export default function SignupScreen() {
             }}>
             Nhập lại mật khẩu
             </Text>
-            <TextInput style={styles.inputText} secureTextEntry={true}/>
+            <TextInput
+              style={styles.inputText} secureTextEntry={true}
+              onChangeText = {(text) => setConfirmPassword(text)}  
+            />
           </View>
         </View>
         <View style={styles.genderSelection}>
@@ -161,7 +205,7 @@ export default function SignupScreen() {
           <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
         </View>
       </View>
-      <TouchableOpacity style={styles.registerButton}>
+      <TouchableOpacity style={styles.registerButton} onPress={handleSignUp}>
         <Text style={{fontSize:24, color: 'white'}}>Đăng ký</Text>
       </TouchableOpacity>
       <View style={styles.signin}>

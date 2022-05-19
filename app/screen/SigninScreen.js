@@ -42,7 +42,7 @@ export default function SigninScreen() {
             fontSize: 15,
             color: '#2F80ED',
           }}>
-            Tài khoản
+            Email
           </Text>
           <TextInput style={styles.input} />
         
