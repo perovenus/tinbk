@@ -59,6 +59,7 @@ export default function SignupScreen() {
   }
 
   const handleSignUpInfo = () => {
+    console.log(auth().currentUser.email)
     if (middleName == '') {
       middleNameRef.current.focus()
       showToast('Bạn chưa nhập Họ và tên đệm')
@@ -88,6 +89,14 @@ export default function SignupScreen() {
       .createUserWithEmailAndPassword(email,password)
       .then(() => {
         console.log('User account created & signed in!');
+        const user = auth().currentUser
+        if(user != null) {
+          user.sendEmailVerification()
+          showToast('Tạo tài khoản thành công')
+          auth().signOut().then(() => {
+            goToSigninScreen()
+          })
+        }
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { 
   StyleSheet,
   Text, 
@@ -12,6 +12,9 @@ import {
   } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
+
 export default function SigninScreen() {
   const goToSignupScreen = () => {
     Actions.signupScreen()
@@ -22,6 +25,40 @@ export default function SigninScreen() {
   }
   const goToHomescreen = () => {
     Actions.Tabs()
+  }
+
+  const showToast = (message) => {
+    Toast.show({
+      type: 'success',
+      text1: message,
+    });
+  }
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSignIn = () => {
+    auth().signInWithEmailAndPassword(email, password)
+    .catch(error => {
+      if (error.code === 'auth/user-not-found') {
+        showToast('Tài khoản chưa được đăng ký')
+      }
+      else if (error.code === 'auth/wrong-password') {
+        showToast('Sai mật khẩu')
+      }
+    })
+    .then(() => {
+      const user = auth().currentUser
+      console.log(user.email)
+      if (user != null){
+        if (user.emailVerified == true) {
+          goToHomescreen()
+        }
+        else {
+          auth().signOut().then(() => showToast('Email chưa được xác nhận'))
+        }
+      }
+    });
   }
   return (
     <ImageBackground
@@ -44,7 +81,10 @@ export default function SigninScreen() {
           }}>
             Email
           </Text>
-          <TextInput style={styles.input} />
+          <TextInput 
+            style={styles.input}
+            onChangeText={(text) => setEmail(text)}  
+          />
         
           <Text style={{
             marginTop: 25,
@@ -53,7 +93,10 @@ export default function SigninScreen() {
           }}>
             Mật khẩu
           </Text>
-          <TextInput style={styles.input} secureTextEntry={true} />
+          <TextInput
+            style={styles.input} secureTextEntry={true}
+            onChangeText={(text) => setPassword(text)}
+          />
         </View>
         <Pressable onPress={goToGetOTPScreen}>
           {({pressed}) => (
@@ -78,7 +121,7 @@ export default function SigninScreen() {
           <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
         </View>
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={goToHomescreen}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleSignIn}>
         <Text style={{fontSize:24, color: 'white'}}>Đăng nhập</Text>
       </TouchableOpacity>
       <View style={styles.signup}>
