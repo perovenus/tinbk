@@ -9,19 +9,41 @@
 import ProductList from './app/screen/ProductList';
  import Tabs from './app/screen/Tabs'
  import { Router, Scene } from 'react-native-router-flux'
+ import Toast, { BaseToast } from 'react-native-toast-message';
  
  export default function App(props) {
+
+  const toastConfig = {
+    /*
+      Overwrite 'success' type,
+      by modifying the existing `BaseToast` component
+    */
+    success: (props) => (
+      <BaseToast
+        {...props}
+        style={{ borderLeftColor: '#2f80ed' }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{
+          fontSize: 15,
+          fontWeight: '400'
+        }}
+      />
+    )
+  }
    return (
-    <Router>
-      <Scene key='root'>
-        <Scene key = "signinScreen" component = {SigninScreen} title = "Signin" initial = {true} hideNavBar={true} />
-        <Scene key = "ProductScreen" component = {ProductScreen} title = "Product" hideNavBar={true} />
-        <Scene key = "signupScreen" component = {SignupScreen} title = "Signup" hideNavBar={true}/>
-        <Scene key = "getOTPScreen" component = {GetOTPScreen} title = "GetOTP" hideNavBar={true}/>
-        <Scene key = "confirmOTPScreen" component = {ConfirmOTPScreen} title = "ConfirmOTP" hideNavBar={true}/>
-        <Scene key = "Tabs" component = {Tabs} title = "Tabs" hideNavBar={true}/>
-      </Scene>
-    </Router>
+     <>
+      <Router>
+        <Scene key='root'>
+          <Scene key = "signinScreen" component = {SigninScreen} title = "Signin" initial = {true} hideNavBar={true} />
+          <Scene key = "ProductScreen" component = {ProductScreen} title = "Product" hideNavBar={true} />
+          <Scene key = "signupScreen" component = {SignupScreen} title = "Signup" hideNavBar={true}/>
+          <Scene key = "getOTPScreen" component = {GetOTPScreen} title = "GetOTP" hideNavBar={true}/>
+          <Scene key = "confirmOTPScreen" component = {ConfirmOTPScreen} title = "ConfirmOTP" hideNavBar={true}/>
+          <Scene key = "Tabs" component = {Tabs} title = "Tabs" hideNavBar={true}/>
+        </Scene>
+      </Router>
+      <Toast config={toastConfig}/>
+    </>
    );
  }
 

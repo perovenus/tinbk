@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { 
   StyleSheet,
   Text, 
@@ -13,6 +13,7 @@ import {
 import { Actions} from 'react-native-router-flux'
 import CheckBox from '@react-native-community/checkbox';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 
 export default function SignupScreen() {
@@ -23,11 +24,24 @@ export default function SignupScreen() {
   const [male, setToggleMaleCheckBox] = useState(false)
   const [female, setToggleFemaleCheckBox] = useState(false)
 
+  const firstNameRef = useRef(null)
+  const middleNameRef = useRef(null)
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
+  const confirmPasswordRef = useRef(null)
+
   const [middleName, setMiddleName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+
+  const showToast = (message) => {
+    Toast.show({
+      type: 'success',
+      text1: message,
+    });
+  }
 
 
   const handaleMaleCheckBox = (newValue) => {
@@ -44,28 +58,56 @@ export default function SignupScreen() {
     }
   }
 
-  const handleSignUp = () => {
-    // console.log(middleName)
-    // console.log(firstName)
-    // console.log(email)
-    // console.log(password)
-    // console.log(confirmPassword)
-    auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      console.log('User account created & signed in!');
-    })
-    .catch(error => {
-      if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
+  const handleSignUpInfo = () => {
+    if (middleName == '') {
+      middleNameRef.current.focus()
+      showToast('Bạn chưa nhập Họ và tên đệm')
+    }
+    else if (firstName == ''){
+      firstName.current.focust()
+      showToast('Bạn chưa nhập Tên')
+    }
+    else if (email == '') {
+      emailRef.current.focus()
+      showToast('Bạn chưa nhập Email')
+    }
+    else if (password == '') {
+      passwordRef.current.focus()
+      showToast('Bạn chưa nhập mật khẩu')
+    }
+    else if (confirmPassword == '') {
+      confirmPasswordRef.current.focus()
+      showToast('Bạn cần xác nhận mật khẩu')
+    }
+    else if(password != confirmPassword) {
+      confirmPasswordRef.current.focus()
+      showToast('Xác nhận mật khẩu chưa đúng')
+    }
+    else {
+      auth()
+      .createUserWithEmailAndPassword(email,password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
 
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+        console.error(error);
+      });
+    }
 
-      console.error(error);
-    });
+    // const user = auth().currentUser;
+
+    // if (user) {
+    //   console.log('User email: ', user.email);
+    //   user.delete()
+    // }
+
   }
 
   return (
@@ -106,6 +148,7 @@ export default function SignupScreen() {
               Họ và tên đệm
               </Text>
               <TextInput 
+                ref={middleNameRef}
                 style={styles.inputText}
                 onChangeText = {(text) => setMiddleName(text)}
               />
@@ -117,7 +160,8 @@ export default function SignupScreen() {
               }}>
               Tên
               </Text>
-              <TextInput 
+              <TextInput
+                ref={firstNameRef}
                 style={styles.inputText}
                 onChangeText = {(text) => setFirstName(text)}
               />
@@ -130,7 +174,8 @@ export default function SignupScreen() {
             }}>
             Email
             </Text>
-            <TextInput 
+            <TextInput
+              ref={emailRef}
               style={styles.inputText}
               onChangeText = {(text) => setEmail(text)}
             />
@@ -142,7 +187,8 @@ export default function SignupScreen() {
             }}>
             Mật khẩu
             </Text>
-            <TextInput 
+            <TextInput
+              ref={passwordRef}
               style={styles.inputText} secureTextEntry={true}
               onChangeText = {(text) => setPassword(text)}  
             />
@@ -155,6 +201,7 @@ export default function SignupScreen() {
             Nhập lại mật khẩu
             </Text>
             <TextInput
+              ref={confirmPasswordRef}
               style={styles.inputText} secureTextEntry={true}
               onChangeText = {(text) => setConfirmPassword(text)}  
             />
@@ -205,7 +252,7 @@ export default function SignupScreen() {
           <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
         </View>
       </View>
-      <TouchableOpacity style={styles.registerButton} onPress={handleSignUp}>
+      <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
         <Text style={{fontSize:24, color: 'white'}}>Đăng ký</Text>
       </TouchableOpacity>
       <View style={styles.signin}>
