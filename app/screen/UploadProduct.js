@@ -9,25 +9,32 @@ import {
   ImageBackground,
   SafeAreaView,
   Modal,
+  Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import * as ImagePicker from "react-native-image-picker";
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
 const khuvuc = ['ĐHBK cơ sở 2', 'ĐHBK cơ sở 1', 'KTX khu A', 'KTX khu B'];
 
+
+
 export default function UploadProduct() {
   const [modalVisible, setModalVisible] = useState(false);
   const dropdownIcon = () => {
-    return(
+    return (
       <FontAwesome5
-        name='caret-down'
+        name="caret-down"
         size={20}
-        color='#2F80ED'
-        style={{left: 10}}/>
-    )
-  }
+        color="#2F80ED"
+        style={{left: 10}}
+      />
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -35,11 +42,12 @@ export default function UploadProduct() {
         source={require('../assets/upload-background.jpg')}>
         <Text style={styles.header}>Đăng ký gửi bán</Text>
         <View style={styles.viewimage}>
-         
-            <Image
-              style={styles.image}
-              source={require('../assets/chair.jpg')}
-            />
+          <Image style={styles.image} source={require('../assets/chair.jpg')} />
+          <TouchableOpacity
+            onPress={{}}
+            style={styles.getImageButton}>
+            <FontAwesome5 name="camera" size={30} color="#494949" />
+          </TouchableOpacity>
         </View>
         <ScrollView style={styles.scrollview}>
           <View style={styles.form}>
@@ -172,7 +180,6 @@ export default function UploadProduct() {
             </View>
           </View>
         </ScrollView>
-        <View style={{backgroundColor: 'yellow', height: 72}}></View>
       </ImageBackground>
     </SafeAreaView>
   );
@@ -184,7 +191,13 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     backgroundColor: 'green',
   },
-  backgroundImage: {flex: 1, resizeMode: 'cover', justifyContent: 'center'},
+  backgroundImage: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
   header: {
     marginTop: 10,
     fontSize: 25,
@@ -194,11 +207,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   scrollview: {
-    marginTop: 30,
+    marginTop: 100,
+    marginBottom: 70,
   },
   viewimage: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignContent: 'center',
   },
   image: {
     width: 160,
@@ -271,9 +286,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#2F80ED',
     fontSize: 18,
-    backgroundColor:'white'
+    backgroundColor: 'white',
   },
-  textdropdown: {fontWeight: '400', fontSize: 18, textAlign: 'left', paddingLeft: 10},
+  textdropdown: {
+    fontWeight: '400',
+    fontSize: 18,
+    textAlign: 'left',
+    paddingLeft: 10,
+  },
   dropdown: {borderWidth: 0, borderRadius: 10, backgroundColor: 'white'},
   modalView: {
     margin: 20,
@@ -313,5 +333,9 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 22,
     color: '#FFFFFF',
+  },
+  getImageButton: {
+    justifyContent: 'center',
+    right: 92,
   },
 });
