@@ -19,7 +19,6 @@ export default function SigninScreen() {
   const goToSignupScreen = () => {
     Actions.signupScreen()
   }
-
   const goToGetOTPScreen = () => {
     Actions.getOTPScreen()
   }

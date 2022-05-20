@@ -42,8 +42,6 @@ export default function SignupScreen() {
       text1: message,
     });
   }
-
-
   const handaleMaleCheckBox = (newValue) => {
     if (male == false) {
       setToggleMaleCheckBox(newValue)
@@ -59,7 +57,6 @@ export default function SignupScreen() {
   }
 
   const handleSignUpInfo = () => {
-    console.log(auth().currentUser.email)
     if (middleName == '') {
       middleNameRef.current.focus()
       showToast('Bạn chưa nhập Họ và tên đệm')
@@ -109,14 +106,6 @@ export default function SignupScreen() {
         console.error(error);
       });
     }
-
-    // const user = auth().currentUser;
-
-    // if (user) {
-    //   console.log('User email: ', user.email);
-    //   user.delete()
-    // }
-
   }
 
   return (
