@@ -15,12 +15,10 @@ import {
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import * as ImagePicker from "react-native-image-picker";
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
 const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
 const khuvuc = ['ĐHBK cơ sở 2', 'ĐHBK cơ sở 1', 'KTX khu A', 'KTX khu B'];
-
-
 
 export default function UploadProduct() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -35,6 +33,17 @@ export default function UploadProduct() {
     );
   };
 
+  const [image, setImage] = useState(null);
+  //pick photo
+  const pickImage = async () => {
+    let result = await launchImageLibrary();
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  // console.log(image);
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -42,10 +51,9 @@ export default function UploadProduct() {
         source={require('../assets/upload-background.jpg')}>
         <Text style={styles.header}>Đăng ký gửi bán</Text>
         <View style={styles.viewimage}>
-          <Image style={styles.image} source={require('../assets/chair.jpg')} />
-          <TouchableOpacity
-            onPress={{}}
-            style={styles.getImageButton}>
+          {!image && <Image style={styles.image} source={require('../assets/chair.jpg')} />}
+          {image && <Image style={styles.image} source={{uri: image}} />}
+          <TouchableOpacity onPress={pickImage} style={styles.getImageButton}>
             <FontAwesome5 name="camera" size={30} color="#494949" />
           </TouchableOpacity>
         </View>
@@ -177,6 +185,9 @@ export default function UploadProduct() {
                 onPress={() => setModalVisible(true)}>
                 <Text style={styles.textbutton}>Xác nhận</Text>
               </Pressable>
+              <View style={{height: 75}}>
+                
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -214,6 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
+    marginHorizontal: 'auto',
   },
   image: {
     width: 160,
@@ -335,7 +347,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   getImageButton: {
+    position: 'absolute',
     justifyContent: 'center',
-    right: 92,
+    height: '100%',
+    alignItems: 'center',
   },
 });
