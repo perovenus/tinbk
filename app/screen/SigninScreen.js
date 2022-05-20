@@ -42,14 +42,10 @@ export default function SigninScreen() {
 
   const handleSignIn = () => {
     if(email != '' && password != ''){
-
       auth().signInWithEmailAndPassword(email, password)
       .catch(error => {
-        if (error.code === 'auth/user-not-found') {
-          showToast('Tài khoản chưa được đăng ký')
-        }
-        else if (error.code === 'auth/wrong-password') {
-          showToast('Sai mật khẩu')
+        if(error){
+          showToast('Email và mật khẩu chưa đúng')
         }
       })
       .then(() => {

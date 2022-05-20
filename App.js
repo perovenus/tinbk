@@ -4,6 +4,7 @@
  import GetOTPScreen from './app/screen/GetOTPScreen';
  import ConfirmOTPScreen from './app/screen/ConfirmOTPScreen';
  import ProductScreen from './app/screen/ProductInfo';
+ import IntroductionScreen from './app/screen/Intro';
  import Notification from './app/screen/Notification'
  import UploadProduct from './app/screen/UploadProduct';
 import ProductList from './app/screen/ProductList';
@@ -34,7 +35,8 @@ import ProductList from './app/screen/ProductList';
      <>
       <Router>
         <Scene key='root'>
-          <Scene key = "signinScreen" component = {SigninScreen} title = "Signin" initial = {true} hideNavBar={true} />
+          <Scene key = "welcomeScreen" component = {IntroductionScreen} title = "Welcome" initial = {true} hideNavBar={true} />
+          <Scene key = "signinScreen" component = {SigninScreen} title = "Signin" hideNavBar={true} />
           <Scene key = "ProductScreen" component = {ProductScreen} title = "Product" hideNavBar={true} />
           <Scene key = "signupScreen" component = {SignupScreen} title = "Signup" hideNavBar={true}/>
           <Scene key = "getOTPScreen" component = {GetOTPScreen} title = "GetOTP" hideNavBar={true}/>

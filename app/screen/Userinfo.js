@@ -14,6 +14,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Tabs from './Tabs';
 import Editmodal from './Editmodal';
+import auth from '@react-native-firebase/auth';
+
 const UserInfo = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const data = {
@@ -21,6 +23,11 @@ const UserInfo = () => {
     gender: 'Nam',
     birthday: '02/05/2001',
   };
+
+  const handleSignOut = () => {
+    auth().signOut().then(() => Actions.signinScreen())
+  }
+
   return (
     <SafeAreaView style={styles.userinfoscreen}>
       {/* NAVBAR */}
@@ -105,7 +112,7 @@ const UserInfo = () => {
             <FontAwesome name="angle-right" size={24} color="#444" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={handleSignOut}>
           <View style={styles.lefticon}>
             <FontAwesome name="power-off" size={24} color="red" />
           </View>
