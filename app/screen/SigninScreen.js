@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { 
   StyleSheet,
   Text, 
@@ -37,34 +37,50 @@ export default function SigninScreen() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
+
   const handleSignIn = () => {
-    auth().signInWithEmailAndPassword(email, password)
-    .catch(error => {
-      if (error.code === 'auth/user-not-found') {
-        showToast('Tài khoản chưa được đăng ký')
-      }
-      else if (error.code === 'auth/wrong-password') {
-        showToast('Sai mật khẩu')
-      }
-    })
-    .then(() => {
-      const user = auth().currentUser
-      console.log(user.email)
-      if (user != null){
-        if (user.emailVerified == true) {
-          goToHomescreen()
+    if(email != '' && password != ''){
+
+      auth().signInWithEmailAndPassword(email, password)
+      .catch(error => {
+        if (error.code === 'auth/user-not-found') {
+          showToast('Tài khoản chưa được đăng ký')
         }
-        else {
-          auth().signOut().then(() => showToast('Email chưa được xác nhận'))
+        else if (error.code === 'auth/wrong-password') {
+          showToast('Sai mật khẩu')
         }
+      })
+      .then(() => {
+        const user = auth().currentUser
+        console.log(user.password)
+        if (user != null){
+          if (user.emailVerified == true) {
+            goToHomescreen()
+            showToast('Đăng nhập thành công')
+          }
+          else {
+            auth().signOut().then(() => showToast('Email chưa được xác nhận'))
+          }
+        }
+      });
+    }
+    else {
+      if(email == ''){
+        emailRef.current.focus()
       }
-    });
+      else if(password == ''){
+        passwordRef.current.focus()
+      }
+      showToast('Bạn hãy nhập tài khoản của mình')
+    }
   }
-  return (
-    <ImageBackground
+    return (
+      <ImageBackground
       style={styles.background}
       source={require('../assets/signin-background.jpg')}
-    >
+      >
       <View style={styles.accountInfoContainer}>
         <Text 
           style={{
@@ -81,7 +97,8 @@ export default function SigninScreen() {
           }}>
             Email
           </Text>
-          <TextInput 
+          <TextInput
+            ref={emailRef}
             style={styles.input}
             onChangeText={(text) => setEmail(text)}  
           />
@@ -94,6 +111,7 @@ export default function SigninScreen() {
             Mật khẩu
           </Text>
           <TextInput
+            ref={passwordRef}
             style={styles.input} secureTextEntry={true}
             onChangeText={(text) => setPassword(text)}
           />
@@ -147,7 +165,9 @@ const styles = StyleSheet.create({
   background: { 
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    justifyContent: 'flex-end'
+    flex: 1,
+    justifyContent: 'flex-end',
+    position: 'absolute'
     // justifyContent: 'space-between'
     // justifyContent: 'center',
   },
