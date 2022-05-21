@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,12 +16,81 @@ import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
-const theloai = ['Giáo trình', 'Tiểu thuyết', 'Truyện tranh', 'Sách bài tập'];
-const khuvuc = ['ĐHBK cơ sở 2', 'ĐHBK cơ sở 1', 'KTX khu A', 'KTX khu B'];
+import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 export default function UploadProduct() {
   const [modalVisible, setModalVisible] = useState(false);
+  const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
+  const theloai = ['Giáo trình', 'Bài tập', 'Tham khảo', 'Truyện'];
+  const khuvuc = ['ĐHBK cơ sở 2', 'ĐHBK cơ sở 1', 'KTX khu A', 'KTX khu B'];
+
+  const showToast = message => {
+    Toast.show({
+      type: 'success',
+      text1: message,
+    });
+  };
+
+  const bookNameRef = useRef(null);
+  const quantityRef = useRef(null);
+  const priceRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const bookTypeRef = useRef(null);
+  const bookRegionRef = useRef(null);
+  const bookStatusRef = useRef(null);
+
+  const [image, setImage] = useState(null);
+  const [bookName, setBookName] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [bookType, setBookType] = useState('');
+  const [bookRegion, setBookRegion] = useState('');
+  const [bookStatus, setBookStatus] = useState('');
+
+  const handleUploadProduct = () => {
+    if (!image) {
+      showToast('Bạn chưa chọn ảnh sách');
+    } else if (bookName == '') {
+      bookNameRef.current.focus();
+      showToast('Bạn chưa nhập tên sách');
+    } else if (quantity == '' || quantity == '0') {
+      quantityRef.current.focus();
+      showToast('Bạn chưa nhập số lượng sách');
+    } else if (price == '') {
+      priceRef.current.focus();
+      showToast('Bạn chưa nhập giá sách');
+    } else if (bookType == '') {
+      showToast('Bạn chưa chọn loại sách');
+    } else if (bookRegion == '') {
+      showToast('Bạn chưa chọn khu vực');
+    } else if (bookStatus == '') {
+      showToast('Bạn chưa chọn trạng thái sách');
+    } else {
+      //upload form database to firebase
+      const reference = storage().ref(`images/${image.fileName}`);
+      //upload refrence to firebase
+      console.log(reference);
+
+      firestore().collection('Books').add({
+        bookName: bookName,
+        quantity: quantity,
+        price: price,
+        description: description,
+        bookType: bookType,
+        bookRegion: bookRegion,
+        bookStatus: bookStatus,
+        image: image,
+        seller: auth().currentUser.uid,
+      });
+
+      setModalVisible(true);
+    }
+  };
+
   const dropdownIcon = () => {
     return (
       <FontAwesome5
@@ -33,7 +102,6 @@ export default function UploadProduct() {
     );
   };
 
-  const [image, setImage] = useState(null);
   //pick photo
   const pickImage = async () => {
     let result = await launchImageLibrary();
@@ -42,7 +110,6 @@ export default function UploadProduct() {
       setImage(result.assets[0].uri);
     }
   };
-
   // console.log(image);
   return (
     <SafeAreaView style={styles.container}>
@@ -51,7 +118,12 @@ export default function UploadProduct() {
         source={require('../assets/upload-background.jpg')}>
         <Text style={styles.header}>Đăng ký gửi bán</Text>
         <View style={styles.viewimage}>
-          {!image && <Image style={styles.image} source={require('../assets/chair.jpg')} />}
+          {!image && (
+            <Image
+              style={styles.image}
+              source={require('../assets/chair.jpg')}
+            />
+          )}
           {image && <Image style={styles.image} source={{uri: image}} />}
           <TouchableOpacity onPress={pickImage} style={styles.getImageButton}>
             <FontAwesome5 name="camera" size={30} color="#494949" />
@@ -60,11 +132,19 @@ export default function UploadProduct() {
         <ScrollView style={styles.scrollview}>
           <View style={styles.form}>
             <Text style={styles.text}>Tên sách</Text>
-            <TextInput style={styles.textinput} value={{}} placeholder="" />
+            <TextInput
+              ref={bookNameRef}
+              style={styles.textinput}
+              onChangeText={text => setBookName(text)}
+              value={{}}
+              placeholder=""
+            />
             <View style={styles.soluongvagia}>
               <View style={styles.soluong}>
                 <Text style={styles.text}>Số lượng</Text>
                 <TextInput
+                  ref={quantityRef}
+                  onChangeText={text => setQuantity(text)}
                   style={styles.textinput}
                   keyboardType="numeric"
                   value={{}}
@@ -74,6 +154,8 @@ export default function UploadProduct() {
               <View style={styles.gia}>
                 <Text style={styles.text}>Giá</Text>
                 <TextInput
+                  ref={priceRef}
+                  onChangeText={text => setPrice(text)}
                   style={styles.textinput}
                   keyboardType="numeric"
                   value={{}}
@@ -92,9 +174,9 @@ export default function UploadProduct() {
                   paddingLeft: 20,
                 }}
                 data={domoi}
-                defaultValue={domoi[0]}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
+                  setBookStatus(selectedItem);
                 }}
                 renderDropdownIcon={dropdownIcon}
                 buttonTextAfterSelection={(selectedItem, index) => {
@@ -112,9 +194,9 @@ export default function UploadProduct() {
                 buttonTextStyle={styles.textdropdown}
                 dropdownStyle={styles.dropdown}
                 data={theloai}
-                defaultValue={theloai[0]}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
+                  setBookType(selectedItem);
                 }}
                 renderDropdownIcon={dropdownIcon}
                 buttonTextAfterSelection={(selectedItem, index) => {
@@ -132,9 +214,9 @@ export default function UploadProduct() {
                 buttonTextStyle={styles.textdropdown}
                 dropdownStyle={styles.dropdown}
                 data={khuvuc}
-                defaultValue={khuvuc[0]}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index);
+                  setBookRegion(selectedItem);
                 }}
                 renderDropdownIcon={dropdownIcon}
                 buttonTextAfterSelection={(selectedItem, index) => {
@@ -148,9 +230,11 @@ export default function UploadProduct() {
             <View style={styles.ghichu}>
               <Text style={styles.text}>Ghi chú</Text>
               <TextInput
+                ref={descriptionRef}
+                onChangeText={text => setDescription(text)}
                 style={[
                   styles.textinput,
-                  {height: 200, textAlignVertical: 'top'},
+                  {height: 140, textAlignVertical: 'top'},
                 ]}
                 multiline={true}
                 numberOfLines={4}
@@ -182,12 +266,10 @@ export default function UploadProduct() {
               </Modal>
               <Pressable
                 style={styles.button}
-                onPress={() => setModalVisible(true)}>
+                onPress={() => handleUploadProduct()}>
                 <Text style={styles.textbutton}>Xác nhận</Text>
               </Pressable>
-              <View style={{height: 75}}>
-                
-              </View>
+              <View style={{height: 70}}></View>
             </View>
           </View>
         </ScrollView>
