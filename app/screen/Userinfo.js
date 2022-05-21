@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,48 +15,55 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Tabs from './Tabs';
 import Editmodal from './Editmodal';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const UserInfo = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const data = {
-    name: 'Peroveus',
-    gender: 'Nam',
-    birthday: '02/05/2001',
-  };
+  const [userInfo, setUserInfo] = useState({})
+
+  const user = auth().currentUser;
 
   const handleSignOut = () => {
     auth().signOut().then(() => Actions.signinScreen())
   }
 
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Users')
+      .doc(user.uid)
+      .onSnapshot(documentSnapshot => {
+        setUserInfo(documentSnapshot.data());
+      });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [user.uid]);
+
   return (
     <SafeAreaView style={styles.userinfoscreen}>
-      {/* NAVBAR */}
       <View style={styles.appbar}>
         <View style={styles.appbar_left}>
           <Text style={styles.navbarText}>Cá nhân</Text>
         </View>
         <View style={styles.appbar_right}>
-          <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
             <FontAwesome name="edit" size={34} color="#fff" />
           </TouchableOpacity>
         </View>
       </View>
-      {/*END NAVBAR*/}
-      {/*CONTENT*/}
       <ScrollView style={styles.body}>
         <View style={styles.container}>
-          {/* <View> */}
-            <Image
-              // resizeMode='contain'
-              source={require('../assets/hutao.jpg')}
-              style={styles.avatar}
-            />
-          {/* </View> */}
+          <Image
+            source={require('../assets/hutao.jpg')}
+            style={styles.avatar}
+          />
           <View style={styles.info}>
-            <Text style={styles.infoText}>Tên: {data['name']}</Text>
-            <Text style={styles.infoText}>Giới tính: {data['gender']} </Text>
+            <Text style={[styles.infoText,{fontWeight: 'bold'}]}>
+              {userInfo['middleName'] + ' ' + userInfo['firstName']}
+            </Text>
+            <Text style={styles.infoText}>Giới tính: {userInfo['gender']} </Text>
             <Text style={styles.infoText}>Ngày sinh:</Text>
-            <Text style={styles.infoText}>{data['birthday']}</Text>
+            <Text style={styles.infoText}>{userInfo['birthday']}</Text>
           </View>
         </View>
         <View style={styles.card}>
@@ -64,7 +71,7 @@ const UserInfo = () => {
             <Ionicons name="mail" size={24} color="#444"></Ionicons>
           </View>
           <View>
-            <Text style={styles.cardtext}>han.cao509@hcmut.edu.vn</Text>
+            <Text style={styles.cardtext}>{user.email}</Text>
           </View>
         </View>
         <View style={styles.card}>
@@ -72,7 +79,7 @@ const UserInfo = () => {
             <FontAwesome name="mobile-phone" size={24} color="#444" />
           </View>
           <View>
-            <Text style={styles.cardtext}>0349362424</Text>
+            <Text style={styles.cardtext}>{userInfo['phoneNumber']}</Text>
           </View>
         </View>
         <View style={styles.card}>
@@ -83,7 +90,7 @@ const UserInfo = () => {
               color="#444"></Ionicons>
           </View>
           <View>
-            <Text style={styles.cardtext}>KTX khu A đại học quốc gia</Text>
+            <Text style={styles.cardtext}>{userInfo['address']}</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.cardbonus}>
@@ -120,9 +127,9 @@ const UserInfo = () => {
             <Text style={styles.cardtext}>Đăng xuất</Text>
           </View>
         </TouchableOpacity>
-        
       </ScrollView>
-      {Editmodal(modalVisible, setModalVisible)}
+      {Editmodal(modalVisible, setModalVisible, user, userInfo)}
+      {/* <Editmodal modalVisible={modalVisible} setModalVisible={setModalVisible} /> */}
     </SafeAreaView>
   );
 };
@@ -168,7 +175,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    padding: 16,
+    paddingHorizontal: 16,
   },
   avatar: {
     height: 120,

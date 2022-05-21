@@ -42,24 +42,24 @@ export default function SigninScreen() {
   const handleSignIn = () => {
     if(email != '' && password != ''){
       auth().signInWithEmailAndPassword(email, password)
-      .catch(error => {
-        if(error){
-          showToast('Email và mật khẩu chưa đúng')
-        }
-      })
-      .then(() => {
-        const user = auth().currentUser
-        console.log(user.password)
-        if (user != null){
-          if (user.emailVerified == true) {
-            goToHomescreen()
-            showToast('Đăng nhập thành công')
+        .catch(error => {
+          if(error){
+            showToast('Email và mật khẩu chưa đúng')
           }
-          else {
-            auth().signOut().then(() => showToast('Email chưa được xác nhận'))
+        })
+        .then(() => {
+          const user = auth().currentUser
+          console.log(user.password)
+          if (user != null){
+            if (user.emailVerified == true) {
+              goToHomescreen()
+              showToast('Đăng nhập thành công')
+            }
+            else {
+              auth().signOut().then(() => showToast('Email chưa được xác nhận'))
+            }
           }
-        }
-      });
+        });
     }
     else {
       if(email == ''){

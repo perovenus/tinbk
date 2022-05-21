@@ -28,7 +28,7 @@ const ItemInHome = ({item}) => {
           </View>
         </View>
         <TouchableOpacity style={styles.buybutton}>
-          <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/>
+          <FontAwesome5 name='shopping-cart' size={24} color='rgba(47,128,237,0.85)'/>
         </TouchableOpacity>
       </TouchableOpacity>
     // </View>
