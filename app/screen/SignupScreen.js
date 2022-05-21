@@ -1,26 +1,27 @@
 import React, { useState, useRef } from 'react'
-import { 
+import {
   StyleSheet,
-  Text, 
-  View, 
-  Image, 
-  TextInput, 
-  TouchableOpacity, 
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
   ImageBackground,
   Dimensions,
   TouchableHighlight
-  } from 'react-native'
-import { Actions} from 'react-native-router-flux'
+} from 'react-native'
+import { Actions } from 'react-native-router-flux'
 import CheckBox from '@react-native-community/checkbox';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 export default function SignupScreen() {
   const goToSigninScreen = () => {
     Actions.signinScreen()
   }
-  
+
   const [male, setToggleMaleCheckBox] = useState(false)
   const [female, setToggleFemaleCheckBox] = useState(false)
 
@@ -42,8 +43,6 @@ export default function SignupScreen() {
       text1: message,
     });
   }
-
-
   const handaleMaleCheckBox = (newValue) => {
     if (male == false) {
       setToggleMaleCheckBox(newValue)
@@ -63,8 +62,8 @@ export default function SignupScreen() {
       middleNameRef.current.focus()
       showToast('Bạn chưa nhập Họ và tên đệm')
     }
-    else if (firstName == ''){
-      firstName.current.focust()
+    else if (firstName == '') {
+      firstName.current.focus()
       showToast('Bạn chưa nhập Tên')
     }
     else if (email == '') {
@@ -79,35 +78,47 @@ export default function SignupScreen() {
       confirmPasswordRef.current.focus()
       showToast('Bạn cần xác nhận mật khẩu')
     }
-    else if(password != confirmPassword) {
+    else if (password != confirmPassword) {
       confirmPasswordRef.current.focus()
       showToast('Xác nhận mật khẩu chưa đúng')
     }
     else {
       auth()
-      .createUserWithEmailAndPassword(email,password)
-      .then(() => {
-        console.log('User account created & signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          const user = auth().currentUser
+          if (user != null) {
+            user.sendEmailVerification()
+            showToast('Tạo tài khoản thành công')
+            firestore()
+              .collection('Users')
+              .doc(user.uid)
+              .set({
+                middlename: middleName,
+                firstName: firstName,
+                gender : male == true ? 'Male' : 'Female',
+                address: ''
+              })
+              .then(() => {
+                console.log('User added!');
+              });
+            auth().signOut().then(() => {
+              goToSigninScreen()
+            })
+          }
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-        console.error(error);
-      });
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+          console.error(error);
+        });
     }
-
-    // const user = auth().currentUser;
-
-    // if (user) {
-    //   console.log('User email: ', user.email);
-    //   user.delete()
-    // }
-
   }
 
   return (
@@ -120,12 +131,12 @@ export default function SignupScreen() {
           <FontAwesome5
             name='angle-left'
             color='white'
-            size={28} 
+            size={28}
           />
         </View>
       </TouchableOpacity>
       <View style={styles.userInfoContainer}>
-        <Text 
+        <Text
           style={{
             fontSize: 36,
             color: '#2F80ED',
@@ -136,34 +147,34 @@ export default function SignupScreen() {
         <View style={styles.userInfo}>
           <View
             style={{
-              flexDirection:'row',
-              justifyContent:'space-between'
+              flexDirection: 'row',
+              justifyContent: 'space-between'
             }}
-            >
-            <View style={[styles.input, {width: '45%'}]}>
+          >
+            <View style={[styles.input, { width: '45%' }]}>
               <Text style={{
                 fontSize: 15,
                 color: '#2F80ED'
               }}>
-              Họ và tên đệm
+                Họ và tên đệm
               </Text>
-              <TextInput 
+              <TextInput
                 ref={middleNameRef}
                 style={styles.inputText}
-                onChangeText = {(text) => setMiddleName(text)}
+                onChangeText={(text) => setMiddleName(text)}
               />
             </View>
-            <View style={[styles.input, {width: '45%'}]}>        
+            <View style={[styles.input, { width: '45%' }]}>
               <Text style={{
                 fontSize: 15,
                 color: '#2F80ED'
               }}>
-              Tên
+                Tên
               </Text>
               <TextInput
                 ref={firstNameRef}
                 style={styles.inputText}
-                onChangeText = {(text) => setFirstName(text)}
+                onChangeText={(text) => setFirstName(text)}
               />
             </View>
           </View>
@@ -172,12 +183,12 @@ export default function SignupScreen() {
               fontSize: 15,
               color: '#2F80ED'
             }}>
-            Email
+              Email
             </Text>
             <TextInput
               ref={emailRef}
               style={styles.inputText}
-              onChangeText = {(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text)}
             />
           </View>
           <View style={styles.input}>
@@ -185,12 +196,12 @@ export default function SignupScreen() {
               fontSize: 15,
               color: '#2F80ED'
             }}>
-            Mật khẩu
+              Mật khẩu
             </Text>
             <TextInput
               ref={passwordRef}
               style={styles.inputText} secureTextEntry={true}
-              onChangeText = {(text) => setPassword(text)}  
+              onChangeText={(text) => setPassword(text)}
             />
           </View>
           <View style={styles.input}>
@@ -198,23 +209,23 @@ export default function SignupScreen() {
               fontSize: 15,
               color: '#2F80ED'
             }}>
-            Nhập lại mật khẩu
+              Nhập lại mật khẩu
             </Text>
             <TextInput
               ref={confirmPasswordRef}
               style={styles.inputText} secureTextEntry={true}
-              onChangeText = {(text) => setConfirmPassword(text)}  
+              onChangeText={(text) => setConfirmPassword(text)}
             />
           </View>
         </View>
         <View style={styles.genderSelection}>
           <View style={styles.genderCheckBox}>
             <CheckBox
-              tintColors={{true: '#2F80ED', false: '#2F80ED'}}
+              tintColors={{ true: '#2F80ED', false: '#2F80ED' }}
               disabled={false}
               value={male}
               onValueChange={(newValue) => handaleMaleCheckBox(newValue)}
-              />
+            />
             <Text style={{
               fontSize: 17,
               color: '#2F80ED',
@@ -226,11 +237,11 @@ export default function SignupScreen() {
           </View>
           <View style={styles.genderCheckBox}>
             <CheckBox
-              tintColors={{true: '#2F80ED', false: '#2F80ED'}}
+              tintColors={{ true: '#2F80ED', false: '#2F80ED' }}
               disabled={false}
               value={female}
               onValueChange={(newValue) => handleFemaleCheckBox(newValue)}
-              />
+            />
             <Text style={{
               fontSize: 17,
               color: '#2F80ED',
@@ -244,29 +255,29 @@ export default function SignupScreen() {
       </View>
       <View style={styles.signinWith}>
         <View style={[styles.singinWithButton, styles.elevation]}>
-          <Image 
+          <Image
             style={styles.googleImage}
             source={require('../assets/google.png')} />
         </View>
         <View style={[styles.singinWithButton, styles.elevation]}>
-          <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
+          <FontAwesome5 name='facebook-square' size={30} color='#395185' />
         </View>
       </View>
       <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
-        <Text style={{fontSize:24, color: 'white'}}>Đăng ký</Text>
+        <Text style={{ fontSize: 24, color: 'white' }}>Đăng ký</Text>
       </TouchableOpacity>
       <View style={styles.signin}>
         <Text style={styles.signinButton}>Đã có tài khoản?</Text>
         <TouchableOpacity onPress={goToSigninScreen}>
-          <Text 
+          <Text
             style={[
               styles.signinButton,
               {
-                textDecorationLine:'underline',
+                textDecorationLine: 'underline',
                 fontWeight: 'bold'
               }
             ]}>
-              Đăng nhập
+            Đăng nhập
           </Text>
         </TouchableOpacity>
       </View>
@@ -275,7 +286,7 @@ export default function SignupScreen() {
 }
 
 const styles = StyleSheet.create({
-  background: { 
+  background: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     justifyContent: 'flex-end'
@@ -285,7 +296,7 @@ const styles = StyleSheet.create({
     top: '13%',
     width: '100%',
   },
-  userInfo:{
+  userInfo: {
     marginHorizontal: 30,
     marginTop: 20,
   },

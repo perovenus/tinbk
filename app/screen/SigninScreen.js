@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { 
   StyleSheet,
   Text, 
@@ -12,22 +12,70 @@ import {
   } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
+
 export default function SigninScreen() {
   const goToSignupScreen = () => {
     Actions.signupScreen()
   }
-
   const goToGetOTPScreen = () => {
     Actions.getOTPScreen()
   }
   const goToHomescreen = () => {
     Actions.Tabs()
   }
-  return (
-    <ImageBackground
+
+  const showToast = (message) => {
+    Toast.show({
+      type: 'success',
+      text1: message,
+    });
+  }
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
+
+  const handleSignIn = () => {
+    if(email != '' && password != ''){
+      auth().signInWithEmailAndPassword(email, password)
+      .catch(error => {
+        if(error){
+          showToast('Email và mật khẩu chưa đúng')
+        }
+      })
+      .then(() => {
+        const user = auth().currentUser
+        console.log(user.password)
+        if (user != null){
+          if (user.emailVerified == true) {
+            goToHomescreen()
+            showToast('Đăng nhập thành công')
+          }
+          else {
+            auth().signOut().then(() => showToast('Email chưa được xác nhận'))
+          }
+        }
+      });
+    }
+    else {
+      if(email == ''){
+        emailRef.current.focus()
+      }
+      else if(password == ''){
+        passwordRef.current.focus()
+      }
+      showToast('Bạn hãy nhập tài khoản của mình')
+    }
+  }
+    return (
+      <ImageBackground
       style={styles.background}
       source={require('../assets/signin-background.jpg')}
-    >
+      >
       <View style={styles.accountInfoContainer}>
         <Text 
           style={{
@@ -44,7 +92,11 @@ export default function SigninScreen() {
           }}>
             Email
           </Text>
-          <TextInput style={styles.input} />
+          <TextInput
+            ref={emailRef}
+            style={styles.input}
+            onChangeText={(text) => setEmail(text)}  
+          />
         
           <Text style={{
             marginTop: 25,
@@ -53,7 +105,11 @@ export default function SigninScreen() {
           }}>
             Mật khẩu
           </Text>
-          <TextInput style={styles.input} secureTextEntry={true} />
+          <TextInput
+            ref={passwordRef}
+            style={styles.input} secureTextEntry={true}
+            onChangeText={(text) => setPassword(text)}
+          />
         </View>
         <Pressable onPress={goToGetOTPScreen}>
           {({pressed}) => (
@@ -78,7 +134,7 @@ export default function SigninScreen() {
           <FontAwesome5 name='facebook-square' size={30} color='#395185'/>
         </View>
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={goToHomescreen}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleSignIn}>
         <Text style={{fontSize:24, color: 'white'}}>Đăng nhập</Text>
       </TouchableOpacity>
       <View style={styles.signup}>
@@ -104,7 +160,9 @@ const styles = StyleSheet.create({
   background: { 
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    justifyContent: 'flex-end'
+    flex: 1,
+    justifyContent: 'flex-end',
+    position: 'absolute'
     // justifyContent: 'space-between'
     // justifyContent: 'center',
   },

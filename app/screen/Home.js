@@ -1,20 +1,22 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import {
-    SafeAreaView,
-    TextInput,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    TouchableOpacity,
-    FlatList,
-    Dimensions
-  } from 'react-native';
+  SafeAreaView,
+  TextInput,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,BackHandler, Alert 
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ItemInHome from './ItemInHome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const DATA = [
   {
@@ -56,6 +58,7 @@ const DATA = [
 ]
 
 const Home = () => {
+  let currUid = auth().currentUser.uid;
 
   const renderItem = ({ item }) => (
     <ItemInHome item={item} />
@@ -66,22 +69,113 @@ const Home = () => {
   const handleSearch = (text) => {
     setQuery(text)
   }
-   return (
-      <SafeAreaView style={styles.homeScreen}>
+  const [imageUrl, setImageUrl] = useState([]);
+  // const func = async () => {
+  //   console.log('aloooooooooooooooooooooooooo')
+  //   const ref = storage().ref('hakyu.jpg');
+  //   console.log('aloooooooooooooooooooooooooo111111111111111111111111111111')
 
-        <View style ={styles.header}>
-          <TextInput
-            autoCapitalize='none'
-            autoCorrect={false}
-            clearButtonMode='always'
-            value={query}
-            onChangeText={(queryText) => handleSearch(queryText)}
-            placeholder='Tìm kiếm...'
-            style={styles.searchbar}
-          />
-        </View>
+  //   await ref.getDownloadURL().then(
+  //     url => {
+  //       console.log('aloooooooooooooooooooooooo22222222222222222222222222')
 
+  //       setImageUrl(url);
+  //     }
+  //   ).catch((err) => {
+  //     console.log("Api call error");
+  //   })
 
+  // }
+  // func();
+  var list_href = [];
+  const func = async (name) => {
+    await storage().ref('type_book/' + name).getDownloadURL().then(x => {
+      list_href.push(x);
+      if (name == 'manga.jpg'){
+        setImageUrl(list_href);
+      }
+      console.log(list_href);
+    }).catch(err => {
+      console.log(err)
+    });
+  }
+  // func('type_book/giao_trinh.jpg')
+  const getBookTypeImage = () => {
+    
+      let listName = ['giao_trinh.jpg', 'bai_tap.jpg', 'tham_khao.jpg', 'manga.jpg'];
+      console.log('aloooo')
+      for (var i  = 0 ; i < 4 ; i ++ ){
+        func(listName[i])
+      }
+      console.log(list_href)
+      
+      
+  }
+  useEffect(() => {
+    if (imageUrl[0] == undefined){
+      // getBookTypeImage();
+      func('giao_trinh.jpg')
+      func('bai_tap.jpg')
+      func('tham_khao.jpg')
+      func('manga.jpg')
+    }
+  }, [])
+  // firestore()
+  //   .collection('Users')
+  //   // Filter results
+  //   .get()
+  //   .then(querySnapshot => {
+  //     /* ... */
+  //     console.log(querySnapshot.docs)
+  //     querySnapshot.forEach(documentSnapshot => {
+  //       console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
+  //     });
+  //   });
+
+  // firestore()
+  // .collection('Users')
+  // .add({
+  //   name: 'Ada Lovelace',
+  //   age: 30,
+  // })
+  // .then(() => {
+  //   console.log('User added!');
+  // });
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Hold on!", "Bạn có muốn thoát ứng dụng", [
+        {
+          text: "Không",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "Có", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  return (
+    <SafeAreaView style={styles.homeScreen}>
+
+      <View style={styles.header}>
+        <TextInput
+          autoCapitalize='none'
+          autoCorrect={false}
+          clearButtonMode='always'
+          value={query}
+          onChangeText={(queryText) => handleSearch(queryText)}
+          placeholder='Tìm kiếm...'
+          style={styles.searchbar}
+        />
+      </View>
       <View style={styles.body}>
         <View style={styles.appName}>
           <Text style={styles.appname}>tinBK</Text>
@@ -90,41 +184,41 @@ const Home = () => {
         <View style={styles.category}>
           <TouchableOpacity style={styles.booktype}>
             <View>
-              <Image 
-                source={require('../assets/hakyu.jpg')}
+              <Image
+                source={{ uri: imageUrl[0] }}
                 style={styles.categoryImages}
                 resizeMode='contain'
-                />
+              />
               <Text style={styles.typename}>Giáo trình</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.booktype}>
             <View>
-              <Image 
-                source={require('../assets/hakyu.jpg')}
+              <Image
+                source={{ uri: imageUrl[1] }}
                 style={styles.categoryImages}
                 resizeMode='contain'
-                />
+              />
               <Text style={styles.typename}>Bài tập</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.booktype}>
             <View>
-              <Image 
-                source={require('../assets/hakyu.jpg')}
+              <Image
+                source={{ uri: imageUrl[2] }}
                 style={styles.categoryImages}
                 resizeMode='contain'
-                />
+              />
               <Text style={styles.typename}>Tham khảo</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.booktype}>
             <View>
-              <Image 
-                source={require('../assets/hakyu.jpg')}
+              <Image
+                source={{ uri: imageUrl[3] }}
                 style={styles.categoryImages}
                 resizeMode='contain'
-                />
+              />
               <Text style={styles.typename}>Truyện</Text>
             </View>
           </TouchableOpacity>
@@ -132,11 +226,11 @@ const Home = () => {
 
         <View style={styles.productlist}>
           <View style={styles.productlistHeader}>
-            <Text style={[styles.typename, {fontSize: 15}]}>Sản phẩm mới</Text>
+            <Text style={[styles.typename, { fontSize: 15 }]}>Sản phẩm mới</Text>
             <TouchableOpacity>
               <View style={styles.allProduct}>
-                <Text style={[styles.typename, {fontSize: 15}]}>Tất cả</Text>
-                <FontAwesome5 name='angle-right' size={24} color='#000000'/>
+                <Text style={[styles.typename, { fontSize: 15 }]}>Tất cả</Text>
+                <FontAwesome5 name='angle-right' size={24} color='#000000' />
               </View>
             </TouchableOpacity>
           </View>
@@ -150,8 +244,8 @@ const Home = () => {
           </View>
         </View>
       </View>
-   </SafeAreaView>
-   )
+    </SafeAreaView>
+  )
 }
 const styles = StyleSheet.create({
   homeScreen: {
@@ -172,7 +266,7 @@ const styles = StyleSheet.create({
     width: '88%',
     borderRadius: 17,
     fontSize: 15,
-    
+
   },
   body: {
     backgroundColor: '#EEEEEE'
@@ -212,7 +306,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   productlist: {
-    height: Dimensions.get('window').height-335,
+    height: Dimensions.get('window').height - 335,
     marginTop: 5,
     backgroundColor: '#FFFFFF',
   },
