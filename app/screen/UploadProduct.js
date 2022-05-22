@@ -84,6 +84,7 @@ export default function UploadProduct() {
     } else if (bookStatus == '') {
       showToast('Bạn chưa chọn trạng thái sách');
     } else {
+      uploadImage();
       let img = image.split("/");
       firestore()
         .collection('Books')
@@ -98,7 +99,6 @@ export default function UploadProduct() {
           image: img[img.length - 1],
           seller: auth().currentUser.uid,
         });
-
       setModalVisible(true);
     }
   };
@@ -288,7 +288,6 @@ export default function UploadProduct() {
               <Pressable
                 style={styles.button}
                 onPress={() => {
-                  uploadImage();
                   handleUploadProduct();
                 }}>
                 <Text style={styles.textbutton}>Xác nhận</Text>
