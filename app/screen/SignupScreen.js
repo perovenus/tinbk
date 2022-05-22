@@ -140,7 +140,7 @@ export default function SignupScreen() {
       <View style={styles.userInfoContainer}>
         <Text
           style={{
-            fontSize: 36,
+            fontSize: 28,
             color: '#2F80ED',
             marginLeft: 30,
             fontWeight: 'bold',
@@ -156,7 +156,7 @@ export default function SignupScreen() {
           >
             <View style={[styles.input, { width: '45%' }]}>
               <Text style={{
-                fontSize: 22,
+                fontSize: 18,
                 color: '#2F80ED'
               }}>
                 Họ và tên đệm
@@ -169,7 +169,7 @@ export default function SignupScreen() {
             </View>
             <View style={[styles.input, { width: '45%' }]}>
               <Text style={{
-                fontSize: 22,
+                fontSize: 18,
                 color: '#2F80ED'
               }}>
                 Tên
@@ -183,7 +183,7 @@ export default function SignupScreen() {
           </View>
           <View style={styles.input}>
             <Text style={{
-              fontSize: 22,
+              fontSize: 18,
               color: '#2F80ED'
             }}>
               Email
@@ -196,7 +196,7 @@ export default function SignupScreen() {
           </View>
           <View style={styles.input}>
             <Text style={{
-              fontSize: 22,
+              fontSize: 18,
               color: '#2F80ED'
             }}>
               Mật khẩu
@@ -209,7 +209,7 @@ export default function SignupScreen() {
           </View>
           <View style={styles.input}>
             <Text style={{
-              fontSize: 22,
+              fontSize: 18,
               color: '#2F80ED'
             }}>
               Nhập lại mật khẩu
@@ -230,7 +230,7 @@ export default function SignupScreen() {
               onValueChange={(newValue) => handaleMaleCheckBox(newValue)}
             />
             <Text style={{
-              fontSize: 22,
+              fontSize: 18,
               color: '#2F80ED',
               fontWeight: 'bold'
             }}
@@ -246,7 +246,7 @@ export default function SignupScreen() {
               onValueChange={(newValue) => handleFemaleCheckBox(newValue)}
             />
             <Text style={{
-              fontSize: 22,
+              fontSize: 18,
               color: '#2F80ED',
               fontWeight: 'bold'
             }}
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
   signinButton: {
     marginLeft: 20,
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
     bottom: 50
   },
   gobackButton: {

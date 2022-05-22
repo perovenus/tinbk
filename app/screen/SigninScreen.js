@@ -78,7 +78,7 @@ export default function SigninScreen() {
       <View style={styles.accountInfoContainer}>
         <Text
           style={{
-            fontSize: 36,
+            fontSize: 28,
             color: '#2F80ED',
             marginLeft: 50,
             fontWeight: 'bold',
@@ -88,7 +88,7 @@ export default function SigninScreen() {
         <View style={styles.accountInfo}>
           <Text
             style={{
-              fontSize: 22,
+              fontSize: 18,
               color: '#2F80ED',
             }}>
             Email
@@ -104,7 +104,7 @@ export default function SigninScreen() {
               marginTop: 30,
               fontSize: 15,
               color: '#2F80ED',
-              fontSize: 22,
+              fontSize: 18,
             }}>
             Mật khẩu
           </Text>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginTop: 25,
     marginRight: 60,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   signinWith: {
@@ -245,6 +245,6 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
   },
 });
