@@ -143,7 +143,7 @@ export default function SigninScreen() {
         <Text style={{fontSize: 24, color: 'white'}}>Đăng nhập</Text>
       </TouchableOpacity>
       <View style={styles.signup}>
-        <Text style={styles.signupButton}>Chưa có tài khoản? </Text>
+        <Text style={styles.signupButton}>Chưa có tài khoản?  </Text>
         <TouchableOpacity onPress={goToSignupScreen}>
           <Text
             style={[
