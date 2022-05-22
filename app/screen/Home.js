@@ -58,82 +58,74 @@ const DATA = [
 ]
 
 const Home = () => {
-  let currUid = auth().currentUser.uid;
-
-  const renderItem = ({ item }) => (
-    <ItemInHome item={item} />
-  );
-
-  const [query, setQuery] = useState('')
-
-  const handleSearch = (text) => {
-    setQuery(text)
-  }
-  const [imageUrl, setImageUrl] = useState([]);
-  let list_href = [];
-  const func = async (name) => {
-    await storage().ref('type_book/' + name).getDownloadURL().then(x => {
-      list_href.push(x);
-      return () => {}
-    }).catch(err => {
-      console.log(err)
-    });
-  }
-  useEffect( async() => {
-    await func('giao_trinh.jpg')
-    await func('bai_tap.jpg')
-    await func('tham_khao.jpg')
-    await func('manga.jpg')
-    await setImageUrl(list_href);
-  }, [])
-
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert("Hold on!", "Bạn có muốn thoát ứng dụng", [
-        {
-          text: "Không",
-          onPress: () => null,
-          style: "cancel"
-        },
-        { text: "Có", onPress: () => BackHandler.exitApp() }
-      ]);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
+    let currUid = auth().currentUser.uid;
+    let temp_data = []
+    const [datalist, setDatalist] = useState([]);
+    const renderItem = ({ item }) => (
+      <ItemInHome item={item} />
     );
-
-    return () => backHandler.remove();
-  }, []);
-
-  const [booksData, setBooksData] = useState([])
-
-  // useEffect(() => {
-  //   const subscriber = firestore()
-  //     .collection('Books')
-  //     .onSnapshot(querySnapshot => {
-  //       // setBooksData(querySnapshot.data());
-  //       console.log(querySnapshot)
-  //     });
-
-  //   // Stop listening for updates when no longer required
-  //   return () => subscriber();
-  // }, []);
-
-  firestore()
-  .collection('Books')
-  .get()
-  .then(querySnapshot => {
-    console.log('Total users: ', querySnapshot);
-
-    querySnapshot.forEach(documentSnapshot => {
-      console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
-    });
-  });
-
-  console.log(booksData)
+  
+    const [query, setQuery] = useState('')
+  
+    const handleSearch = (text) => {
+      setQuery(text)
+    }
+    const [imageUrl, setImageUrl] = useState([]);
+    let list_href = [];
+    const func = async (name) => {
+      await storage().ref('type_book/' + name).getDownloadURL().then(x => {
+        list_href.push(x);
+  
+        return () => { }
+      }).catch(err => {
+      });
+    }
+    useEffect(async () => {
+      await func('giao_trinh.jpg')
+      await func('bai_tap.jpg')
+      await func('tham_khao.jpg')
+      await func('manga.jpg')
+      await setImageUrl(list_href);
+    }, [])
+  
+    useEffect(() => {
+      firestore()
+      .collection('Books')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          let temp = documentSnapshot.data();
+          temp_data.push(temp)
+        });
+  
+        if (datalist.length == 0){
+          setDatalist(temp_data)
+        }
+        console.log(temp_data)
+      });
+      return () => temp_data
+    })
+  
+    useEffect(() => {
+      const backAction = () => {
+        Alert.alert("Hold on!", "Bạn có muốn thoát ứng dụng", [
+          {
+            text: "Không",
+            onPress: () => null,
+            style: "cancel"
+          },
+          { text: "Có", onPress: () => BackHandler.exitApp() }
+        ]);
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+  
+      return () => backHandler.remove();
+    }, []);
   return (
     <SafeAreaView style={styles.homeScreen}>
 
