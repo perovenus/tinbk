@@ -154,7 +154,7 @@ export default function SignupScreen() {
               justifyContent: 'space-between'
             }}
           >
-            <View style={[styles.input, { width: '45%' }]}>
+            <View style={[styles.input, { width: '60%' }]}>
               <Text style={{
                 fontSize: 18,
                 color: '#2F80ED'
@@ -167,7 +167,7 @@ export default function SignupScreen() {
                 onChangeText={(text) => setMiddleName(text)}
               />
             </View>
-            <View style={[styles.input, { width: '45%' }]}>
+            <View style={[styles.input, { width: '30%' }]}>
               <Text style={{
                 fontSize: 18,
                 color: '#2F80ED'
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   userInfo: {
-    marginHorizontal: 30,
+    marginHorizontal: 40,
     marginTop: 20,
   },
   input: {
@@ -330,11 +330,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signinWith: {
-    marginLeft: 30,
+    marginLeft: 40,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: 110,
-    bottom: '30%',
+    width: 120,
+    bottom: '15%',
   },
   googleImage: {
     width: 30,
@@ -347,7 +347,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: 'white',
-    marginLeft: 30,
   },
   elevation: {
     elevation: 20,
@@ -363,20 +362,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    marginRight: 40,
-    bottom: 80,
+    marginRight: '4%',
+    bottom: '8%',
   },
   signin: {
     marginLeft: 20,
     flexDirection: 'row',
     width: 210,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    bottom: '10%',
   },
   signinButton: {
-    marginLeft: 20,
+    marginLeft: '5%',
     color: 'white',
     fontSize: 16,
-    bottom: 50
   },
   gobackButton: {
     position: 'absolute',

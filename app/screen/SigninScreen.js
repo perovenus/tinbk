@@ -80,7 +80,7 @@ export default function SigninScreen() {
           style={{
             fontSize: 28,
             color: '#2F80ED',
-            marginLeft: 50,
+            marginLeft: 30,
             fontWeight: 'bold',
           }}>
           Đăng nhập
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     top: '30%',
   },
   accountInfo: {
-    marginHorizontal: 60,
+    marginHorizontal: 40,
     marginTop: 30,
     // height: 155,
     // backgroundColor: 'red'
@@ -194,17 +194,17 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     alignSelf: 'flex-end',
-    marginTop: 25,
-    marginRight: 60,
+    marginTop: 20,
+    marginRight: 40,
     fontSize: 16,
     fontWeight: 'bold',
   },
   signinWith: {
-    marginLeft: 30,
+    marginLeft: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 110,
-    bottom: '30%',
+    bottom: '20%',
   },
   googleImage: {
     width: 30,
@@ -233,13 +233,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    marginRight: 40,
-    bottom: 80,
+    marginRight: '4%',
+    bottom: '8%',
   },
   signup: {
-    marginHorizontal: 50,
+    marginLeft: '5%',
     flexDirection: 'row',
-    bottom: 70,
+    bottom: '10%',
     width: 210,
     justifyContent: 'space-between',
   },
