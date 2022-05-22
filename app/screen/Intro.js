@@ -38,6 +38,7 @@ export default function IntroductionScreen() {
       goToSigninScreen()
     }
   }
+  
   return (
     <ImageBackground
       style={styles.background}

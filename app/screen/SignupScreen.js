@@ -95,9 +95,11 @@ export default function SignupScreen() {
               .collection('Users')
               .doc(user.uid)
               .set({
-                middlename: middleName,
+                middleName: middleName,
                 firstName: firstName,
                 gender : male == true ? 'Male' : 'Female',
+                phoneNumber: '',
+                birthday: '',
                 address: ''
               })
               .then(() => {

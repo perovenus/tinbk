@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   Modal,
@@ -12,7 +12,30 @@ import {
   TouchableOpacity
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-const Editmodal = (modalVisible, setModalVisible) => {
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
+const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
+
+  const [middleName, setMiddleName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [gender, setGender] = useState('')
+  const [birthday, setBirthday] = useState('')
+  const [address, setAddress] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  
+  const handleSubmit = () => {
+    firestore().collection('Users').doc(user.uid).update({
+      middleName: middleName,
+      firstName: firstName,
+      gender: gender,
+      birthday: birthday,
+      phoneNumber: phoneNumber,
+      address: address
+    })
+    .then(() => setModalVisible(!modalVisible))
+  }
+
   return (
     <Modal
       animationType="fade"
@@ -45,42 +68,62 @@ const Editmodal = (modalVisible, setModalVisible) => {
             </TouchableOpacity>
           </View>
           <View style={styles.container}>
+            <Text style={styles.textstyle}>Họ tên đệm</Text>
+            <TextInput
+              style={styles.inputText}
+              placeholder={userInfo['middleName']}
+              onChangeText={(text) => setMiddleName(text)}
+            />
+          </View>
+          <View style={styles.container}>
             <Text style={styles.textstyle}>Tên</Text>
-            <TextInput style={styles.inputText}/>
+            <TextInput 
+              style={styles.inputText}
+              placeholder={userInfo['firstName']}
+              onChangeText={(text) => setFirstName(text)}
+            />
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Giới tính</Text>
-            <TextInput style={styles.inputText}/>
+            <TextInput 
+              style={styles.inputText}
+              placeholder={userInfo['gender']}
+              onChangeText={(text) => setGender(text)}
+            />
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Ngày sinh</Text>
-            <TextInput style={styles.inputText}/>
-          </View>
-          <View style={styles.container}>
-            <Text style={styles.textstyle}>Email</Text>
-            <TextInput style={styles.inputText}/>
+            <TextInput 
+              style={styles.inputText}
+              placeholder={userInfo['birthday']}
+              onChangeText={(text) => setBirthday(text)}
+              keyboardType='name-phone-pad'
+            />
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Điện thoại</Text>
-            <TextInput style={styles.inputText}/>
+            <TextInput 
+              style={styles.inputText}
+              placeholder={userInfo['phoneNumber']}
+              onChangeText={(text) => {setPhoneNumber(text)}}
+              keyboardType='numeric'
+            />
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Địa chỉ</Text>
-            <TextInput style={styles.inputText}/>
+            <TextInput 
+              style={styles.inputText}
+              placeholder={userInfo['address']}
+              onChangeText={(text) => setAddress(text)}
+            />
           </View>
 
           <TouchableOpacity 
             style={styles.confirmButton}
-            onPress={() => setModalVisible(!modalVisible)}
+            onPress={handleSubmit}
           >
             <Text style={[styles.textstyle, {color: 'white'}]}>Xác nhận</Text>
           </TouchableOpacity>
-
-          {/* <Pressable
-            style={styles.confirmButton}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={[styles.textstyle, {color: 'white'}]}>Xác nhận</Text>
-          </Pressable> */}
         </View>
       </View>
     </Modal>
