@@ -23,7 +23,7 @@ const ItemInHome = ({item}) => {
             style={styles.image}
           />
           <View style={styles.details}>
-            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.name}>{item.bookName}</Text>
             <Text style={styles.price}>{item.price}</Text>
           </View>
         </View>
