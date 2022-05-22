@@ -143,6 +143,7 @@ export default function SignupScreen() {
             fontSize: 36,
             color: '#2F80ED',
             marginLeft: 30,
+            fontWeight: 'bold',
           }}>
           Đăng ký
         </Text>
