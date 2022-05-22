@@ -31,7 +31,7 @@ export default function GetOTPScreen() {
         <Text
           style={{
             marginTop: 80,
-            fontSize: 36,
+            fontSize: 28,
             color: '#2F80ED',
             marginLeft: 30,
             fontWeight: 'bold',
@@ -41,7 +41,7 @@ export default function GetOTPScreen() {
         <View style={styles.accountInfo}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 18,
               color: '#2F80ED',
             }}>
             Hãy nhập Email mà bạn dùng để đăng ký tài khoản trước đó
@@ -50,7 +50,7 @@ export default function GetOTPScreen() {
         </View>
         <TouchableOpacity onPress={goToConfirmOTPScreen}>
           <View style={[styles.loginButton, styles.elevation]}>
-            <Text style={{fontSize: 24, color: 'white'}}>Nhận mã OTP</Text>
+            <Text style={{fontSize: 20, color: 'white'}}>Nhận mã OTP</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 35,
-    width: 180,
+    width: 160,
     height: 60,
     borderWidth: 1,
     borderRadius: 8,
