@@ -52,13 +52,26 @@ export default function UploadProduct() {
   const [bookRegion, setBookRegion] = useState('');
   const [bookStatus, setBookStatus] = useState('');
 
+  const uploadImage = async () => {
+    let img = image.split('/');
+    const reference = storage().ref(
+      `book_image/${auth().currentUser.uid}/${img[img.length - 1]}`,
+    );
+    await reference.putFile(image);
+  };
+
   const handleUploadProduct = () => {
     if (!image) {
       showToast('Bạn chưa chọn ảnh sách');
     } else if (bookName == '' || bookName.length < 5 || bookName.length > 50) {
       bookNameRef.current.focus();
       showToast('Tên sách không hợp lệ');
-    } else if (quantity == '' || quantity == '0' || quantity < 1 || quantity > 100) {
+    } else if (
+      quantity == '' ||
+      quantity == '0' ||
+      quantity < 1 ||
+      quantity > 100
+    ) {
       quantityRef.current.focus();
       showToast('Số lượng không hợp lệ');
     } else if (price == '' || price < 0 || price > 10000000) {
@@ -71,17 +84,20 @@ export default function UploadProduct() {
     } else if (bookStatus == '') {
       showToast('Bạn chưa chọn trạng thái sách');
     } else {
-      firestore().collection('Books').add({
-        bookName: bookName,
-        quantity: parseInt(quantity),
-        price: parseInt(price),
-        description: description,
-        bookType: bookType,
-        bookRegion: bookRegion,
-        bookStatus: bookStatus,
-        image: image,
-        seller: auth().currentUser.uid,
-      });
+      let img = image.split("/");
+      firestore()
+        .collection('Books')
+        .add({
+          bookName: bookName,
+          quantity: parseInt(quantity),
+          price: parseInt(price),
+          description: description,
+          bookType: bookType,
+          bookRegion: bookRegion,
+          bookStatus: bookStatus,
+          image: img[img.length - 1],
+          seller: auth().currentUser.uid,
+        });
 
       setModalVisible(true);
     }
@@ -272,6 +288,7 @@ export default function UploadProduct() {
               <Pressable
                 style={styles.button}
                 onPress={() => {
+                  uploadImage();
                   handleUploadProduct();
                 }}>
                 <Text style={styles.textbutton}>Xác nhận</Text>
