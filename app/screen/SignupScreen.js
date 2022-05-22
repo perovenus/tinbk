@@ -124,6 +124,7 @@ export default function SignupScreen() {
   }
 
   return (
+    <>
     <ImageBackground
       style={styles.background}
       source={require('../assets/signup-background.jpg')}
@@ -255,18 +256,18 @@ export default function SignupScreen() {
             </Text>
           </View>
         </View>
-      </View>
-      <View style={styles.signinWith}>
-        <View style={[styles.singinWithButton, styles.elevation]}>
-          <Image
-            style={styles.googleImage}
-            source={require('../assets/google.png')} />
+        <View style={styles.signinWith}>
+          <View style={[styles.singinWithButton, styles.elevation]}>
+            <Image
+              style={styles.googleImage}
+              source={require('../assets/google.png')} />
+          </View>
+          <View style={[styles.singinWithButton, styles.elevation]}>
+            <FontAwesome5 name='facebook-square' size={30} color='#395185' />
+          </View>
         </View>
-        <View style={[styles.singinWithButton, styles.elevation]}>
-          <FontAwesome5 name='facebook-square' size={30} color='#395185' />
-        </View>
       </View>
-      <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
+      {/* <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
         <Text style={{ fontSize: 24, color: 'white' }}>Đăng ký</Text>
       </TouchableOpacity>
       <View style={styles.signin}>
@@ -283,8 +284,27 @@ export default function SignupScreen() {
             Đăng nhập
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </ImageBackground>
+      <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
+        <Text style={{fontSize: 24, color: 'white'}}>Đăng ký</Text>
+      </TouchableOpacity>
+      <View style={styles.signin}>
+        <Text style={styles.signinButton}>Đã có tài khoản?</Text>
+        <TouchableOpacity onPress={goToSigninScreen}>
+          <Text
+            style={[
+              styles.signinButton,
+              {
+                textDecorationLine: 'underline',
+                fontWeight: 'bold'
+              }
+            ]}>
+            Đăng nhập
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </>
   )
 }
 
@@ -292,11 +312,9 @@ const styles = StyleSheet.create({
   background: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    justifyContent: 'flex-end'
+    justifyContent: 'center',
   },
   userInfoContainer: {
-    position: 'absolute',
-    top: '15%',
     width: '100%',
   },
   userInfo: {
@@ -334,7 +352,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 120,
-    bottom: '15%',
+    marginTop: 25,
+    // bottom: '15%',
   },
   googleImage: {
     width: 30,
@@ -361,19 +380,20 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    top: '85%',
+    right: '5%',
     alignSelf: 'flex-end',
-    marginRight: '4%',
-    bottom: '8%',
   },
   signin: {
-    marginLeft: 20,
     flexDirection: 'row',
     width: 210,
+    position: 'absolute',
     justifyContent: 'space-between',
-    bottom: '10%',
+    top: '95%',
+    left: '5%'
   },
   signinButton: {
-    marginLeft: '5%',
     color: 'white',
     fontSize: 16,
   },
