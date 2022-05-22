@@ -39,9 +39,6 @@ export default function UploadProduct() {
   const quantityRef = useRef(null);
   const priceRef = useRef(null);
   const descriptionRef = useRef(null);
-  const bookTypeRef = useRef(null);
-  const bookRegionRef = useRef(null);
-  const bookStatusRef = useRef(null);
 
   const [image, setImage] = useState(null);
   const [bookName, setBookName] = useState('');
@@ -120,7 +117,6 @@ export default function UploadProduct() {
     if (!result.cancelled) {
       setImage(result.assets[0].uri);
     }
-    console.log(image);
   };
 
   return (
