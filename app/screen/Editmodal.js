@@ -26,11 +26,11 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
   
   const handleSubmit = () => {
     firestore().collection('Users').doc(user.uid).update({
-      middleName: middleName,
-      firstName: firstName,
-      birthday: birthday,
-      phoneNumber: phoneNumber,
-      address: address
+      middleName: middleName == '' ? userInfo['middleName'] : middleName,
+      firstName: firstName == '' ? userInfo['firstName'] : firstName,
+      birthday: birthday == '' ? userInfo['birthday'] : birthday,
+      phoneNumber: phoneNumber == '' ? userInfo['phoneNumber'] : phoneNumber,
+      address: address == '' ? userInfo['address'] : address
     })
     .then(() => setModalVisible(!modalVisible))
   }
