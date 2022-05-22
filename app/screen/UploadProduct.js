@@ -20,6 +20,7 @@ import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import {utils} from '@react-native-firebase/app';
 
 export default function UploadProduct() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -70,11 +71,6 @@ export default function UploadProduct() {
     } else if (bookStatus == '') {
       showToast('Bạn chưa chọn trạng thái sách');
     } else {
-      //upload form database to firebase
-      const reference = storage().ref(`images/${image.fileName}`);
-      //upload refrence to firebase
-      console.log(reference);
-
       firestore().collection('Books').add({
         bookName: bookName,
         quantity: quantity,
@@ -105,12 +101,14 @@ export default function UploadProduct() {
   //pick photo
   const pickImage = async () => {
     let result = await launchImageLibrary();
-    console.log(result);
     if (!result.cancelled) {
       setImage(result.assets[0].uri);
     }
+    console.log(image);
   };
-  // console.log(image);
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -121,7 +119,7 @@ export default function UploadProduct() {
           {!image && (
             <Image
               style={styles.image}
-              source={require('../assets/chair.jpg')}
+              source={require('../assets/grey.jpg')}
             />
           )}
           {image && <Image style={styles.image} source={{uri: image}} />}
@@ -175,7 +173,6 @@ export default function UploadProduct() {
                 }}
                 data={domoi}
                 onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
                   setBookStatus(selectedItem);
                 }}
                 renderDropdownIcon={dropdownIcon}
@@ -195,7 +192,6 @@ export default function UploadProduct() {
                 dropdownStyle={styles.dropdown}
                 data={theloai}
                 onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
                   setBookType(selectedItem);
                 }}
                 renderDropdownIcon={dropdownIcon}
@@ -215,7 +211,6 @@ export default function UploadProduct() {
                 dropdownStyle={styles.dropdown}
                 data={khuvuc}
                 onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index);
                   setBookRegion(selectedItem);
                 }}
                 renderDropdownIcon={dropdownIcon}
@@ -266,7 +261,9 @@ export default function UploadProduct() {
               </Modal>
               <Pressable
                 style={styles.button}
-                onPress={() => handleUploadProduct()}>
+                onPress={() => {
+                  handleUploadProduct();
+                }}>
                 <Text style={styles.textbutton}>Xác nhận</Text>
               </Pressable>
               <View style={{height: 70}}></View>
