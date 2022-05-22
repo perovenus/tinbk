@@ -89,10 +89,9 @@ const Home = () => {
     }, [])
   
     useEffect(() => {
-      firestore()
+      const subscriber = firestore()
       .collection('Books')
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           temp_data.push(temp)
@@ -100,11 +99,12 @@ const Home = () => {
   
         if (datalist.length == 0){
           setDatalist(temp_data)
+          temp_data = []
         }
         console.log(temp_data)
       });
-      return () => temp_data
-    })
+      return () => subscriber();
+    }, [])
   
     useEffect(() => {
       const backAction = () => {
@@ -201,7 +201,7 @@ const Home = () => {
           <View styles={styles.productlistContainer}>
             <FlatList
               numColumns={2}
-              data={DATA}
+              data={datalist}
               renderItem={renderItem}
               keyExtractor={item => item.id}
             />
