@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     backgroundColor: 'white',
-    marginHorizontal: 30,
+    marginLeft: 30,
   },
   elevation: {
     elevation: 20,
