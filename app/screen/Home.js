@@ -74,11 +74,6 @@ const Home = () => {
   const func = async (name) => {
     await storage().ref('type_book/' + name).getDownloadURL().then(x => {
       list_href.push(x);
-      // if (name == 'manga.jpg')
-      // {
-      //   setImageUrl(list_href);
-      // }
-      console.log(list_href);
       return () => {}
     }).catch(err => {
       console.log(err)
@@ -92,27 +87,6 @@ const Home = () => {
     await setImageUrl(list_href);
   }, [])
 
-  // firestore()
-  //   .collection('Users')
-  //   // Filter results
-  //   .get()
-  //   .then(querySnapshot => {
-  //     /* ... */
-  //     console.log(querySnapshot.docs)
-  //     querySnapshot.forEach(documentSnapshot => {
-  //       console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
-  //     });
-  //   });
-
-  // firestore()
-  // .collection('Users')
-  // .add({
-  //   name: 'Ada Lovelace',
-  //   age: 30,
-  // })
-  // .then(() => {
-  //   console.log('User added!');
-  // });
   useEffect(() => {
     const backAction = () => {
       Alert.alert("Hold on!", "Bạn có muốn thoát ứng dụng", [
@@ -134,6 +108,32 @@ const Home = () => {
     return () => backHandler.remove();
   }, []);
 
+  const [booksData, setBooksData] = useState([])
+
+  // useEffect(() => {
+  //   const subscriber = firestore()
+  //     .collection('Books')
+  //     .onSnapshot(querySnapshot => {
+  //       // setBooksData(querySnapshot.data());
+  //       console.log(querySnapshot)
+  //     });
+
+  //   // Stop listening for updates when no longer required
+  //   return () => subscriber();
+  // }, []);
+
+  firestore()
+  .collection('Books')
+  .get()
+  .then(querySnapshot => {
+    console.log('Total users: ', querySnapshot);
+
+    querySnapshot.forEach(documentSnapshot => {
+      console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
+    });
+  });
+
+  console.log(booksData)
   return (
     <SafeAreaView style={styles.homeScreen}>
 

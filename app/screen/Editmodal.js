@@ -12,6 +12,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import CheckBox from '@react-native-community/checkbox';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -19,7 +20,6 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
 
   const [middleName, setMiddleName] = useState('')
   const [firstName, setFirstName] = useState('')
-  const [gender, setGender] = useState('')
   const [birthday, setBirthday] = useState('')
   const [address, setAddress] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -28,7 +28,6 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
     firestore().collection('Users').doc(user.uid).update({
       middleName: middleName,
       firstName: firstName,
-      gender: gender,
       birthday: birthday,
       phoneNumber: phoneNumber,
       address: address
@@ -84,21 +83,13 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
             />
           </View>
           <View style={styles.container}>
-            <Text style={styles.textstyle}>Giới tính</Text>
-            <TextInput 
-              style={styles.inputText}
-              placeholder={userInfo['gender']}
-              onChangeText={(text) => setGender(text)}
-            />
-          </View>
-          <View style={styles.container}>
             <Text style={styles.textstyle}>Ngày sinh</Text>
             <TextInput 
               style={styles.inputText}
               placeholder={userInfo['birthday']}
               onChangeText={(text) => setBirthday(text)}
               keyboardType='name-phone-pad'
-            />
+            />            
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Điện thoại</Text>
@@ -153,7 +144,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: Dimensions.get('window').width,
-    height: 475,
+    height: 425,
   },
   closeButton: {
     position: 'absolute',
@@ -187,11 +178,6 @@ const styles = StyleSheet.create({
     width: 130,
     alignItems: 'center'
   },
-  // textStyle: {
-  //   color: 'white',
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  // },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',

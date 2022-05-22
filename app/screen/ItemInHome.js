@@ -39,11 +39,13 @@ export default ItemInHome;
 
 const styles = StyleSheet.create({
   itemInHome: {
-    width: 165,
-    height: 200,
+    width: '44%',
+    height: Dimensions.get('window').height*0.25,
+    minHeight: 200,
     borderRadius: 10,
     elevation: 1, 
-    marginLeft: (Dimensions.get('window').width - 165*2) / 3,
+    // marginLeft: (Dimensions.get('window').width - 165*2) / 3,
+    marginLeft: '4%',
     marginVertical: 5,
   },
   container: {

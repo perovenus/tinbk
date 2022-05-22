@@ -12,7 +12,6 @@ import {
 import {Actions} from 'react-native-router-flux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Tabs from './Tabs';
 import Editmodal from './Editmodal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -38,7 +37,7 @@ const UserInfo = () => {
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [user.uid]);
-
+  
   return (
     <SafeAreaView style={styles.userinfoscreen}>
       <View style={styles.appbar}>
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
   userinfoscreen:{
     // flex: 1,
     backgroundColor: '#FFFFFF',
-    height: Dimensions.get('window').height - 90,
+    height: Dimensions.get('window').height - 70,
   },
   appbar: {
     backgroundColor: 'rgba(47,128,237,0.76)',
@@ -166,14 +165,13 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
   },
   body:{
-    
   },
   container: {
     height: '100%',
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     flexDirection: 'row',
     paddingHorizontal: 16,
   },
@@ -185,8 +183,8 @@ const styles = StyleSheet.create({
     borderColor: '#BBCEE7'
   },
   info: {
-    padding: 20,
     height: 160,
+    justifyContent: 'center',
   },
   infoText: {
     fontSize: 16,
