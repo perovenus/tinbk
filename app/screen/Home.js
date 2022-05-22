@@ -9,7 +9,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  Dimensions,BackHandler, Alert 
+  Dimensions, BackHandler, Alert
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ItemInHome from './ItemInHome';
@@ -70,56 +70,28 @@ const Home = () => {
     setQuery(text)
   }
   const [imageUrl, setImageUrl] = useState([]);
-  // const func = async () => {
-  //   console.log('aloooooooooooooooooooooooooo')
-  //   const ref = storage().ref('hakyu.jpg');
-  //   console.log('aloooooooooooooooooooooooooo111111111111111111111111111111')
-
-  //   await ref.getDownloadURL().then(
-  //     url => {
-  //       console.log('aloooooooooooooooooooooooo22222222222222222222222222')
-
-  //       setImageUrl(url);
-  //     }
-  //   ).catch((err) => {
-  //     console.log("Api call error");
-  //   })
-
-  // }
-  // func();
-  var list_href = [];
+  let list_href = [];
   const func = async (name) => {
     await storage().ref('type_book/' + name).getDownloadURL().then(x => {
       list_href.push(x);
-      if (name == 'manga.jpg'){
-        setImageUrl(list_href);
-      }
+      // if (name == 'manga.jpg')
+      // {
+      //   setImageUrl(list_href);
+      // }
       console.log(list_href);
+      return () => {}
     }).catch(err => {
       console.log(err)
     });
   }
-  // func('type_book/giao_trinh.jpg')
-  const getBookTypeImage = () => {
-    
-      let listName = ['giao_trinh.jpg', 'bai_tap.jpg', 'tham_khao.jpg', 'manga.jpg'];
-      console.log('aloooo')
-      for (var i  = 0 ; i < 4 ; i ++ ){
-        func(listName[i])
-      }
-      console.log(list_href)
-      
-      
-  }
-  useEffect(() => {
-    if (imageUrl[0] == undefined){
-      // getBookTypeImage();
-      func('giao_trinh.jpg')
-      func('bai_tap.jpg')
-      func('tham_khao.jpg')
-      func('manga.jpg')
-    }
+  useEffect( async() => {
+    await func('giao_trinh.jpg')
+    await func('bai_tap.jpg')
+    await func('tham_khao.jpg')
+    await func('manga.jpg')
+    await setImageUrl(list_href);
   }, [])
+
   // firestore()
   //   .collection('Users')
   //   // Filter results
