@@ -55,15 +55,15 @@ export default function UploadProduct() {
   const handleUploadProduct = () => {
     if (!image) {
       showToast('Bạn chưa chọn ảnh sách');
-    } else if (bookName == '') {
+    } else if (bookName == '' || bookName.length < 5 || bookName.length > 50) {
       bookNameRef.current.focus();
-      showToast('Bạn chưa nhập tên sách');
-    } else if (quantity == '' || quantity == '0') {
+      showToast('Tên sách không hợp lệ');
+    } else if (quantity == '' || quantity == '0' || quantity < 1 || quantity > 100) {
       quantityRef.current.focus();
-      showToast('Bạn chưa nhập số lượng sách');
-    } else if (price == '') {
+      showToast('Số lượng không hợp lệ');
+    } else if (price == '' || price < 0 || price > 10000000) {
       priceRef.current.focus();
-      showToast('Bạn chưa nhập giá sách');
+      showToast('Giá không hợp lệ');
     } else if (bookType == '') {
       showToast('Bạn chưa chọn loại sách');
     } else if (bookRegion == '') {
@@ -73,8 +73,8 @@ export default function UploadProduct() {
     } else {
       firestore().collection('Books').add({
         bookName: bookName,
-        quantity: quantity,
-        price: price,
+        quantity: parseInt(quantity),
+        price: parseInt(price),
         description: description,
         bookType: bookType,
         bookRegion: bookRegion,
@@ -107,8 +107,6 @@ export default function UploadProduct() {
     console.log(image);
   };
 
-
-
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -129,40 +127,48 @@ export default function UploadProduct() {
         </View>
         <ScrollView style={styles.scrollview}>
           <View style={styles.form}>
-            <Text style={styles.text}>Tên sách</Text>
+            <Text style={styles.text}>
+              Tên sách <Text style={{color: 'red'}}>*</Text>
+            </Text>
             <TextInput
               ref={bookNameRef}
               style={styles.textinput}
               onChangeText={text => setBookName(text)}
               value={{}}
-              placeholder=""
+              placeholder="Nhập tên sách (5 đến 50 ký tự)"
             />
             <View style={styles.soluongvagia}>
               <View style={styles.soluong}>
-                <Text style={styles.text}>Số lượng</Text>
+                <Text style={styles.text}>
+                  Số lượng <Text style={{color: 'red'}}>*</Text>
+                </Text>
                 <TextInput
                   ref={quantityRef}
                   onChangeText={text => setQuantity(text)}
                   style={styles.textinput}
                   keyboardType="numeric"
                   value={{}}
-                  placeholder=""
+                  placeholder="1 - 100"
                 />
               </View>
               <View style={styles.gia}>
-                <Text style={styles.text}>Giá</Text>
+                <Text style={styles.text}>
+                  Giá <Text style={{color: 'red'}}>*</Text>
+                </Text>
                 <TextInput
                   ref={priceRef}
                   onChangeText={text => setPrice(text)}
                   style={styles.textinput}
                   keyboardType="numeric"
                   value={{}}
-                  placeholder=""
+                  placeholder="0 - 10.000.000"
                 />
               </View>
             </View>
             <View style={styles.domoi}>
-              <Text style={styles.text}>Độ mới</Text>
+              <Text style={styles.text}>
+                Độ mới <Text style={{color: 'red'}}>*</Text>
+              </Text>
               <SelectDropdown
                 buttonStyle={styles.buttondropdown}
                 buttonTextStyle={styles.textdropdown}
@@ -185,7 +191,9 @@ export default function UploadProduct() {
               />
             </View>
             <View style={styles.theloai}>
-              <Text style={styles.text}>Thể loại</Text>
+              <Text style={styles.text}>
+                Thể loại <Text style={{color: 'red'}}>*</Text>
+              </Text>
               <SelectDropdown
                 buttonStyle={styles.buttondropdown}
                 buttonTextStyle={styles.textdropdown}
@@ -204,7 +212,9 @@ export default function UploadProduct() {
               />
             </View>
             <View style={styles.khuvuc}>
-              <Text style={styles.text}>Khu vực</Text>
+              <Text style={styles.text}>
+                Khu vực <Text style={{color: 'red'}}>*</Text>
+              </Text>
               <SelectDropdown
                 buttonStyle={styles.buttondropdown}
                 buttonTextStyle={styles.textdropdown}
