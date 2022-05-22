@@ -306,7 +306,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignContent: 'center',
-    backgroundColor: 'green',
   },
   backgroundImage: {
     position: 'absolute',
@@ -363,7 +362,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 20,
   },
-  soluong: {flex: 2, marginRight: 30},
+  soluong: {flex: 3, marginRight: 30},
   gia: {flex: 5},
   domoi: {
     flexDirection: 'row',

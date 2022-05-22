@@ -1,66 +1,68 @@
-import React from 'react'
-import { 
+import React from 'react';
+import {
   StyleSheet,
-  Text, 
-  View, 
-  TextInput, 
-  TouchableOpacity, 
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
   ImageBackground,
   Dimensions,
-  } from 'react-native'
-import { Actions } from 'react-native-router-flux'
+} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function GetOTPScreen() {
   const goToSigninScreen = () => {
-      Actions.signinScreen()
-  }
+    Actions.signinScreen();
+  };
   const goToConfirmOTPScreen = () => {
-    Actions.confirmOTPScreen()
-  }
+    Actions.confirmOTPScreen();
+  };
   return (
     <ImageBackground
       style={styles.background}
-      source={require('../assets/getotp-background.jpg')}
-    >
+      source={require('../assets/getotp-background.jpg')}>
       <TouchableOpacity onPress={goToSigninScreen} style={styles.gobackButton}>
         <View>
-          <FontAwesome5
-            name='angle-left'
-            color='white'
-            size={28} 
-          />
-        </View>
-      </TouchableOpacity>  
-      <Text 
-        style={{
-          fontSize: 36,
-          color: '#2F80ED',
-          marginLeft: 30,
-        }}>
-        Lấy lại mật khẩu
-      </Text>
-      <View style={styles.accountInfo}>
-        <Text style={{
-          fontSize: 20,
-          color: '#2F80ED'
-        }}>
-          Hãy nhập Email mà bạn dùng để đăng ký tài khoản trước đó
-        </Text>
-        <TextInput style={styles.input} />
-      
-      </View>
-      <TouchableOpacity onPress={goToConfirmOTPScreen}>
-        <View style={[styles.loginButton, styles.elevation]}>
-          <Text style={{fontSize:24, color: 'white'}}>Nhận mã OTP</Text>
+          <FontAwesome5 name="angle-left" color="white" size={28} />
         </View>
       </TouchableOpacity>
+      <View style={styles.container}>
+        <Text
+          style={{
+            marginTop: 80,
+            fontSize: 36,
+            color: '#2F80ED',
+            marginLeft: 30,
+            fontWeight: 'bold',
+          }}>
+          Lấy lại mật khẩu
+        </Text>
+        <View style={styles.accountInfo}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: '#2F80ED',
+            }}>
+            Hãy nhập Email mà bạn dùng để đăng ký tài khoản trước đó
+          </Text>
+          <TextInput style={styles.input} />
+        </View>
+        <TouchableOpacity onPress={goToConfirmOTPScreen}>
+          <View style={[styles.loginButton, styles.elevation]}>
+            <Text style={{fontSize: 24, color: 'white'}}>Nhận mã OTP</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  background: { 
+  container: {
+    marginHorizontal: 10,
+  },
+  background: {
     paddingTop: 150,
     position: 'absolute',
     left: 0,
@@ -68,9 +70,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  accountInfo:{
+  accountInfo: {
     marginHorizontal: 30,
-    marginTop: 35,
+    marginTop: 30,
     height: 125,
   },
   input: {
@@ -80,11 +82,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     borderColor: '#2F80ED',
-    fontSize: 15
+    fontSize: 20,
+    paddingHorizontal:15,
   },
   loginButton: {
     marginTop: 35,
-    width: 160,
+    width: 180,
     height: 60,
     borderWidth: 1,
     borderRadius: 8,
@@ -101,6 +104,6 @@ const styles = StyleSheet.create({
   gobackButton: {
     position: 'absolute',
     marginLeft: 15,
-    marginTop: 21
-  }
-})
+    marginTop: 21,
+  },
+});
