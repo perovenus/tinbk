@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     StyleSheet,
     Text,
@@ -8,21 +8,33 @@ import {
     TouchableOpacity,
     ImageBackground,
     Dimensions,
-    Pressable,
     ScrollView,
-    Button,
     Modal
 } from 'react-native'
 
 import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { ModalProps } from 'react-native-modal';
+import firestore from '@react-native-firebase/firestore';
 import { RadioButton } from 'react-native-paper';
 export default function ProductScreen(item) {
     // const goToSignupScreen = () => {
     //     Actions.signupScreen()
     // }
-    console.log(item)
+    const [user, setUser] = useState({})
+    console.log(item.seller)
+    useEffect(() => {
+        const subscriber = firestore()
+          .collection('Users')
+          .doc(item.seller)
+          .onSnapshot(documentSnapshot => {
+            console.log('User data: ', documentSnapshot.data());
+            setUser(documentSnapshot.data())
+          });
+    
+        // Stop listening for updates when no longer required
+        return () => subscriber();
+      }, [item.seller]);
+    // console.log(item)
     const ProductInfo = {
         'name' : 'Thanh gươm diệt quỷ chap 3345',
         'price' : '30000',
@@ -367,15 +379,24 @@ export default function ProductScreen(item) {
 
                 <View style={styles.SellerInfoBlock}>
                     <View style={styles.avatar}>
-                        <Image
+                        {
+                            user.image ? <Image
                             style={styles.sellerImg}
-                            source={ProductInfo['sellerAvatar']} />
+                            source={{uri : user.image}} />
+                            :
+                            <Image
+                            style={styles.sellerImg}
+                            source={require('../assets/user.png')} />
+                        }
+                        {/* <Image
+                            style={styles.sellerImg}
+                            source={ProductInfo['sellerAvatar']} /> */}
                     </View>
 
                     <View style={styles.SellerInfo}>
-                        <Text style={{ color: 'black' }}>Chủ sở hữu : {item.seller}</Text>
-                        <Text style={{ color: 'black' }}>Số điện thoại : {ProductInfo['phone']}</Text>
-                        <Text style={{ color: 'black' }}>Địa chỉ giao dịch : {ProductInfo['address']}</Text>
+                        <Text style={{ color: 'black' }}>Chủ sở hữu : {user.middleName + ' ' + user.firstName}</Text>
+                        <Text style={{ color: 'black' }}>Số điện thoại : {user.phoneNumber}</Text>
+                        <Text style={{ color: 'black' }}>Địa chỉ giao dịch : {user.address}</Text>
                     </View>
                 </View>
                 <View style={styles.line}></View>
