@@ -300,7 +300,7 @@ const UploadProduct = ({item}) => {
   );
 }
 
-export default ProductScreen;
+export default UploadProduct;
 
 const styles = StyleSheet.create({
   container: {
