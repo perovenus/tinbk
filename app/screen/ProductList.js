@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red'
   },
   container: {
-    height: Dimensions.get('window').height - 154,
+    height: Dimensions.get('window').height - 65,
   },
   detail: {
     marginLeft: 20,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   menubar: {
     height: 65,
-    backgroundColor: 'yellow'
+    // backgroundColor: 'yellow'
   },
   container1: {
     flex: 1,

@@ -11,6 +11,9 @@ import ProductList from './app/screen/ProductList';
  import Tabs from './app/screen/Tabs'
  import { Router, Scene } from 'react-native-router-flux'
  import Toast, { BaseToast } from 'react-native-toast-message';
+ import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
  
  export default function App(props) {
 
@@ -41,6 +44,7 @@ import ProductList from './app/screen/ProductList';
           <Scene key = "signupScreen" component = {SignupScreen} title = "Signup" hideNavBar={true}/>
           <Scene key = "getOTPScreen" component = {GetOTPScreen} title = "GetOTP" hideNavBar={true}/>
           <Scene key = "confirmOTPScreen" component = {ConfirmOTPScreen} title = "ConfirmOTP" hideNavBar={true}/>
+          <Scene key = "ProductList" component = {ProductList} title = "ProductList" hideNavBar={true}/>
           <Scene key = "Tabs" component = {Tabs} title = "Tabs" hideNavBar={true}/>
         </Scene>
       </Router>

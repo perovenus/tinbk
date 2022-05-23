@@ -15,22 +15,41 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CheckBox from '@react-native-community/checkbox';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 
 const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
-
+  const [image, setImage] = useState(null);
+  const pickImage = async () => {
+    let result = await launchImageLibrary();
+    if (!result.cancelled) {
+      setImage(result.assets[0].uri);
+    }
+  };
   const [middleName, setMiddleName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [birthday, setBirthday] = useState('')
   const [address, setAddress] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   
-  const handleSubmit = () => {
+  const uploadImage = async () => {
+    let img = image.split('/');
+    const reference = storage().ref(
+      `user_image/${auth().currentUser.uid}.jpg`,
+    );
+    await reference.putFile(image);
+    const url = await reference.getDownloadURL()
+    return url;
+  };
+
+  const handleSubmit = async () => {
     firestore().collection('Users').doc(user.uid).update({
       middleName: middleName == '' ? userInfo['middleName'] : middleName,
       firstName: firstName == '' ? userInfo['firstName'] : firstName,
       birthday: birthday == '' ? userInfo['birthday'] : birthday,
       phoneNumber: phoneNumber == '' ? userInfo['phoneNumber'] : phoneNumber,
-      address: address == '' ? userInfo['address'] : address
+      address: address == '' ? userInfo['address'] : address,
+      image : image ? await uploadImage() : ''
     })
     .then(() => setModalVisible(!modalVisible))
   }
@@ -55,11 +74,24 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
             />
           </TouchableOpacity>
           <View>
-            <Image
+            {
+              image ? 
+              <Image
               style={styles.Avatar}
-              source={require('../assets/hutao.jpg')}
-            />
-            <TouchableOpacity style={styles.getImageButton}>
+              source={{uri : image}}/>
+              : 
+              user.image ? 
+              <Image
+              style={styles.Avatar}
+              source={{uri : user.image}}/>
+              :
+              <Image
+              style={styles.Avatar}
+              source={require('../assets/user.png')}/>
+            }
+            <TouchableOpacity
+            onPress={pickImage}
+            style={styles.getImageButton}>
               <FontAwesome
                 name="camera" 
                 size={30} 

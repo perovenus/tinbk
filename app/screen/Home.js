@@ -20,7 +20,9 @@ import storage from '@react-native-firebase/storage';
 
 
 const Home = () => {
-    let currUid = auth().currentUser.uid;
+  const gotoProductList = () => {
+    Actions.ProductList()
+  }
     let temp_data = []
     const [datalist, setDatalist] = useState([]);
     const renderItem = ({ item }) => (
@@ -32,23 +34,6 @@ const Home = () => {
     const handleSearch = (text) => {
       setQuery(text)
     }
-    const [imageUrl, setImageUrl] = useState([]);
-    let list_href = [];
-    const func = async (name) => {
-      await storage().ref('type_book/' + name).getDownloadURL().then(x => {
-        list_href.push(x);
-  
-        return () => { }
-      }).catch(err => {
-      });
-    }
-    // useEffect(async () => {
-    //   await func('giao_trinh.jpg')
-    //   await func('bai_tap.jpg')
-    //   await func('tham_khao.jpg')
-    //   await func('manga.jpg')
-    //   await setImageUrl(list_href);
-    // }, [])
   
     useEffect(() => {
       firestore()
@@ -107,7 +92,9 @@ const Home = () => {
         </View>
 
         <View style={styles.category}>
-          <TouchableOpacity style={styles.booktype}>
+          <TouchableOpacity
+          onPress={gotoProductList}
+          style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/giao_trinh.jpg')}
@@ -117,7 +104,9 @@ const Home = () => {
               <Text style={styles.typename}>Giáo trình</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.booktype}>
+          <TouchableOpacity
+          onPress={gotoProductList}
+          style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/bai_tap.jpg')}
@@ -127,7 +116,9 @@ const Home = () => {
               <Text style={styles.typename}>Bài tập</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.booktype}>
+          <TouchableOpacity
+          onPress={gotoProductList}
+          style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/tham_khao.jpg')}
@@ -137,7 +128,9 @@ const Home = () => {
               <Text style={styles.typename}>Tham khảo</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.booktype}>
+          <TouchableOpacity
+          onPress={gotoProductList}
+          style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/manga.jpg')}
