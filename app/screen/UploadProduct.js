@@ -21,8 +21,9 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import {utils} from '@react-native-firebase/app';
+import ProductScreen from './ProductInfo';
 
-export default function UploadProduct() {
+const UploadProduct = ({item}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
   const theloai = ['Giáo trình', 'Bài tập', 'Tham khảo', 'Truyện'];
@@ -55,9 +56,11 @@ export default function UploadProduct() {
       `book_image/${auth().currentUser.uid}/${img[img.length - 1]}`,
     );
     await reference.putFile(image);
+    const url = await reference.getDownloadURL()
+    return url;
   };
 
-  const handleUploadProduct = () => {
+  const handleUploadProduct = async () => {
     if (!image) {
       showToast('Bạn chưa chọn ảnh sách');
     } else if (bookName == '' || bookName.length < 5 || bookName.length > 50) {
@@ -81,7 +84,7 @@ export default function UploadProduct() {
     } else if (bookStatus == '') {
       showToast('Bạn chưa chọn trạng thái sách');
     } else {
-      uploadImage();
+      let link_img = await uploadImage();
       let img = image.split("/");
       firestore()
         .collection('Books')
@@ -93,7 +96,7 @@ export default function UploadProduct() {
           bookType: bookType,
           bookRegion: bookRegion,
           bookStatus: bookStatus,
-          image: img[img.length - 1],
+          image: link_img,
           seller: auth().currentUser.uid,
         });
       setModalVisible(true);
@@ -296,6 +299,8 @@ export default function UploadProduct() {
     </SafeAreaView>
   );
 }
+
+export default ProductScreen;
 
 const styles = StyleSheet.create({
   container: {

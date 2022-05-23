@@ -18,44 +18,6 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 
-const DATA = [
-  {
-    id: '1',
-    name: 'Giải tích 1',
-    price: '10000 VNĐ',
-    location: 'KTX khu A',
-  },
-  {
-    id: '2',
-    name: 'Giải tích 2',
-    price: '20000 VNĐ',
-    location: 'KTX khu B',
-  },
-  {
-    id: '3',
-    name: 'Kinh tế chính trị Mác-Lênin',
-    price: '30000 VNĐ',
-    location: 'ĐHBK cơ sở 1',
-  },
-  {
-    id: '4',
-    name: 'Chủ nghĩa xã hội',
-    price: '40000 VNĐ',
-    location: 'ĐHBK cơ sở 2',
-  },
-  {
-    id: '5',
-    name: 'PPL',
-    price: '50000 VNĐ',
-    location: 'Quận 1',
-  },
-  {
-    id: '6',
-    name: 'Sách loz',
-    price: '300000 VNĐ',
-    location: 'KTX khu A',
-  },
-]
 
 const Home = () => {
     let currUid = auth().currentUser.uid;
@@ -80,18 +42,19 @@ const Home = () => {
       }).catch(err => {
       });
     }
-    useEffect(async () => {
-      await func('giao_trinh.jpg')
-      await func('bai_tap.jpg')
-      await func('tham_khao.jpg')
-      await func('manga.jpg')
-      await setImageUrl(list_href);
-    }, [])
+    // useEffect(async () => {
+    //   await func('giao_trinh.jpg')
+    //   await func('bai_tap.jpg')
+    //   await func('tham_khao.jpg')
+    //   await func('manga.jpg')
+    //   await setImageUrl(list_href);
+    // }, [])
   
     useEffect(() => {
-      const subscriber = firestore()
+      firestore()
       .collection('Books')
-      .onSnapshot(querySnapshot => {
+      .get()
+      .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           temp_data.push(temp)
@@ -99,12 +62,10 @@ const Home = () => {
   
         if (datalist.length == 0){
           setDatalist(temp_data)
-          temp_data = []
         }
-        console.log(temp_data)
       });
-      return () => subscriber();
-    }, [])
+      return () => temp_data
+    })
   
     useEffect(() => {
       const backAction = () => {
@@ -149,7 +110,7 @@ const Home = () => {
           <TouchableOpacity style={styles.booktype}>
             <View>
               <Image
-                source={{ uri: imageUrl[0] }}
+                source={require('../assets/giao_trinh.jpg')}
                 style={styles.categoryImages}
                 resizeMode='contain'
               />
@@ -159,7 +120,7 @@ const Home = () => {
           <TouchableOpacity style={styles.booktype}>
             <View>
               <Image
-                source={{ uri: imageUrl[1] }}
+                source={require('../assets/bai_tap.jpg')}
                 style={styles.categoryImages}
                 resizeMode='contain'
               />
@@ -169,7 +130,7 @@ const Home = () => {
           <TouchableOpacity style={styles.booktype}>
             <View>
               <Image
-                source={{ uri: imageUrl[2] }}
+                source={require('../assets/tham_khao.jpg')}
                 style={styles.categoryImages}
                 resizeMode='contain'
               />
@@ -179,7 +140,7 @@ const Home = () => {
           <TouchableOpacity style={styles.booktype}>
             <View>
               <Image
-                source={{ uri: imageUrl[3] }}
+                source={require('../assets/manga.jpg')}
                 style={styles.categoryImages}
                 resizeMode='contain'
               />

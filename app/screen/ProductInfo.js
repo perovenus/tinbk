@@ -18,10 +18,11 @@ import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ModalProps } from 'react-native-modal';
 import { RadioButton } from 'react-native-paper';
-export default function ProductScreen(ProductId) {
+export default function ProductScreen(item) {
     // const goToSignupScreen = () => {
     //     Actions.signupScreen()
     // }
+    console.log(item)
     const ProductInfo = {
         'name' : 'Thanh gươm diệt quỷ chap 3345',
         'price' : '30000',
@@ -29,7 +30,7 @@ export default function ProductScreen(ProductId) {
         'seller' : 'Nguyễn Đăng Hải',
         'phone' : '0836585244',
         'address' : 'tòa nhà A20 KTX khu A',
-        'imagelist' : [require('../assets/a.png'),require('../assets/hakyu.jpg'),require('../assets/t1.jpg')],
+        'imagelist' : [require('../assets/t1.jpg')],
         'sellerAvatar' : require('../assets/jerry.png')
     }
     // const goToGetOTPScreen = () => {
@@ -106,7 +107,7 @@ export default function ProductScreen(ProductId) {
                     style={styles.centeredView}>
                         
                         <View style={styles.modalView}>
-                            <Text style={styles.initPrice}>Giá khởi điểm:<Text style={{color: 'red'}}> {ProductInfo['price']} VNĐ</Text></Text>
+                            <Text style={styles.initPrice}>Giá khởi điểm:<Text style={{color: 'red'}}> {item.price} VNĐ</Text></Text>
                             <Text style={styles.modalText}>Nhập giá bạn yêu cầu :</Text>
                             <View style={styles.inputcontainer}>
                                 <TextInput
@@ -329,11 +330,14 @@ export default function ProductScreen(ProductId) {
                     
                     pagingEnabled>
                         {
-                            ProductInfo['imagelist'].map((image) => (
+                            // ProductInfo['imagelist'].map((image) => (
+                            // <Image
+                            //     style={styles.mangastyle}
+                            //     source={image} />
+                            // ))
                             <Image
                                 style={styles.mangastyle}
-                                source={image} />
-                            ))
+                                source={{uri: item.image}} />
                         }
                        
                     </ScrollView>
@@ -349,13 +353,13 @@ export default function ProductScreen(ProductId) {
                 </View>
                 <View style={styles.ProductInfoBlock}>
                     <Text style={styles.ProductTitle}>
-                        {ProductInfo['name']}
+                        {item.bookName}
                     </Text>
                     <Text style={styles.ProductPrice}>
-                        Giá : {ProductInfo['price']} VNĐ
+                        Giá : {item.price} VNĐ
                     </Text>
                     <Text style={styles.ProductStatus}>
-                        Tình trạng : {ProductInfo['status']}
+                        Tình trạng : {item.bookStatus}
                     </Text>
                 </View>
                 <View style={styles.line}></View>
@@ -369,7 +373,7 @@ export default function ProductScreen(ProductId) {
                     </View>
 
                     <View style={styles.SellerInfo}>
-                        <Text style={{ color: 'black' }}>Chủ sở hữu : {ProductInfo['seller']}</Text>
+                        <Text style={{ color: 'black' }}>Chủ sở hữu : {item.seller}</Text>
                         <Text style={{ color: 'black' }}>Số điện thoại : {ProductInfo['phone']}</Text>
                         <Text style={{ color: 'black' }}>Địa chỉ giao dịch : {ProductInfo['address']}</Text>
                     </View>
