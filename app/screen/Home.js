@@ -28,7 +28,6 @@ const Home = () => {
   const renderItem = ({ item }) => (
     <ItemInHome item={item} />
   );
-  const [isInitialRender, setIsInitialRender] = useState(true);
   const [query, setQuery] = useState('')
 
   const handleSearch = (text) => {
@@ -36,10 +35,9 @@ const Home = () => {
   }
 
   useEffect(() => {
-    const ref = firestore()
+    const subscriber = firestore()
       .collection('Books')
-      .get()
-      .then( querySnapshot => {
+      .onSnapshot( querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           // console.log(documentSnapshot.id)
@@ -47,13 +45,14 @@ const Home = () => {
           temp_data.push(temp)
         });
 
-        if (isInitialRender) {
-          setIsInitialRender(false);
+        if (datalist.length == 0) {
+          // setIsInitialRender(false);
           setDatalist(() => temp_data)
+          temp_data = []
         }
       });
-    // return () => temp_data
-  }, [temp_data, isInitialRender])
+    return () => subscriber()
+  }, [])
   console.log('aloooo')
   useEffect(() => {
     const backAction = () => {
