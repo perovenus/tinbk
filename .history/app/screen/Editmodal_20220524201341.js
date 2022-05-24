@@ -27,6 +27,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
     userInfo['address'],
     userInfo['phoneNumber'],
   ];
+  
   const [middleName, setMiddleName] = useState(data[0]);
   const [firstName, setFirstName] = useState(data[1]);
   const [birthday, setBirthday] = useState(data[2]);

@@ -32,6 +32,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
   const [birthday, setBirthday] = useState(data[2]);
   const [address, setAddress] = useState(data[3]);
   const [phoneNumber, setPhoneNumber] = useState(data[4]);
+  console.log(data);
   const pickImage = async () => {
     let result = await launchImageLibrary();
     if (!result.cancelled) {

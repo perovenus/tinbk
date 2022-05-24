@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,24 +9,23 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Editmodal from './Editmodal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
+
 const UserInfo = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({})
 
   const user = auth().currentUser;
 
   const handleSignOut = () => {
-    auth()
-      .signOut()
-      .then(() => Actions.signinScreen());
-  };
+    auth().signOut().then(() => Actions.signinScreen())
+  }
   useEffect(() => {
     const subscriber = firestore()
       .collection('Users')
@@ -53,22 +52,23 @@ const UserInfo = () => {
       </View>
       <ScrollView style={styles.body}>
         <View style={styles.container}>
-          {userInfo.image ? (
-            <Image source={{uri: userInfo.image}} style={styles.avatar} />
-          ) : (
-            <Image
-              source={require('../assets/user.png')}
-              style={styles.avatar}
-            />
-          )}
+          {
+            userInfo.image ?
+              <Image
+                source={{uri: userInfo.image}}
+                style={styles.avatar}
+              /> :
+              <Image
+                source={require('../assets/user.png')}
+                style={styles.avatar}
+              />
+          }
 
           <View style={styles.info}>
-            <Text style={[styles.infoText, {fontWeight: 'bold'}]}>
+            <Text style={[styles.infoText, { fontWeight: 'bold' }]}>
               {userInfo['middleName'] + ' ' + userInfo['firstName']}
             </Text>
-            <Text style={styles.infoText}>
-              Giới tính: {userInfo['gender'] == 'Male' ? 'Nam' : 'Nữ'}{' '}
-            </Text>
+            <Text style={styles.infoText}>Giới tính: {userInfo['gender'] == 'Male' ? 'Nam':'Nữ'} </Text>
             <Text style={styles.infoText}>Ngày sinh:</Text>
             <Text style={styles.infoText}>{userInfo['birthday']}</Text>
           </View>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
   },
   body: {
-    textColor: '#444',
+    textc
   },
   container: {
     height: '100%',
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     width: 120,
     borderRadius: 60,
     borderWidth: 1,
-    borderColor: '#BBCEE7',
+    borderColor: '#BBCEE7'
   },
   info: {
     height: 160,
