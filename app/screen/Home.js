@@ -17,7 +17,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
-
+import firebase from '@react-native-firebase/app';
+import messaging from '@react-native-firebase/messaging';
 
 const Home = () => {
   const gotoProductList = (type) => {
@@ -55,6 +56,7 @@ const Home = () => {
     // return () => temp_data
   }, [temp_data, isInitialRender])
   console.log('aloooo')
+
   useEffect(() => {
     const backAction = () => {
       Alert.alert("Hold on!", "Bạn có muốn thoát ứng dụng", [
@@ -75,6 +77,21 @@ const Home = () => {
 
     return () => backHandler.remove();
   }, []);
+
+  firebase.messaging().onMessage(message => {
+    console.log('Received a message');
+    console.log(message)
+  });
+  
+  firebase.messaging().onMessageSent(message => {
+    console.log('Sent a message');
+    console.log(message)
+  });
+  
+  firebase.messaging().onSendError(message => {
+    console.log('Received an Error');
+  });
+
   return (
     <SafeAreaView style={styles.homeScreen}>
 
