@@ -12,8 +12,19 @@ import {
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Actions } from 'react-native-router-flux'
+import firebase from '@react-native-firebase/app';
+import messaging from '@react-native-firebase/messaging';
 
 const ItemInHome = ({item}) => {
+  const handleBuy = () => {
+    firebase.messaging().sendMessage({
+      data: {
+        foo: 'bar',
+      },
+    }).then(() =>{
+      console.log('Djtme ppl')
+    });
+  }
   const gotoProductInfo = (i) => {
     Actions.ProductScreen(i)
   }
@@ -33,7 +44,7 @@ const ItemInHome = ({item}) => {
             <Text style={styles.price}>{item.price}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.buybutton}>
+        <TouchableOpacity style={styles.buybutton} onPress={handleBuy}>
           <FontAwesome5 name='shopping-cart' size={24} color='rgba(47,128,237,0.85)'/>
         </TouchableOpacity>
       </TouchableOpacity>
