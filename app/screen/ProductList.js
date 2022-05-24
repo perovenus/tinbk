@@ -60,6 +60,8 @@ const DATA = [
 
 const ProductList = (props) => {
   const [datalist, setDatalist] = useState([]);
+  const [isInitialRender, setIsInitialRender] = useState(true);
+
   useEffect(() => {
     const backAction = () => {
       Actions.pop();
@@ -89,13 +91,14 @@ const ProductList = (props) => {
             temp_data.push(temp)
           }
         });
-
-        if (datalist.length == 0) {
-          setDatalist(temp_data)
+        if (isInitialRender) {
+          setIsInitialRender(false);
+          setDatalist(() => temp_data)
         }
+
       });
-    return () => ''
-  })
+    // return () => ''
+  }, [temp_data, isInitialRender])
 
   
   const renderItem = ({ item }) => (

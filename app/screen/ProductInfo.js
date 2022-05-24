@@ -9,7 +9,8 @@ import {
     ImageBackground,
     Dimensions,
     ScrollView,
-    Modal
+    Modal,
+    BackHandler
 } from 'react-native'
 
 import { Actions } from 'react-native-router-flux'
@@ -20,6 +21,19 @@ export default function ProductScreen(item) {
     // const goToSignupScreen = () => {
     //     Actions.signupScreen()
     // }
+    useEffect(() => {
+        const backAction = () => {
+          Actions.pop();
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+    
+        return () => backHandler.remove();
+      }, []);
     const [user, setUser] = useState({})
     console.log(item.seller)
     useEffect(() => {
