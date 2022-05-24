@@ -84,7 +84,10 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
                   />
                 )
               ) : (
-                <Image style={styles.Avatar} source={{uri: image}} />
+                <Image
+                  style={styles.Avatar}
+                  source={require('../assets/user.png')}
+                />
               )}
               <TouchableOpacity
                 onPress={pickImage}
