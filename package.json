@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@gorhom/portal": "^1.0.13",
+    "@react-native-async-storage/async-storage": "npm:@react-native-community/async-storage",
     "@react-native-community/checkbox": "^0.5.12",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^14.9.4",
