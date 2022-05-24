@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     StyleSheet,
     Text,
@@ -8,20 +8,47 @@ import {
     TouchableOpacity,
     ImageBackground,
     Dimensions,
-    Pressable,
     ScrollView,
-    Button,
-    Modal
+    Modal,
+    BackHandler
 } from 'react-native'
 
 import { Actions } from 'react-native-router-flux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { ModalProps } from 'react-native-modal';
+import firestore from '@react-native-firebase/firestore';
 import { RadioButton } from 'react-native-paper';
-export default function ProductScreen(ProductId) {
+export default function ProductScreen(item) {
     // const goToSignupScreen = () => {
     //     Actions.signupScreen()
     // }
+    useEffect(() => {
+        const backAction = () => {
+          Actions.pop();
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+    
+        return () => backHandler.remove();
+      }, []);
+    const [user, setUser] = useState({})
+    console.log(item.seller)
+    useEffect(() => {
+        const subscriber = firestore()
+          .collection('Users')
+          .doc(item.seller)
+          .onSnapshot(documentSnapshot => {
+            console.log('User data: ', documentSnapshot.data());
+            setUser(documentSnapshot.data())
+          });
+    
+        // Stop listening for updates when no longer required
+        return () => subscriber();
+      }, [item.seller]);
+    // console.log(item)
     const ProductInfo = {
         'name' : 'Thanh gươm diệt quỷ chap 3345',
         'price' : '30000',
@@ -29,7 +56,7 @@ export default function ProductScreen(ProductId) {
         'seller' : 'Nguyễn Đăng Hải',
         'phone' : '0836585244',
         'address' : 'tòa nhà A20 KTX khu A',
-        'imagelist' : [require('../assets/a.png'),require('../assets/hakyu.jpg'),require('../assets/t1.jpg')],
+        'imagelist' : [require('../assets/t1.jpg')],
         'sellerAvatar' : require('../assets/jerry.png')
     }
     // const goToGetOTPScreen = () => {
@@ -106,7 +133,7 @@ export default function ProductScreen(ProductId) {
                     style={styles.centeredView}>
                         
                         <View style={styles.modalView}>
-                            <Text style={styles.initPrice}>Giá khởi điểm:<Text style={{color: 'red'}}> {ProductInfo['price']} VNĐ</Text></Text>
+                            <Text style={styles.initPrice}>Giá khởi điểm:<Text style={{color: 'red'}}> {item.price} VNĐ</Text></Text>
                             <Text style={styles.modalText}>Nhập giá bạn yêu cầu :</Text>
                             <View style={styles.inputcontainer}>
                                 <TextInput
@@ -329,11 +356,14 @@ export default function ProductScreen(ProductId) {
                     
                     pagingEnabled>
                         {
-                            ProductInfo['imagelist'].map((image) => (
+                            // ProductInfo['imagelist'].map((image) => (
+                            // <Image
+                            //     style={styles.mangastyle}
+                            //     source={image} />
+                            // ))
                             <Image
                                 style={styles.mangastyle}
-                                source={image} />
-                            ))
+                                source={{uri: item.image}} />
                         }
                        
                     </ScrollView>
@@ -349,13 +379,13 @@ export default function ProductScreen(ProductId) {
                 </View>
                 <View style={styles.ProductInfoBlock}>
                     <Text style={styles.ProductTitle}>
-                        {ProductInfo['name']}
+                        {item.bookName}
                     </Text>
                     <Text style={styles.ProductPrice}>
-                        Giá : {ProductInfo['price']} VNĐ
+                        Giá : {item.price} VNĐ
                     </Text>
                     <Text style={styles.ProductStatus}>
-                        Tình trạng : {ProductInfo['status']}
+                        Tình trạng : {item.bookStatus}
                     </Text>
                 </View>
                 <View style={styles.line}></View>
@@ -363,15 +393,24 @@ export default function ProductScreen(ProductId) {
 
                 <View style={styles.SellerInfoBlock}>
                     <View style={styles.avatar}>
-                        <Image
+                        {
+                            user.image ? <Image
                             style={styles.sellerImg}
-                            source={ProductInfo['sellerAvatar']} />
+                            source={{uri : user.image}} />
+                            :
+                            <Image
+                            style={styles.sellerImg}
+                            source={require('../assets/user.png')} />
+                        }
+                        {/* <Image
+                            style={styles.sellerImg}
+                            source={ProductInfo['sellerAvatar']} /> */}
                     </View>
 
                     <View style={styles.SellerInfo}>
-                        <Text style={{ color: 'black' }}>Chủ sở hữu : {ProductInfo['seller']}</Text>
-                        <Text style={{ color: 'black' }}>Số điện thoại : {ProductInfo['phone']}</Text>
-                        <Text style={{ color: 'black' }}>Địa chỉ giao dịch : {ProductInfo['address']}</Text>
+                        <Text style={{ color: 'black' }}>Chủ sở hữu : {user.middleName + ' ' + user.firstName}</Text>
+                        <Text style={{ color: 'black' }}>Số điện thoại : {user.phoneNumber}</Text>
+                        <Text style={{ color: 'black' }}>Địa chỉ giao dịch : {user.address}</Text>
                     </View>
                 </View>
                 <View style={styles.line}></View>

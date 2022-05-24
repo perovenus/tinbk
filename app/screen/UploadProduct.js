@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,16 +13,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import {utils} from '@react-native-firebase/app';
+import { utils } from '@react-native-firebase/app';
+import ProductScreen from './ProductInfo';
 
-export default function UploadProduct() {
+const UploadProduct = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const domoi = ['Sách mới', 'Sách 99%', 'Sách cũ'];
   const theloai = ['Giáo trình', 'Bài tập', 'Tham khảo', 'Truyện'];
@@ -55,9 +56,11 @@ export default function UploadProduct() {
       `book_image/${auth().currentUser.uid}/${img[img.length - 1]}`,
     );
     await reference.putFile(image);
+    const url = await reference.getDownloadURL()
+    return url;
   };
 
-  const handleUploadProduct = () => {
+  const handleUploadProduct = async () => {
     if (!image) {
       showToast('Bạn chưa chọn ảnh sách');
     } else if (bookName == '' || bookName.length < 5 || bookName.length > 50) {
@@ -81,7 +84,7 @@ export default function UploadProduct() {
     } else if (bookStatus == '') {
       showToast('Bạn chưa chọn trạng thái sách');
     } else {
-      uploadImage();
+      let link_img = await uploadImage();
       let img = image.split("/");
       firestore()
         .collection('Books')
@@ -93,9 +96,19 @@ export default function UploadProduct() {
           bookType: bookType,
           bookRegion: bookRegion,
           bookStatus: bookStatus,
-          image: img[img.length - 1],
+          image: link_img,
           seller: auth().currentUser.uid,
         });
+
+
+      // setImage(null)
+      // setBookName('')
+      // setQuantity('')
+      // setPrice('')
+      // setDescription('')
+      // setBookType('')
+      // setBookRegion('')
+      // setBookStatus('')
       setModalVisible(true);
     }
   };
@@ -106,7 +119,7 @@ export default function UploadProduct() {
         name="caret-down"
         size={20}
         color="#2F80ED"
-        style={{left: 10}}
+        style={{ left: 10 }}
       />
     );
   };
@@ -132,7 +145,7 @@ export default function UploadProduct() {
               source={require('../assets/grey.jpg')}
             />
           )}
-          {image && <Image style={styles.image} source={{uri: image}} />}
+          {image && <Image style={styles.image} source={{ uri: image }} />}
           <TouchableOpacity onPress={pickImage} style={styles.getImageButton}>
             <FontAwesome5 name="camera" size={30} color="#494949" />
           </TouchableOpacity>
@@ -140,7 +153,7 @@ export default function UploadProduct() {
         <ScrollView style={styles.scrollview}>
           <View style={styles.form}>
             <Text style={styles.text}>
-              Tên sách <Text style={{color: 'red'}}>*</Text>
+              Tên sách <Text style={{ color: 'red' }}>*</Text>
             </Text>
             <TextInput
               ref={bookNameRef}
@@ -152,7 +165,7 @@ export default function UploadProduct() {
             <View style={styles.soluongvagia}>
               <View style={styles.soluong}>
                 <Text style={styles.text}>
-                  Số lượng <Text style={{color: 'red'}}>*</Text>
+                  Số lượng <Text style={{ color: 'red' }}>*</Text>
                 </Text>
                 <TextInput
                   ref={quantityRef}
@@ -165,7 +178,7 @@ export default function UploadProduct() {
               </View>
               <View style={styles.gia}>
                 <Text style={styles.text}>
-                  Giá <Text style={{color: 'red'}}>*</Text>
+                  Giá <Text style={{ color: 'red' }}>*</Text>
                 </Text>
                 <TextInput
                   ref={priceRef}
@@ -179,7 +192,7 @@ export default function UploadProduct() {
             </View>
             <View style={styles.domoi}>
               <Text style={styles.text}>
-                Độ mới <Text style={{color: 'red'}}>*</Text>
+                Độ mới <Text style={{ color: 'red' }}>*</Text>
               </Text>
               <SelectDropdown
                 buttonStyle={styles.buttondropdown}
@@ -204,7 +217,7 @@ export default function UploadProduct() {
             </View>
             <View style={styles.theloai}>
               <Text style={styles.text}>
-                Thể loại <Text style={{color: 'red'}}>*</Text>
+                Thể loại <Text style={{ color: 'red' }}>*</Text>
               </Text>
               <SelectDropdown
                 buttonStyle={styles.buttondropdown}
@@ -225,7 +238,7 @@ export default function UploadProduct() {
             </View>
             <View style={styles.khuvuc}>
               <Text style={styles.text}>
-                Khu vực <Text style={{color: 'red'}}>*</Text>
+                Khu vực <Text style={{ color: 'red' }}>*</Text>
               </Text>
               <SelectDropdown
                 buttonStyle={styles.buttondropdown}
@@ -251,7 +264,7 @@ export default function UploadProduct() {
                 onChangeText={text => setDescription(text)}
                 style={[
                   styles.textinput,
-                  {height: 140, textAlignVertical: 'top'},
+                  { height: 140, textAlignVertical: 'top' },
                 ]}
                 multiline={true}
                 numberOfLines={4}
@@ -288,7 +301,7 @@ export default function UploadProduct() {
                 }}>
                 <Text style={styles.textbutton}>Xác nhận</Text>
               </Pressable>
-              <View style={{height: 70}}></View>
+              <View style={{ height: 70 }}></View>
             </View>
           </View>
         </ScrollView>
@@ -296,6 +309,8 @@ export default function UploadProduct() {
     </SafeAreaView>
   );
 }
+
+export default UploadProduct;
 
 const styles = StyleSheet.create({
   container: {
@@ -357,8 +372,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 20,
   },
-  soluong: {flex: 3, marginRight: 30},
-  gia: {flex: 5},
+  soluong: { flex: 3, marginRight: 30 },
+  gia: { flex: 5 },
   domoi: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -406,7 +421,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     paddingLeft: 10,
   },
-  dropdown: {borderWidth: 0, borderRadius: 10, backgroundColor: 'white'},
+  dropdown: { borderWidth: 0, borderRadius: 10, backgroundColor: 'white' },
   modalView: {
     margin: 20,
     backgroundColor: 'white',

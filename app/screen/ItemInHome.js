@@ -11,15 +11,21 @@ import {
 } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { Actions } from 'react-native-router-flux'
 
 const ItemInHome = ({item}) => {
+  const gotoProductInfo = (i) => {
+    Actions.ProductScreen(i)
+  }
   return (
     // <View style={styles.itemInHome}>
-      <TouchableOpacity style={styles.itemInHome}>
+      <TouchableOpacity
+      onPress={() => gotoProductInfo(item)}
+      style={styles.itemInHome}>
         <View style={styles.container}>
           <Image
             resizeMode='contain'
-            source={require('../assets/ppl.jpg')} 
+            source={{uri : item.image}} 
             style={styles.image}
           />
           <View style={styles.details}>
