@@ -20,58 +20,61 @@ import storage from '@react-native-firebase/storage';
 
 
 const Home = () => {
-  const gotoProductList = () => {
-    Actions.ProductList()
+  const gotoProductList = (type) => {
+    Actions.ProductList(type)
   }
-    let temp_data = []
-    const [datalist, setDatalist] = useState([]);
-    const renderItem = ({ item }) => (
-      <ItemInHome item={item} />
-    );
-  
-    const [query, setQuery] = useState('')
-  
-    const handleSearch = (text) => {
-      setQuery(text)
-    }
-  
-    useEffect(() => {
-      firestore()
+  let temp_data = []
+  const [datalist, setDatalist] = useState([]);
+  const renderItem = ({ item }) => (
+    <ItemInHome item={item} />
+  );
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [query, setQuery] = useState('')
+
+  const handleSearch = (text) => {
+    setQuery(text)
+  }
+
+  useEffect(() => {
+    const ref = firestore()
       .collection('Books')
       .get()
-      .then(querySnapshot => {
+      .then( querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
+          // console.log(documentSnapshot.id)
+          temp['id'] = documentSnapshot.id
           temp_data.push(temp)
         });
-  
-        if (datalist.length == 0){
-          setDatalist(temp_data)
+
+        if (isInitialRender) {
+          setIsInitialRender(false);
+          setDatalist(() => temp_data)
         }
       });
-      return () => temp_data
-    })
-  
-    useEffect(() => {
-      const backAction = () => {
-        Alert.alert("Hold on!", "Bạn có muốn thoát ứng dụng", [
-          {
-            text: "Không",
-            onPress: () => null,
-            style: "cancel"
-          },
-          { text: "Có", onPress: () => BackHandler.exitApp() }
-        ]);
-        return true;
-      };
-  
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
-  
-      return () => backHandler.remove();
-    }, []);
+    // return () => temp_data
+  }, [temp_data, isInitialRender])
+  console.log('aloooo')
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Hold on!", "Bạn có muốn thoát ứng dụng", [
+        {
+          text: "Không",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "Có", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <SafeAreaView style={styles.homeScreen}>
 
@@ -93,8 +96,8 @@ const Home = () => {
 
         <View style={styles.category}>
           <TouchableOpacity
-          onPress={gotoProductList}
-          style={styles.booktype}>
+            onPress={() => gotoProductList('giao_trinh')}
+            style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/giao_trinh.jpg')}
@@ -105,8 +108,8 @@ const Home = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={gotoProductList}
-          style={styles.booktype}>
+            onPress={() => gotoProductList('bai_tap')}
+            style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/bai_tap.jpg')}
@@ -117,8 +120,8 @@ const Home = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={gotoProductList}
-          style={styles.booktype}>
+            onPress={() => gotoProductList('tham_khao')}
+            style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/tham_khao.jpg')}
@@ -129,8 +132,8 @@ const Home = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={gotoProductList}
-          style={styles.booktype}>
+            onPress={() => gotoProductList('manga')}
+            style={styles.booktype}>
             <View>
               <Image
                 source={require('../assets/manga.jpg')}

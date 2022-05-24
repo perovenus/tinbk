@@ -18,13 +18,13 @@ const Item = ({item}) => {
         <View style={styles.container}>
           <Image
             resizeMode='contain'
-            source={require('../assets/hakyu.jpg')} 
+            source={{uri: item.image}} 
             style={styles.image}
           />
           <View style={styles.details}>
-            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.name}>{item.bookName}</Text>
             <Text style={styles.price}>{item.price}</Text>
-            <Text style={styles.location}>{item.location}</Text>
+            <Text style={styles.location}>{item.bookRegion}</Text>
           </View>
         </View>
       </TouchableOpacity>

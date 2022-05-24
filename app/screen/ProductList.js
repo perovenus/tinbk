@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,6 +7,8 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  BackHandler,
+  Text
 } from 'react-native'
 
 import Item from './Item';
@@ -14,6 +16,8 @@ import Item from './Item';
 import FilterModal from './FilterModal';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { PortalProvider } from "@gorhom/portal";
+import { Actions } from 'react-native-router-flux';
+import firestore from '@react-native-firebase/firestore';
 
 const DATA = [
   {
@@ -54,7 +58,46 @@ const DATA = [
   },
 ]
 
-const ProductList = () => {
+const ProductList = (props) => {
+  const [datalist, setDatalist] = useState([]);
+  useEffect(() => {
+    const backAction = () => {
+      Actions.pop();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  let temp_data = []
+  useEffect(() => {
+    const ref = firestore()
+      .collection('Books')
+      .get()
+      .then( querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          let temp = documentSnapshot.data();
+          // console.log(documentSnapshot.id)
+          if ((props.data == 'tham_khao' && temp.bookType == 'Tham khảo') || (props.data == 'bai_tap' && temp.bookType == 'Bài tập') || (props.data == 'giao_trinh' && temp.bookType == 'Giáo trình') || (props.data == 'manga' && temp.bookType == 'Truyện')){
+            console.log(temp)
+            temp['id'] = documentSnapshot.id
+            temp_data.push(temp)
+          }
+        });
+
+        if (datalist.length == 0) {
+          setDatalist(temp_data)
+        }
+      });
+    return () => ''
+  })
+
+  
   const renderItem = ({ item }) => (
     <Item item={item} />
   );
@@ -64,10 +107,6 @@ const ProductList = () => {
   const handleSearch = (text) => {
     setQuery(text)
   }
-
-  const [showModal, setShowModal] = useState(false)
-
-  const [modalVisible, setModalVisible] = useState(false);
 
   const modalRef = useRef(null);
 
@@ -101,11 +140,18 @@ const ProductList = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
-        <FlatList 
-          data={DATA}
+        {
+          datalist.length == 0 ?
+          <View>
+            <Text>Không tìm thấy sản phẩm</Text>
+          </View>:
+          <FlatList 
+          data={datalist}
           renderItem={renderItem}
           keyExtractor={item => item.id}
         />
+        }
+        
       </View>
       <View style={styles.menubar}>
       </View>
