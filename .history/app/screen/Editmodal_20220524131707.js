@@ -25,7 +25,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
   const [birthday, setBirthday] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-
+  
   const pickImage = async () => {
     let result = await launchImageLibrary();
     if (!result.cancelled) {
@@ -57,7 +57,6 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
 
   return (
     console.log(userInfo),
-    console.log(typeof userInfo.image),
     (
       <Modal
         animationType="fade"
@@ -75,8 +74,8 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
             </TouchableOpacity>
             <View>
               {image == null ? (
-                typeof userInfo.image == 'string' ? (
-                  <Image style={styles.Avatar} source={{uri: userInfo.image}} />
+                user.image ? (
+                  <Image style={styles.Avatar} source={{uri: user.image}} />
                 ) : (
                   <Image
                     style={styles.Avatar}
@@ -84,10 +83,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
                   />
                 )
               ) : (
-                <Image
-                  style={styles.Avatar}
-                  source={require('../assets/user.png')}
-                />
+                <Image style={styles.Avatar} source={{uri: image}} />
               )}
               <TouchableOpacity
                 onPress={pickImage}

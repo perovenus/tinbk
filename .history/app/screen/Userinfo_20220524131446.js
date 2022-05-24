@@ -68,7 +68,7 @@ const UserInfo = () => {
             <Text style={[styles.infoText, { fontWeight: 'bold' }]}>
               {userInfo['middleName'] + ' ' + userInfo['firstName']}
             </Text>
-            <Text style={styles.infoText}>Giới tính: {userInfo['gender'] == 'Male' ? 'Nam':'Nữ'} </Text>
+            <Text style={styles.infoText}>Giới tính: {userInfo['gender'] } </Text>
             <Text style={styles.infoText}>Ngày sinh:</Text>
             <Text style={styles.infoText}>{userInfo['birthday']}</Text>
           </View>

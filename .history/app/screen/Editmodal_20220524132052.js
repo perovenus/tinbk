@@ -57,7 +57,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
 
   return (
     console.log(userInfo),
-    console.log(typeof userInfo.image),
+    con
     (
       <Modal
         animationType="fade"
@@ -74,21 +74,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
               <FontAwesome name="close" size={30} color="black" />
             </TouchableOpacity>
             <View>
-              {image == null ? (
-                typeof userInfo.image == 'string' ? (
-                  <Image style={styles.Avatar} source={{uri: userInfo.image}} />
-                ) : (
-                  <Image
-                    style={styles.Avatar}
-                    source={require('../assets/user.png')}
-                  />
-                )
-              ) : (
-                <Image
-                  style={styles.Avatar}
-                  source={require('../assets/user.png')}
-                />
-              )}
+              {image ? <Text>'djtmeppl1'</Text> : <Text>'djtmeppl2'</Text>}
               <TouchableOpacity
                 onPress={pickImage}
                 style={styles.getImageButton}>

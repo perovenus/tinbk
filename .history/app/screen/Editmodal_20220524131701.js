@@ -19,6 +19,12 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 
 const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
+  const pickImage = async () => {
+    let result = await launchImageLibrary();
+    if (!result.cancelled) {
+      setImage(result.assets[0].uri);
+    }
+  };
   const [image, setImage] = useState(null);
   const [middleName, setMiddleName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -26,12 +32,6 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const pickImage = async () => {
-    let result = await launchImageLibrary();
-    if (!result.cancelled) {
-      setImage(result.assets[0].uri);
-    }
-  };
   const uploadImage = async () => {
     let img = image.split('/');
     const reference = storage().ref(`user_image/${auth().currentUser.uid}.jpg`);
@@ -57,7 +57,6 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
 
   return (
     console.log(userInfo),
-    console.log(typeof userInfo.image),
     (
       <Modal
         animationType="fade"
@@ -75,8 +74,8 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
             </TouchableOpacity>
             <View>
               {image == null ? (
-                typeof userInfo.image == 'string' ? (
-                  <Image style={styles.Avatar} source={{uri: userInfo.image}} />
+                user.image ? (
+                  <Image style={styles.Avatar} source={{uri: user.image}} />
                 ) : (
                   <Image
                     style={styles.Avatar}
@@ -84,10 +83,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
                   />
                 )
               ) : (
-                <Image
-                  style={styles.Avatar}
-                  source={require('../assets/user.png')}
-                />
+                <Image style={styles.Avatar} source={{uri: image}} />
               )}
               <TouchableOpacity
                 onPress={pickImage}

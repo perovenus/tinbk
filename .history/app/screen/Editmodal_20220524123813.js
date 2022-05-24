@@ -20,18 +20,18 @@ import storage from '@react-native-firebase/storage';
 
 const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
   const [image, setImage] = useState(null);
-  const [middleName, setMiddleName] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-
   const pickImage = async () => {
     let result = await launchImageLibrary();
     if (!result.cancelled) {
       setImage(result.assets[0].uri);
     }
   };
+  const [middleName, setMiddleName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [address, setAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   const uploadImage = async () => {
     let img = image.split('/');
     const reference = storage().ref(`user_image/${auth().currentUser.uid}.jpg`);
@@ -57,7 +57,6 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
 
   return (
     console.log(userInfo),
-    console.log(typeof userInfo.image),
     (
       <Modal
         animationType="fade"
@@ -74,15 +73,10 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
               <FontAwesome name="close" size={30} color="black" />
             </TouchableOpacity>
             <View>
-              {image == null ? (
-                typeof userInfo.image == 'string' ? (
-                  <Image style={styles.Avatar} source={{uri: userInfo.image}} />
-                ) : (
-                  <Image
-                    style={styles.Avatar}
-                    source={require('../assets/user.png')}
-                  />
-                )
+              {image ? (
+                <Image style={styles.Avatar} source={{uri: image}} />
+              ) : user.image ? (
+                <Image style={styles.Avatar} source={{uri: user.image}} />
               ) : (
                 <Image
                   style={styles.Avatar}
@@ -222,6 +216,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputText: {
+    textcolor: 'black',
     width: '70%',
     height: 34,
     borderWidth: 1,

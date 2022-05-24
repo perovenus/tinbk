@@ -76,7 +76,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
             <View>
               {image == null ? (
                 typeof userInfo.image == 'string' ? (
-                  <Image style={styles.Avatar} source={{uri: userInfo.image}} />
+                  <Image style={styles.Avatar} source={{uri: user.image}} />
                 ) : (
                   <Image
                     style={styles.Avatar}

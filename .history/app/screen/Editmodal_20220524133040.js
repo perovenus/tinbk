@@ -57,7 +57,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
 
   return (
     console.log(userInfo),
-    console.log(typeof userInfo.image),
+    console.log(user.image),
     (
       <Modal
         animationType="fade"
@@ -75,8 +75,8 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
             </TouchableOpacity>
             <View>
               {image == null ? (
-                typeof userInfo.image == 'string' ? (
-                  <Image style={styles.Avatar} source={{uri: userInfo.image}} />
+                typeof user.image == 'undefined' ? (
+                  <Image style={styles.Avatar} source={{uri: user.image}} />
                 ) : (
                   <Image
                     style={styles.Avatar}

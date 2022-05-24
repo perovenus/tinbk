@@ -19,13 +19,14 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 
 const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
+
   const [image, setImage] = useState(null);
   const [middleName, setMiddleName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [birthday, setBirthday] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-
+  
   const pickImage = async () => {
     let result = await launchImageLibrary();
     if (!result.cancelled) {
@@ -57,7 +58,6 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
 
   return (
     console.log(userInfo),
-    console.log(typeof userInfo.image),
     (
       <Modal
         animationType="fade"
@@ -74,21 +74,7 @@ const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
               <FontAwesome name="close" size={30} color="black" />
             </TouchableOpacity>
             <View>
-              {image == null ? (
-                typeof userInfo.image == 'string' ? (
-                  <Image style={styles.Avatar} source={{uri: userInfo.image}} />
-                ) : (
-                  <Image
-                    style={styles.Avatar}
-                    source={require('../assets/user.png')}
-                  />
-                )
-              ) : (
-                <Image
-                  style={styles.Avatar}
-                  source={require('../assets/user.png')}
-                />
-              )}
+              {image ? (console.log()) : ()}
               <TouchableOpacity
                 onPress={pickImage}
                 style={styles.getImageButton}>
