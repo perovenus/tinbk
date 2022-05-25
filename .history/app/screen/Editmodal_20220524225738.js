@@ -17,7 +17,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import MaskInput, {Masks} from 'react-native-mask-input';
+import {DateInput} from 'react-native-date-input';
+import dayjs from 'dayjs';
 const Editmodal = (modalVisible, setModalVisible, user) => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -127,11 +128,20 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
               onChangeText={text => setUserInfo({...userInfo, birthday: text})}
               keyboardType="name-phone-pad"
             /> */}
-            <MaskInput
-              style={styles.inputText}
-              value={userInfo ? userInfo['birthday'] : ''}
-              onChangeText={text => setUserInfo({...userInfo, birthday: text})}
-              mask={Masks.DATE_DDMMYYYY}
+            <DateInput
+              inputProps={{
+                style: {},
+                ...props,
+                // Supports all TextInput props
+              }}
+              dateFormat={'DD/MM/YYYY'}
+              defaultValue={
+                new Date(dayjs().subtract(5, 'year').format('DD/MM/YYYY'))
+              }
+              defaultDate={new Date(dayjs().subtract(5, 'year'))}
+              minimumDate={new Date(dayjs().subtract(10, 'year'))}
+              maximumDate={new Date()}
+              handleChange={text => setUserInfo({...userInfo, birthday: text})}
             />
           </View>
           <View style={styles.container}>

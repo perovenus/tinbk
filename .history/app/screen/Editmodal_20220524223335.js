@@ -17,7 +17,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import MaskInput, {Masks} from 'react-native-mask-input';
+
 const Editmodal = (modalVisible, setModalVisible, user) => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -57,11 +57,11 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
       .collection('Users')
       .doc(user.uid)
       .update({
-        middleName: userInfo ? userInfo.middleName : '',
-        firstName: userInfo ? userInfo.firstName : '',
-        birthday: userInfo ? userInfo.birthday : '',
-        phoneNumber: userInfo ? userInfo.phoneNumber : '',
-        address: userInfo ? userInfo.address : '',
+        middleName: middleName == '' ? userInfo['middleName'] : middleName,
+        firstName: firstName == '' ? userInfo['firstName'] : firstName,
+        birthday: birthday == '' ? userInfo['birthday'] : birthday,
+        phoneNumber: phoneNumber == '' ? userInfo['phoneNumber'] : phoneNumber,
+        address: address == '' ? userInfo['address'] : address,
         image: image ? await uploadImage() : '',
       })
       .then(() => setModalVisible(!modalVisible));
@@ -82,18 +82,7 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
             <FontAwesome name="close" size={30} color="black" />
           </TouchableOpacity>
           <View>
-            {image == null ? (
-              userInfo ? (
-                <Image style={styles.Avatar} source={{uri: userInfo.image}} />
-              ) : (
-                <Image
-                  style={styles.Avatar}
-                  source={require('../assets/user.png')}
-                />
-              )
-            ) : (
-              <Image style={styles.Avatar} source={{uri: image}} />
-            )}
+            {<Image style={styles.Avatar} source={{uri: image}} />}
             <TouchableOpacity onPress={pickImage} style={styles.getImageButton}>
               <FontAwesome name="camera" size={30} color="#494949" />
             </TouchableOpacity>
@@ -120,18 +109,12 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Ngày sinh</Text>
-            {/* <TextInput
+            <TextInput
               style={styles.inputText}
               value={userInfo ? userInfo['birthday'] : ''}
               placeholderTextColor={textplaceholder}
               onChangeText={text => setUserInfo({...userInfo, birthday: text})}
               keyboardType="name-phone-pad"
-            /> */}
-            <MaskInput
-              style={styles.inputText}
-              value={userInfo ? userInfo['birthday'] : ''}
-              onChangeText={text => setUserInfo({...userInfo, birthday: text})}
-              mask={Masks.DATE_DDMMYYYY}
             />
           </View>
           <View style={styles.container}>

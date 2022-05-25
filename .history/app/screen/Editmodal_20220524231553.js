@@ -128,7 +128,7 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
               keyboardType="name-phone-pad"
             /> */}
             <MaskInput
-              style={styles.inputText}
+            style={styles.inputText}
               value={userInfo ? userInfo['birthday'] : ''}
               onChangeText={text => setUserInfo({...userInfo, birthday: text})}
               mask={Masks.DATE_DDMMYYYY}

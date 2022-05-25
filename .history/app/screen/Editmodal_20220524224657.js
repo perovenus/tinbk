@@ -17,7 +17,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import MaskInput, {Masks} from 'react-native-mask-input';
+import DatePicker from 'react-native-datepicker';
 const Editmodal = (modalVisible, setModalVisible, user) => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -127,11 +127,40 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
               onChangeText={text => setUserInfo({...userInfo, birthday: text})}
               keyboardType="name-phone-pad"
             /> */}
-            <MaskInput
-              style={styles.inputText}
-              value={userInfo ? userInfo['birthday'] : ''}
-              onChangeText={text => setUserInfo({...userInfo, birthday: text})}
-              mask={Masks.DATE_DDMMYYYY}
+            <DatePicker
+              style={styles.datePickerStyle}
+              date={date}
+              mode="date"
+              placeholder="select date"
+              format="DD/MM/YYYY"
+              minDate="01-01-1900"
+              maxDate="01-01-2000"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  right: -5,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  borderColor: 'gray',
+                  alignItems: 'flex-start',
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                },
+                placeholderText: {
+                  fontSize: 17,
+                  color: 'gray',
+                },
+                dateText: {
+                  fontSize: 17,
+                },
+              }}
+              onDateChange={date => {
+                setUserInfo({...userInfo, birthday: date});
+              }}
             />
           </View>
           <View style={styles.container}>

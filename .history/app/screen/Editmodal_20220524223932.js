@@ -17,7 +17,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import MaskInput, {Masks} from 'react-native-mask-input';
+
 const Editmodal = (modalVisible, setModalVisible, user) => {
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -83,7 +83,7 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
           </TouchableOpacity>
           <View>
             {image == null ? (
-              userInfo ? (
+              us ? (
                 <Image style={styles.Avatar} source={{uri: userInfo.image}} />
               ) : (
                 <Image
@@ -120,18 +120,12 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Ngày sinh</Text>
-            {/* <TextInput
+            <TextInput
               style={styles.inputText}
               value={userInfo ? userInfo['birthday'] : ''}
               placeholderTextColor={textplaceholder}
               onChangeText={text => setUserInfo({...userInfo, birthday: text})}
               keyboardType="name-phone-pad"
-            /> */}
-            <MaskInput
-              style={styles.inputText}
-              value={userInfo ? userInfo['birthday'] : ''}
-              onChangeText={text => setUserInfo({...userInfo, birthday: text})}
-              mask={Masks.DATE_DDMMYYYY}
             />
           </View>
           <View style={styles.container}>

@@ -17,27 +17,15 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import MaskInput, {Masks} from 'react-native-mask-input';
-const Editmodal = (modalVisible, setModalVisible, user) => {
+
+const Editmodal = (modalVisible, setModalVisible, user, userInfo) => {
   const [image, setImage] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
-  const getuser = () => {
-    const user = auth().currentUser;
-    firestore()
-      .collection('Users')
-      .doc(user.uid)
-      .onSnapshot(documentSnapshot => {
-        setUserInfo(documentSnapshot.data());
-      });
-  };
-  useEffect(() => {
-    getuser();
-  }, []);
-  // const [middleName, setMiddleName] = useState(userInfo.middleName);
-  // const [firstName, setFirstName] = useState(userInfo.firstName);
-  // const [birthday, setBirthday] = useState(userInfo.birthday);
-  // const [address, setAddress] = useState(userInfo.address);
-  // const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
+  const getuser
+  const [middleName, setMiddleName] = useState(data[0]);
+  const [firstName, setFirstName] = useState(data[1]);
+  const [birthday, setBirthday] = useState(data[2]);
+  const [address, setAddress] = useState(data[3]);
+  const [phoneNumber, setPhoneNumber] = useState(data[4]);
   const pickImage = async () => {
     let result = await launchImageLibrary();
     if (!result.cancelled) {
@@ -57,15 +45,16 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
       .collection('Users')
       .doc(user.uid)
       .update({
-        middleName: userInfo ? userInfo.middleName : '',
-        firstName: userInfo ? userInfo.firstName : '',
-        birthday: userInfo ? userInfo.birthday : '',
-        phoneNumber: userInfo ? userInfo.phoneNumber : '',
-        address: userInfo ? userInfo.address : '',
+        middleName: middleName == '' ? userInfo['middleName'] : middleName,
+        firstName: firstName == '' ? userInfo['firstName'] : firstName,
+        birthday: birthday == '' ? userInfo['birthday'] : birthday,
+        phoneNumber: phoneNumber == '' ? userInfo['phoneNumber'] : phoneNumber,
+        address: address == '' ? userInfo['address'] : address,
         image: image ? await uploadImage() : '',
       })
       .then(() => setModalVisible(!modalVisible));
   };
+
   return (
     <Modal
       animationType="fade"
@@ -83,7 +72,7 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
           </TouchableOpacity>
           <View>
             {image == null ? (
-              userInfo ? (
+              typeof userInfo.image == 'string' ? (
                 <Image style={styles.Avatar} source={{uri: userInfo.image}} />
               ) : (
                 <Image
@@ -102,46 +91,38 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
             <Text style={styles.textstyle}>Họ tên đệm</Text>
             <TextInput
               style={styles.inputText}
-              value={userInfo ? userInfo['middleName'] : ''}
+              value={middleName}
               placeholderTextColor={textplaceholder}
-              onChangeText={text =>
-                setUserInfo({...userInfo, middleName: text})
-              }
+              onChangeText={text => setMiddleName(text)}
             />
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Tên</Text>
             <TextInput
               style={styles.inputText}
-              value={userInfo ? userInfo['firstName'] : ''}
+              value={firstName}
               placeholderTextColor={textplaceholder}
-              onChangeText={text => setUserInfo({...userInfo, firstName: text})}
+              onChangeText={text => setFirstName(text)}
             />
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Ngày sinh</Text>
-            {/* <TextInput
+            <TextInput
               style={styles.inputText}
-              value={userInfo ? userInfo['birthday'] : ''}
+              value={birthday}
               placeholderTextColor={textplaceholder}
-              onChangeText={text => setUserInfo({...userInfo, birthday: text})}
+              onChangeText={text => setBirthday(text)}
               keyboardType="name-phone-pad"
-            /> */}
-            <MaskInput
-              style={styles.inputText}
-              value={userInfo ? userInfo['birthday'] : ''}
-              onChangeText={text => setUserInfo({...userInfo, birthday: text})}
-              mask={Masks.DATE_DDMMYYYY}
             />
           </View>
           <View style={styles.container}>
             <Text style={styles.textstyle}>Điện thoại</Text>
             <TextInput
               style={styles.inputText}
-              value={userInfo ? userInfo['phoneNumber'] : ''}
+              value={phoneNumber}
               placeholderTextColor={textplaceholder}
               onChangeText={text => {
-                setUserInfo({...userInfo, phoneNumber: text});
+                setPhoneNumber(text);
               }}
               keyboardType="numeric"
             />
@@ -150,9 +131,9 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
             <Text style={styles.textstyle}>Địa chỉ</Text>
             <TextInput
               style={styles.inputText}
-              value={userInfo ? userInfo['address'] : ''}
+              value={address}
               placeholderTextColor={textplaceholder}
-              onChangeText={text => setUserInfo({...userInfo, address: text})}
+              onChangeText={text => setAddress(text)}
             />
           </View>
 
