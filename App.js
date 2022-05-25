@@ -107,7 +107,11 @@ export default function App(props) {
             hideNavBar={true}
           />
           <Scene key="Tabs" component={Tabs} title="Tabs" hideNavBar={true} />
-          <Scene key="changePassword" component={ChangePassword} title="ChangePassword" hideNavBar={true}></Scene>
+          <Scene
+            key="changePassword"
+            component={ChangePassword}
+            title="ChangePassword"
+            hideNavBar={true}></Scene>
         </Scene>
       </Router>
       <Toast config={toastConfig} />
