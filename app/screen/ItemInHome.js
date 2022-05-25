@@ -1,5 +1,5 @@
 import { faAlignJustify, faDiceSix } from '@fortawesome/free-solid-svg-icons'
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   View,
@@ -34,9 +34,27 @@ const ItemInHome = ({item}) => {
   
   // const admin = require('firebase-admin')
 
+  const [buyerToken, setBuyerToken] = useState('')
+  const [sellerToken, setSellerToken] = useState('')
+
+  // firestore().collection('Users').doc(auth().currentUser.uid).get()
+  //   .then(documentSnapshot => {
+  //     if (buyerToken == '') {
+  //       setBuyerToken(documentSnapshot.data()['tokens'])
+  //     }
+  //   })
+
+  firestore().collection('Users').doc(item.seller).get()
+    .then(documentSnapshot => {
+      if (sellerToken == '') {
+        setSellerToken(documentSnapshot.data()['tokens'])
+      }
+    })
+
   const handleBuy = (buyerId, sellerId, book) => {
-    const seller = firestore().collection('Users').doc(sellerId).get()
-    const buyer = firestore().collection('Users').doc(buyerId).get()
+    
+    const seller = firebase.firestore().collection('Users').doc(sellerId).get()
+    const buyer = firebase.firestore().collection('Users').doc(buyerId).get()
 
     firebase.messaging().sendMessage(
       {
@@ -45,7 +63,7 @@ const ItemInHome = ({item}) => {
           buyer: JSON.stringify(buyer),
           book: JSON.stringify(book)
         },
-        to: seller.tokens
+        to: sellerToken[0]
       },
       // {
       //   priority: 'high',
