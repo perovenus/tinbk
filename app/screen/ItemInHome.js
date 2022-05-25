@@ -16,6 +16,20 @@ import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 
 const ItemInHome = ({item}) => {
+  firebase.messaging().onMessage(message => {
+    console.log('Received a message');
+    console.log(message)
+  });
+  
+  firebase.messaging().onMessageSent(message => {
+    console.log('Sent a message');
+    console.log(message)
+  });
+  
+  firebase.messaging().onSendError(message => {
+    console.log('Received an Error');
+  });
+  
   const handleBuy = () => {
     firebase.messaging().sendMessage({
       data: {

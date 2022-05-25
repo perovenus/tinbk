@@ -78,20 +78,6 @@ const Home = () => {
     return () => backHandler.remove();
   }, []);
 
-  firebase.messaging().onMessage(message => {
-    console.log('Received a message');
-    console.log(message)
-  });
-  
-  firebase.messaging().onMessageSent(message => {
-    console.log('Sent a message');
-    console.log(message)
-  });
-  
-  firebase.messaging().onSendError(message => {
-    console.log('Received an Error');
-  });
-
   return (
     <SafeAreaView style={styles.homeScreen}>
 
