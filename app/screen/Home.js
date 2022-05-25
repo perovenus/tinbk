@@ -117,6 +117,11 @@ const Home = () => {
           onChangeText={(queryText) => handleSearch(queryText)}
           placeholder='Tìm kiếm...'
           style={styles.searchbar}
+          onSubmitEditing={() => gotoProductList({
+            'data': query,
+            'search' : true
+          })
+        }
         />
       </View>
       <View style={styles.body}>

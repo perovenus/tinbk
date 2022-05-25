@@ -81,12 +81,19 @@ const ProductList = (props) => {
     const ref = firestore()
       .collection('Books')
       .get()
-      .then( querySnapshot => {
+      .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           // console.log(documentSnapshot.id)
-          if ((props.data == 'tham_khao' && temp.bookType == 'Tham khảo') || (props.data == 'bai_tap' && temp.bookType == 'Bài tập') || (props.data == 'giao_trinh' && temp.bookType == 'Giáo trình') || (props.data == 'manga' && temp.bookType == 'Truyện')){
-            console.log(temp)
+          if (props.search != undefined) {
+            if (temp.bookName.includes(props.data)) {
+              // console.log(temp)
+              temp['id'] = documentSnapshot.id
+              temp_data.push(temp)
+            }
+          }
+          else if ((props.data == 'tham_khao' && temp.bookType == 'Tham khảo') || (props.data == 'bai_tap' && temp.bookType == 'Bài tập') || (props.data == 'giao_trinh' && temp.bookType == 'Giáo trình') || (props.data == 'manga' && temp.bookType == 'Truyện')) {
+            // console.log(temp)
             temp['id'] = documentSnapshot.id
             temp_data.push(temp)
           }
@@ -100,11 +107,11 @@ const ProductList = (props) => {
     // return () => ''
   }, [temp_data, isInitialRender])
 
-  
+
   const renderItem = ({ item }) => (
     <Item item={item} />
   );
-  
+
   const [query, setQuery] = useState('')
 
   const handleSearch = (text) => {
@@ -133,28 +140,28 @@ const ProductList = (props) => {
           placeholder='Bạn muốn tìm gì'
           style={styles.searchbar}
         />
-        
+
         <TouchableOpacity onPress={onOpen}>
           <FontAwesome5
             name='filter'
             size={30}
             color='#FFFFFF'
-            style={styles.filterbutton}/>
+            style={styles.filterbutton} />
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
         {
           datalist.length == 0 ?
-          <View>
-            <Text>Không tìm thấy sản phẩm</Text>
-          </View>:
-          <FlatList 
-          data={datalist}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
+            <View>
+              <Text>Không tìm thấy sản phẩm</Text>
+            </View> :
+            <FlatList
+              data={datalist}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+            />
         }
-        
+
       </View>
       <View style={styles.menubar}>
       </View>
@@ -169,7 +176,7 @@ const ProductList = (props) => {
 
 const styles = StyleSheet.create({
   productlistscreen: {
-    flex: 1,  
+    flex: 1,
   },
   header: {
     height: 65,
@@ -186,7 +193,7 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     fontSize: 15,
   },
-  filterbutton:{
+  filterbutton: {
     marginLeft: 25
   },
   filtermodal: {
@@ -215,7 +222,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  
+
 });
 
 export default ProductList;
