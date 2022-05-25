@@ -36,6 +36,33 @@ const Home = () => {
     setQuery(text)
   }
 
+  async function saveTokenToDatabase(token) {
+    await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .update({
+        tokens: firestore.FieldValue.arrayUnion(token),
+      });
+  }
+
+  useEffect(() => {
+    // Get the device token
+    messaging()
+      .getToken()
+      .then(token => {
+        return saveTokenToDatabase(token);
+      });
+
+    // If using other push notification providers (ie Amazon SNS, etc)
+    // you may need to get the APNs token instead for iOS:
+    // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
+
+    // Listen to whether the token changes
+    return messaging().onTokenRefresh(token => {
+      saveTokenToDatabase(token);
+    });
+  }, []);
+
   useEffect(() => {
     const ref = firestore()
       .collection('Books')
@@ -77,20 +104,6 @@ const Home = () => {
 
     return () => backHandler.remove();
   }, []);
-
-  firebase.messaging().onMessage(message => {
-    console.log('Received a message');
-    console.log(message)
-  });
-  
-  firebase.messaging().onMessageSent(message => {
-    console.log('Sent a message');
-    console.log(message)
-  });
-  
-  firebase.messaging().onSendError(message => {
-    console.log('Received an Error');
-  });
 
   return (
     <SafeAreaView style={styles.homeScreen}>
