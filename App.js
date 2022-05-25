@@ -9,6 +9,7 @@ import Notification from './app/screen/Notification';
 import UploadProduct from './app/screen/UploadProduct';
 import ProductList from './app/screen/ProductList';
 import Tabs from './app/screen/Tabs';
+import ChangePassword from './app/screen/ChangePassword';
 import {Router, Scene} from 'react-native-router-flux';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import {LogBox, AsyncStorage} from 'react-native';
@@ -93,6 +94,7 @@ export default function App(props) {
             hideNavBar={true}
           />
           <Scene key="Tabs" component={Tabs} title="Tabs" hideNavBar={true} />
+          <Scene key="changePassword" component={ChangePassword} title="ChangePassword" hideNavBar={true}></Scene>
         </Scene>
       </Router>
       <Toast config={toastConfig} />

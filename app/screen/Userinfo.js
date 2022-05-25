@@ -23,6 +23,10 @@ const UserInfo = () => {
 
   const user = auth().currentUser;
 
+  const goToChangePassword  = () => {
+    Actions.changePassword()
+  }
+
   const handleSignOut = () => {
     auth().signOut().then(() => Actions.signinScreen())
   }
@@ -113,7 +117,7 @@ const UserInfo = () => {
             <FontAwesome name="angle-right" size={24} color="#444" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.cardbonus}>
+        <TouchableOpacity style={styles.cardbonus} onPress={goToChangePassword}>
           <View style={styles.bonus}>
             <View style={styles.lefticon}>
               <FontAwesome name="lock" size={24} color="#444" />
