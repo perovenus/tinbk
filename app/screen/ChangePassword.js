@@ -13,11 +13,15 @@ import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const ChangePassword = () => {
+    const goToUserInfo = () => {
+        Actions.pop();
+    }
+
   return (
     <ImageBackground
       style={styles.background}
       source={require('../assets/changepassword.jpg')}>
-      <TouchableOpacity style={styles.gobackButton}>
+      <TouchableOpacity style={styles.gobackButton} onPress={goToUserInfo}>
         <View>
           <FontAwesome5 name="angle-left" color="white" size={28} />
         </View>
