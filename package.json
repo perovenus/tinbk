@@ -26,7 +26,6 @@
     "firebase-admin": "^10.2.0",
     "react": "17.0.2",
     "react-native": "0.67.3",
-    "react-native-appearance": "^0.3.4",
     "react-native-date-input": "^1.0.11",
     "react-native-datepicker": "^1.7.2",
     "react-native-fontawesome": "^7.0.0",

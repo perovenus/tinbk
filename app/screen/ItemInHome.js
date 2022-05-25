@@ -35,21 +35,21 @@ const ItemInHome = ({item}) => {
   // const admin = require('firebase-admin')
 
   const handleBuy = (buyerId, sellerId, book) => {
-    const seller = admin.firestore().collection('Users').doc(sellerId).get()
-    const buyer = admin.firestore().collection('Users').doc(buyerId).get()
+    const seller = firestore().collection('Users').doc(sellerId).get()
+    const buyer = firestore().collection('Users').doc(buyerId).get()
 
-    admin.messaging().sendToDevice(
-      seller.tokens,
+    firebase.messaging().sendMessage(
       {
         data: {
           seller: JSON.stringify(seller),
           buyer: JSON.stringify(buyer),
           book: JSON.stringify(book)
         },
+        to: seller.tokens
       },
-      {
-        priority: 'high',
-      }
+      // {
+      //   priority: 'high',
+      // }
     )
   }
 
