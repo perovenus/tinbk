@@ -7,7 +7,9 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    Text
+    Text,
+    Modal,
+    Alert
 } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
