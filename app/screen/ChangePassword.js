@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,12 +11,54 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import auth, { EmailAuthProvider }from '@react-native-firebase/auth';
+import Toast from 'react-native-toast-message';
 const ChangePassword = () => {
     const goToUserInfo = () => {
         Actions.pop();
     }
 
+    const showToast = message => {
+      Toast.show({
+        type: 'success',
+        text1: message,
+      });
+    };
+    const showToastErr = message => {
+      Toast.show({
+        type: 'error',
+        text1: message,
+      });
+    };
+    const [old_pass, setOld_pass] = useState('');
+    const [new_pass, setNew_pass] = useState('')
+    const [renew_pass, setRenew_pass] = useState('')
+
+    const printText = async () => {
+      console.log(old_pass)
+      console.log(new_pass)
+      console.log(renew_pass)
+      const user = auth().currentUser
+      const cred =await auth.EmailAuthProvider.credential(user.email, old_pass);
+      try {
+        if (new_pass != renew_pass){
+          showToastErr('Mật khẩu mới không khớp !!, Mời bạn nhập lại')
+        }
+        else{
+          await user.reauthenticateWithCredential(cred);
+          await user.updatePassword(new_pass)
+          showToast('Cập nhật thành công')
+          goToUserInfo()
+        }
+      } catch (e) {
+        // console.log(e.code, e.message)
+        showToastErr('Sai mật khẩu !!, Mời bạn nhập lại')
+        // Could be incorrect credentials
+      }
+      
+    }
+    const auth_and_change = () => {
+    }
   return (
     <ImageBackground
       style={styles.background}
@@ -55,7 +97,13 @@ const ChangePassword = () => {
             }}>
             Nhập mật khẩu cũ
           </Text>
-          <TextInput style={styles.input} />
+          <TextInput style={styles.input}
+          onChangeText= {
+            text => {
+            setOld_pass(text)
+          }}
+          secureTextEntry={true}
+          />
         </View>
         <View style={styles.accountInfo}>
           <Text
@@ -65,7 +113,14 @@ const ChangePassword = () => {
             }}>
             Nhập mật khẩu mới
           </Text>
-          <TextInput style={styles.input} />
+          <TextInput style={styles.input}
+          onChangeText={
+            text => {
+              setNew_pass(text)
+            }
+          }
+          secureTextEntry={true}
+          />
         </View>
         <View style={styles.accountInfo}>
           <Text
@@ -75,9 +130,18 @@ const ChangePassword = () => {
             }}>
             Xác nhận mật khẩu
           </Text>
-          <TextInput style={styles.input} />
+          <TextInput style={styles.input} 
+          onChangeText= {
+            text => {
+              setRenew_pass(text)
+            }
+          }
+          secureTextEntry={true}
+          />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={printText}
+        >
           <View style={[styles.loginButton, styles.elevation]}>
             <Text style={{fontSize: 20, color: 'white'}}>Hoàn thành</Text>
           </View>
