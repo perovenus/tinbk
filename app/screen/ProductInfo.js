@@ -193,7 +193,6 @@ export default function ProductScreen(item) {
                         <View style={[styles.modalView, {display: 'flex',}]}>
                             <Text style={{
                                 fontSize: 20,
-                                marginTop: '15%',
                                 marginBottom: 20,
                                 textAlign: 'center',
                             }}>Bạn có chắc muốn hủy đăng ký không ?</Text>
@@ -255,9 +254,8 @@ export default function ProductScreen(item) {
                         <View style={[styles.modalView, {display: 'flex',}]}>
                             <Text style={{
                                 fontSize: 20,
-                                marginTop: '15%',
+                                textAlign: 'center',
                                 marginBottom: 20,
-                                textAlign: 'center'
                             }}>Bạn có chắc muốn đăng ký mua sản phẩm không ?</Text>
                             <View style={[styles.ButtonBlock, {marginTop: 0}]}>
                             <TouchableOpacity
@@ -640,6 +638,8 @@ const styles = StyleSheet.create({
         height: 174,
     },
     modalView: {
+        justifyContent: "center",
+        paddingTop: 30,
         width: '80%',
         height: '100%',
         backgroundColor: "white",
