@@ -121,6 +121,7 @@ const Home = () => {
             'data': query,
             'search' : true
           })
+        }
         />
       </View>
       <View style={styles.body}>
