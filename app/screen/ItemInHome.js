@@ -14,6 +14,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Actions } from 'react-native-router-flux'
 import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const ItemInHome = ({item}) => {
   firebase.messaging().onMessage(message => {
@@ -30,18 +32,33 @@ const ItemInHome = ({item}) => {
     console.log('Received an Error');
   });
   
-  const handleBuy = () => {
-    firebase.messaging().sendMessage({
-      data: {
-        foo: 'bar',
+  // const admin = require('firebase-admin')
+
+  const handleBuy = (buyerId, sellerId, book) => {
+    const seller = admin.firestore().collection('Users').doc(sellerId).get()
+    const buyer = admin.firestore().collection('Users').doc(buyerId).get()
+
+    admin.messaging().sendToDevice(
+      seller.tokens,
+      {
+        data: {
+          seller: JSON.stringify(seller),
+          buyer: JSON.stringify(buyer),
+          book: JSON.stringify(book)
+        },
       },
-    }).then(() =>{
-      console.log('Djtme ppl')
-    });
+      {
+        priority: 'high',
+      }
+    )
   }
+
   const gotoProductInfo = (i) => {
     Actions.ProductScreen(i)
   }
+
+  const user = auth().currentUser
+
   return (
     // <View style={styles.itemInHome}>
       <TouchableOpacity
@@ -58,7 +75,7 @@ const ItemInHome = ({item}) => {
             <Text style={styles.price}>{item.price}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.buybutton} onPress={handleBuy}>
+        <TouchableOpacity style={styles.buybutton} onPress={() => handleBuy(user.uid, item.seller, item)}>
           <FontAwesome5 name='shopping-cart' size={24} color='rgba(47,128,237,0.85)'/>
         </TouchableOpacity>
       </TouchableOpacity>
