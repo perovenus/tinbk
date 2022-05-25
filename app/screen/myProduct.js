@@ -24,7 +24,9 @@ import MyProductItem from './myProductItem';
 const MyProductScreen = (props) => {
     const [datalist, setDatalist] = useState([]);
     const [isInitialRender, setIsInitialRender] = useState(true);
-
+    const goBack = () => {
+        Actions.pop()
+    }
     useEffect(() => {
         const backAction = () => {
             Actions.pop();
@@ -87,6 +89,7 @@ const MyProductScreen = (props) => {
         <SafeAreaView style={styles.productlistscreen}>
             <View style={styles.header}>
                 <TouchableOpacity
+                onPress={goBack}
                 style = {{
                     marginLeft: '5%'
                 }}>
