@@ -14,6 +14,7 @@ import {Router, Scene} from 'react-native-router-flux';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import {LogBox, AsyncStorage} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import MyProductScreen from './app/screen/myProduct';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -104,6 +105,12 @@ export default function App(props) {
             key="ProductList"
             component={ProductList}
             title="ProductList"
+            hideNavBar={true}
+          />
+              <Scene
+            key="myProduct"
+            component={MyProductScreen}
+            title="myProduct"
             hideNavBar={true}
           />
           <Scene key="Tabs" component={Tabs} title="Tabs" hideNavBar={true} />
