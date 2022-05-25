@@ -18,59 +18,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 const ItemInHome = ({item}) => {
-  firebase.messaging().onMessage(message => {
-    console.log('Received a message');
-    console.log(message)
-  });
   
-  firebase.messaging().onMessageSent(message => {
-    console.log('Sent a message');
-    console.log(message)
-  });
-  
-  firebase.messaging().onSendError(message => {
-    console.log('Received an Error');
-  });
-  
-  // const admin = require('firebase-admin')
-
-  const [buyerToken, setBuyerToken] = useState('')
-  const [sellerToken, setSellerToken] = useState('')
-
-  // firestore().collection('Users').doc(auth().currentUser.uid).get()
-  //   .then(documentSnapshot => {
-  //     if (buyerToken == '') {
-  //       setBuyerToken(documentSnapshot.data()['tokens'])
-  //     }
-  //   })
-
-  firestore().collection('Users').doc(item.seller).get()
-    .then(documentSnapshot => {
-      if (sellerToken == '') {
-        setSellerToken(documentSnapshot.data()['tokens'])
-      }
-    })
-
-  const handleBuy = (buyerId, sellerId, book) => {
-    
-    const seller = firebase.firestore().collection('Users').doc(sellerId).get()
-    const buyer = firebase.firestore().collection('Users').doc(buyerId).get()
-
-    firebase.messaging().sendMessage(
-      {
-        data: {
-          seller: JSON.stringify(seller),
-          buyer: JSON.stringify(buyer),
-          book: JSON.stringify(book)
-        },
-        to: sellerToken[0]
-      },
-      // {
-      //   priority: 'high',
-      // }
-    )
-  }
-
   const gotoProductInfo = (i) => {
     Actions.ProductScreen(i)
   }

@@ -23,7 +23,6 @@
     "@react-native-firebase/storage": "^14.9.4",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/native": "^5.9.8",
-    "firebase-admin": "^10.2.0",
     "react": "17.0.2",
     "react-native": "0.67.3",
     "react-native-date-input": "^1.0.11",
