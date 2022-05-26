@@ -18,13 +18,25 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 const ItemInHome = ({item}) => {
-  
   const gotoProductInfo = (i) => {
     Actions.ProductScreen(i)
   }
-
+  
   const user = auth().currentUser
+  const sendMessage = () => {
+    fetch('https://1587-2405-4802-b268-c940-f0e5-df7-e3d4-84e8.ngrok.io/notifications', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify({
+        buyerId: user.uid,
+        book: item
+      })
+    })
+    
 
+  }
   return (
     // <View style={styles.itemInHome}>
       <TouchableOpacity
@@ -41,7 +53,7 @@ const ItemInHome = ({item}) => {
             <Text style={styles.price}>{item.price}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.buybutton} onPress={() => handleBuy(user.uid, item.seller, item)}>
+        <TouchableOpacity style={styles.buybutton} onPress={sendMessage}>
           <FontAwesome5 name='shopping-cart' size={24} color='rgba(47,128,237,0.85)'/>
         </TouchableOpacity>
       </TouchableOpacity>

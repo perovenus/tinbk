@@ -5,8 +5,6 @@ import GetOTPScreen from './app/screen/GetOTPScreen';
 import ConfirmOTPScreen from './app/screen/ConfirmOTPScreen';
 import ProductScreen from './app/screen/ProductInfo';
 import IntroductionScreen from './app/screen/Intro';
-import Notification from './app/screen/Notification';
-import UploadProduct from './app/screen/UploadProduct';
 import ProductList from './app/screen/ProductList';
 import Tabs from './app/screen/Tabs';
 import ChangePassword from './app/screen/ChangePassword';
@@ -14,6 +12,7 @@ import {Router, Scene} from 'react-native-router-flux';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import {LogBox, AsyncStorage} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import firestore from '@react-native-firebase/firestore';
 import MyProductScreen from './app/screen/myProduct';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -46,6 +45,29 @@ export default function App(props) {
         setIsFirstLaunch(false);
       }
     }); // Add some error handling, also you can simply do setIsFirstLaunch(null)
+  }, []);
+
+  async function saveTokenToDatabase(token) {
+    await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .update({
+        tokens: firestore.FieldValue.arrayUnion(token),
+      });
+  }
+
+  useEffect(() => {
+    // Get the device token
+    messaging()
+      .getToken()
+      .then(token => {
+        return saveTokenToDatabase(token);
+      });
+
+    // Listen to whether the token changes
+    return messaging().onTokenRefresh(token => {
+      saveTokenToDatabase(token);
+    });
   }, []);
 
   useEffect(() => {
@@ -126,16 +148,3 @@ export default function App(props) {
   );
 }
 
-// import React, { Component } from 'react';
-// import { AppRegistry, View } from 'react-native';
-// import Routes from './app/screen/Router';
-
-// class reactTutorialApp extends Component {
-//    render() {
-//       return (
-//          <Routes />
-//       )
-//    }
-// }
-// export default reactTutorialApp
-// AppRegistry.registerComponent('reactTutorialApp', () => reactTutorialApp)

@@ -27,7 +27,7 @@ const Home = () => {
   let temp_data = []
   const [datalist, setDatalist] = useState([]);
   const renderItem = ({ item }) => (
-    <ItemInHome item={item} />
+    <ItemInHome item={item}/>
   );
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [query, setQuery] = useState('')
@@ -35,34 +35,6 @@ const Home = () => {
   const handleSearch = (text) => {
     setQuery(text)
   }
-
-  async function saveTokenToDatabase(token) {
-    await firestore()
-      .collection('Users')
-      .doc(auth().currentUser.uid)
-      .update({
-        tokens: firestore.FieldValue.arrayUnion(token),
-      });
-  }
-
-  useEffect(() => {
-    // Get the device token
-    messaging()
-      .getToken()
-      .then(token => {
-        return saveTokenToDatabase(token);
-      });
-
-    // If using other push notification providers (ie Amazon SNS, etc)
-    // you may need to get the APNs token instead for iOS:
-    // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
-
-    // Listen to whether the token changes
-    return messaging().onTokenRefresh(token => {
-      saveTokenToDatabase(token);
-    });
-  }, []);
-
   useEffect(() => {
     const ref = firestore()
       .collection('Books')
