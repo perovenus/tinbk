@@ -19,44 +19,6 @@ import { PortalProvider } from "@gorhom/portal";
 import { Actions } from 'react-native-router-flux';
 import firestore from '@react-native-firebase/firestore';
 
-const DATA = [
-  {
-    id: '1',
-    name: 'Giải tích 1',
-    price: '10000 VNĐ',
-    location: 'KTX khu A',
-  },
-  {
-    id: '2',
-    name: 'Giải tích 2',
-    price: '20000 VNĐ',
-    location: 'KTX khu B',
-  },
-  {
-    id: '3',
-    name: 'Kinh tế chính trị Mác-Lênin',
-    price: '30000 VNĐ',
-    location: 'ĐHBK cơ sở 1',
-  },
-  {
-    id: '4',
-    name: 'Chủ nghĩa xã hội',
-    price: '40000 VNĐ',
-    location: 'ĐHBK cơ sở 2',
-  },
-  {
-    id: '5',
-    name: 'PPL',
-    price: '50000 VNĐ',
-    location: 'Quận 1',
-  },
-  {
-    id: '6',
-    name: 'Sách loz',
-    price: '300000 VNĐ',
-    location: 'KTX khu A',
-  },
-]
 
 const ProductList = (props) => {
   const [datalist, setDatalist] = useState([]);
@@ -112,12 +74,34 @@ const ProductList = (props) => {
     <Item item={item} />
   );
 
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(props.data)
 
   const handleSearch = (text) => {
     setQuery(text)
   }
 
+  const Search = async(data) => {
+    // console.log(data)
+    temp_data = []
+    await firestore()
+      .collection('Books')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          let temp = documentSnapshot.data();
+          // console.log("research......")
+          if (temp.bookName.includes(data)) {
+            // console.log(temp)
+            temp['id'] = documentSnapshot.id
+            temp_data.push(temp)
+          }
+        })
+        
+        setDatalist(() => temp_data)
+        
+      
+      })
+  }
   const modalRef = useRef(null);
 
   const onOpen = () => {
@@ -139,6 +123,9 @@ const ProductList = (props) => {
           onChangeText={(queryText) => handleSearch(queryText)}
           placeholder='Bạn muốn tìm gì'
           style={styles.searchbar}
+          onSubmitEditing={() => {
+            Search(query)
+          }}
         />
 
         <TouchableOpacity onPress={onOpen}>
