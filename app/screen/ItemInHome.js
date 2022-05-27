@@ -24,7 +24,7 @@ const ItemInHome = ({item}) => {
   
   const user = auth().currentUser
   const sendMessage = () => {
-    fetch('https://1587-2405-4802-b268-c940-f0e5-df7-e3d4-84e8.ngrok.io/notifications', {
+    fetch('https://644d-2405-4802-b268-c940-f83f-4f2a-9ddc-207b.ngrok.io/notifications', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json' 
