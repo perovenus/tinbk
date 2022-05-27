@@ -38,7 +38,7 @@ const MyProductItem = ({ item }) => {
                     />
                     <View style={styles.details}>
                         <Text style={styles.name}>{item.bookName}</Text>
-                        <Text style={styles.price}>{item.price}</Text>
+                        <Text style={styles.price}>{item.price} đồng</Text>
                         <Text style={styles.location}>{item.bookRegion}</Text>
                     </View>
                 </View>

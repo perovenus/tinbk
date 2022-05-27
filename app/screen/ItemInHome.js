@@ -50,7 +50,7 @@ const ItemInHome = ({item}) => {
           />
           <View style={styles.details}>
             <Text style={styles.name}>{item.bookName}</Text>
-            <Text style={styles.price}>{item.price}</Text>
+            <Text style={styles.price}>{item.price} đồng</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.buybutton} onPress={sendMessage}>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   buybutton: {
     position: 'absolute',
-    left: 125,
-    top: 165,
+    left: 155,
+    top: 185,
   }
 })
