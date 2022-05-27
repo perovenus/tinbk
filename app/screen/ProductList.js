@@ -79,9 +79,52 @@ const ProductList = (props) => {
   const handleSearch = (text) => {
     setQuery(text)
   }
+  const filter = async (data) => {
+    // temp_data = []
+    console.log(data);
+    // console.log(datalist);
+    // temp_data = []
+    // for (let i of datalist){
+    //   // console.log(i)
+    //   if (i.price <= data.priceTo && 
+    //     i.price >= data.priceFrom && 
+    //     (i.bookRegion.includes(data.location) || data.location == '') &&
+    //     (i.bookType.includes(data.bookType) || data.bookType == '') &&
+    //     (i.bookStatus.includes(data.status) || data.status == '')){
+    //     temp_data.push(i)
+    //     console.log('alooooooooooooo')
+    //   }
+    // }
+    // setDatalist(() => temp_data)
 
-  const Search = async(data) => {
+
+    temp_data = []
+    await firestore()
+      .collection('Books')
+      .where('price', '<=', data.priceTo)
+      .where('price', '>=', data.priceFrom)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          let temp = documentSnapshot.data();
+          if ((temp.bookRegion.includes(data.location) || data.location == '') &&
+            (temp.bookType.includes(data.bookType) || data.bookType == '') &&
+            (temp.bookStatus.includes(data.status) || data.status == '')) {
+            temp['id'] = documentSnapshot.id
+            temp_data.push(temp)
+            console.log(temp)
+          }
+
+        })
+        console.log(temp_data)
+        setDatalist(() => temp_data)
+
+
+      })
+  }
+  const Search = async (data) => {
     // console.log(data)
+    console.log(data)
     temp_data = []
     await firestore()
       .collection('Books')
@@ -96,10 +139,10 @@ const ProductList = (props) => {
             temp_data.push(temp)
           }
         })
-        
+
         setDatalist(() => temp_data)
-        
-      
+
+
       })
   }
   const modalRef = useRef(null);
@@ -154,7 +197,7 @@ const ProductList = (props) => {
       </View>
       <PortalProvider>
         <View style={styles.container1}>
-          <FilterModal modalRef={modalRef} onClose={onClose} />
+          <FilterModal modalRef={modalRef} onClose={onClose} filter={filter} />
         </View>
       </PortalProvider>
     </SafeAreaView>

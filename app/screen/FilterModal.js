@@ -12,16 +12,22 @@ import { Modalize } from "react-native-modalize";
 import SelectDropdown from 'react-native-select-dropdown'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import CheckBox from '@react-native-community/checkbox';
+import Toast from 'react-native-toast-message';
 
 const { height } = Dimensions.get("screen");
 const modalHeight = height * 0.75;
 
-const FilterModal = ({modalRef, onClose}) => {
-
+const FilterModal = ({modalRef, onClose, filter}) => {
+  // Search('alooooo')
   const [newCheckbox, setNewCheckbox] = useState(false)
   const [likeNewCheckbox, setLikeNewCheckbox] = useState(false)
   const [oldCheckbox, setOldCheckbox] = useState(false)
-
+  const showToastErr = message => {
+    Toast.show({
+      type: 'error',
+      text1: message,
+    });
+  };
   const handleNewCheckbox = (newValue) => {
     if (newCheckbox == false) {
       setNewCheckbox(newValue)
@@ -82,7 +88,7 @@ const FilterModal = ({modalRef, onClose}) => {
     )
   }
 
-  const bookTypes = ['Giáo trình', 'Sách bài tập', 'Truyện']
+  const bookTypes = ['Giáo trình', 'Bài tập', 'Truyện', 'Tham khảo']
   const locations = ['ĐHBK cơ sở 1', 'ĐHBK cơ sở 2', 'KTX khu A', 'KTX khu B']
 
   return(
@@ -112,7 +118,7 @@ const FilterModal = ({modalRef, onClose}) => {
                   }}
                   defaultButtonText=' '
                   onSelect={(selectedItem, index) => {
-                    setBookType(index)
+                    setBookType(selectedItem)
                   }}
                   renderDropdownIcon={dropdownIcon}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -195,7 +201,7 @@ const FilterModal = ({modalRef, onClose}) => {
                     }}
                     defaultButtonText=' '
                     onSelect={(selectedItem, index) => {
-                      setLocation(index)
+                      setLocation(selectedItem)
                     }}
                     renderDropdownIcon={dropdownIcon}
                     buttonTextAfterSelection={(selectedItem, index) => {
@@ -208,7 +214,23 @@ const FilterModal = ({modalRef, onClose}) => {
                 </View> 
               </View>
             </View>
-            <TouchableOpacity onPress={()=>{}} style={styles.applybutton}>
+            <TouchableOpacity onPress={()=>{
+              if (parseInt(priceFrom) > parseInt(priceTo) && priceFrom != '' && priceTo != ''){
+                showToastErr('Giá khởi điểm phải nhỏ hơn giá chốt')
+              }
+              else {
+                let to = priceTo == '' ? 9999999999 : parseInt(priceTo);
+                let from = priceFrom == '' ? 0 : parseInt(priceFrom);
+                filter({
+                  'bookType' : bookType,
+                  'priceFrom' : from,
+                  'priceTo' : to,
+                  'location' : location,
+                  'status' : newCheckbox ? 'Sách mới' : (likeNewCheckbox ? 'Sách 99%' : (oldCheckbox ? 'Sách cũ' : ''))
+                })
+                onClose()
+              }
+            }} style={styles.applybutton}>
               <View>
                 <Text
                   style={{
