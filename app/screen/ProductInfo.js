@@ -376,17 +376,17 @@ export default function ProductScreen(item) {
 
         <View style={styles.SellerInfoBlock}>
           <View style={styles.avatar}>
-            {user.image ? (
+            {
+            user.image ? (
               <Image style={styles.sellerImg} source={{uri: user.image}} />
             ) : (
               <Image
                 style={styles.sellerImg}
                 source={require('../assets/user.png')}
               />
-            )}
-            {/* <Image
-                            style={styles.sellerImg}
-                            source={ProductInfo['sellerAvatar']} /> */}
+            )
+            }
+
           </View>
 
           <View style={styles.SellerInfo}>
@@ -398,6 +398,9 @@ export default function ProductScreen(item) {
             </Text>
             <Text style={{color: 'black'}}>
               Địa chỉ giao dịch : {user.address}
+            </Text>
+            <Text style={{color: 'black'}}>
+              Mô tả : {user.description}
             </Text>
           </View>
         </View>
@@ -539,18 +542,19 @@ const styles = StyleSheet.create({
   },
   avatar: {
     // view co image
-    flex: 3,
+    // flex: 3,
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
     alignContent: 'center',
   },
   SellerInfo: {
-    flex: 7,
+    // flex: 7,
     display: 'flex',
     alignItems: 'flex-start',
     flexDirection: 'column',
     color: '#000',
+    width: '65%'
   },
   ButtonBlock: {
     display: 'flex',
