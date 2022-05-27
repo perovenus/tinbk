@@ -18,7 +18,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import firebase from '@react-native-firebase/app';
-import messaging from '@react-native-firebase/messaging';
+import Toast from 'react-native-toast-message';
 
 const Home = () => {
   const gotoProductList = (type) => {
@@ -27,7 +27,7 @@ const Home = () => {
   let temp_data = []
   const [datalist, setDatalist] = useState([]);
   const renderItem = ({ item }) => (
-    <ItemInHome item={item}/>
+    <ItemInHome item={item} />
   );
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [query, setQuery] = useState('')
@@ -35,11 +35,18 @@ const Home = () => {
   const handleSearch = (text) => {
     setQuery(text)
   }
+  const showToastErr = message => {
+    Toast.show({
+      type: 'error',
+      text1: message,
+    });
+  };
   useEffect(() => {
     const ref = firestore()
       .collection('Books')
+      .limit(6)
       .get()
-      .then( querySnapshot => {
+      .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           // console.log(documentSnapshot.id)
@@ -89,11 +96,18 @@ const Home = () => {
           onChangeText={(queryText) => handleSearch(queryText)}
           placeholder='Tìm kiếm...'
           style={styles.searchbar}
-          onSubmitEditing={() => gotoProductList({
-            'data': query,
-            'search' : true
-          })
-        }
+          onSubmitEditing={() =>{
+            if (query == ''){
+              showToastErr("Vui lòng nhập ít nhất một ký tự !!")
+            }
+            else {
+              gotoProductList({
+                'data': query,
+                'search': true
+              })
+            }
+          } 
+          }
         />
       </View>
       <View style={styles.body}>
@@ -155,7 +169,12 @@ const Home = () => {
         <View style={styles.productlist}>
           <View style={styles.productlistHeader}>
             <Text style={[styles.typename, { fontSize: 15 }]}>Sản phẩm mới</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => gotoProductList({
+                'data': '',
+                'search': true
+              })
+              }>
               <View style={styles.allProduct}>
                 <Text style={[styles.typename, { fontSize: 15 }]}>Tất cả</Text>
                 <FontAwesome5 name='angle-right' size={24} color='#000000' />

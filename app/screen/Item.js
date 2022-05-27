@@ -10,11 +10,15 @@ import {
 } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-
+import { Actions } from 'react-native-router-flux'
 const Item = ({item}) => {
+  const gotoProductInfo = (i) => {
+    Actions.ProductScreen(i)
+  }
   return (
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity
+      onPress={() => gotoProductInfo(item)}>
         <View style={styles.container}>
           <Image
             resizeMode='contain'
