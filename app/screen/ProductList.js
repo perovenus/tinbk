@@ -48,7 +48,7 @@ const ProductList = (props) => {
           let temp = documentSnapshot.data();
           // console.log(documentSnapshot.id)
           if (props.search != undefined) {
-            if (temp.bookName.includes(props.data)) {
+            if (temp.bookName.toLowerCase().includes(props.data.toLowerCase())) {
               // console.log(temp)
               temp['id'] = documentSnapshot.id
               temp_data.push(temp)
@@ -74,7 +74,9 @@ const ProductList = (props) => {
     <Item item={item} />
   );
 
-  const [query, setQuery] = useState(props.data)
+  const [query, setQuery] = useState(props.search ? props.data : '')
+
+
 
   const handleSearch = (text) => {
     setQuery(text)
