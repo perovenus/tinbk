@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: Dimensions.get('window').width,
-    height: 425,
+    height: 470,
   },
   closeButton: {
     position: 'absolute',
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   textstyle: {
     fontWeight: 'bold',
     color: '#000000',
-    fontSize: 16,
+    fontSize: 20,
   },
   confirmButton: {
     borderRadius: 10,
@@ -236,11 +236,11 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: '70%',
-    height: 34,
+    height: 40,
     borderWidth: 1,
     borderRadius: 15,
     borderColor: '#000000',
-    fontSize: 13,
+    fontSize: 16,
     paddingHorizontal: 10,
     color: '#000',
   },
