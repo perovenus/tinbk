@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
   },
   container: {
     height: Dimensions.get('window').height - 65,
+    backgroundColor: '#dddddd',
   },
   detail: {
     marginLeft: 20,
