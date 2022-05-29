@@ -4,18 +4,13 @@ import {
     View,
     StyleSheet,
     FlatList,
-    TextInput,
     Dimensions,
     TouchableOpacity,
     BackHandler,
     Text
 } from 'react-native'
 
-import Item from './Item';
-// import filter from 'lodash.filter'
-import FilterModal from './FilterModal';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { PortalProvider } from "@gorhom/portal";
 import { Actions } from 'react-native-router-flux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';

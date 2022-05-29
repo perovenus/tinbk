@@ -6,7 +6,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo  from 'react-native-vector-icons/Entypo';
 import Home from './Home'
 import UserInfo from './Userinfo'
-import Notification from './Notification'
 const Tab = createBottomTabNavigator();
 
 export default function Tabs() {

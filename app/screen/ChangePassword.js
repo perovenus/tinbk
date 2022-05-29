@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import auth, { EmailAuthProvider }from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 const ChangePassword = () => {
     const goToUserInfo = () => {

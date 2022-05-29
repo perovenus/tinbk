@@ -1,5 +1,4 @@
-import { faAlignJustify, faDiceSix } from '@fortawesome/free-solid-svg-icons'
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
   View,
@@ -12,9 +11,6 @@ import {
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Actions } from 'react-native-router-flux'
-import firebase from '@react-native-firebase/app';
-import messaging from '@react-native-firebase/messaging';
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 const ItemInHome = ({item}) => {

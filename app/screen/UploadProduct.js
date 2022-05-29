@@ -15,13 +15,11 @@ import {
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary} from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import {utils} from '@react-native-firebase/app';
-import ProductScreen from './ProductInfo';
 
 const UploadProduct = ({item}) => {
   const [modalVisible, setModalVisible] = useState(false);

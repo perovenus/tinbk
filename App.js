@@ -11,7 +11,7 @@ import ChangePassword from './app/screen/ChangePassword';
 import {Router, Scene} from 'react-native-router-flux';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import {LogBox, AsyncStorage} from 'react-native';
-import messaging from '@react-native-firebase/messaging';
+// import messaging from '@react-native-firebase/messaging';
 import firestore from '@react-native-firebase/firestore';
 import MyProductScreen from './app/screen/myProduct';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
@@ -56,31 +56,31 @@ export default function App(props) {
       });
   }
 
-  useEffect(() => {
-    // Get the device token
-    messaging()
-      .getToken()
-      .then(token => {
-        return saveTokenToDatabase(token);
-      });
+  // useEffect(() => {
+  //   // Get the device token
+  //   messaging()
+  //     .getToken()
+  //     .then(token => {
+  //       return saveTokenToDatabase(token);
+  //     });
 
-    // Listen to whether the token changes
-    return messaging().onTokenRefresh(token => {
-      saveTokenToDatabase(token);
-    });
-  }, []);
+  //   // Listen to whether the token changes
+  //   return messaging().onTokenRefresh(token => {
+  //     saveTokenToDatabase(token);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      const seller = JSON.parse(remoteMessage.data.seller);
-      const buyer = JSON.parse(remoteMessage.data.buyer);
-      const book = JSON.parse(remoteMessage.data.book);
+  // useEffect(() => {
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     const seller = JSON.parse(remoteMessage.data.seller);
+  //     const buyer = JSON.parse(remoteMessage.data.buyer);
+  //     const book = JSON.parse(remoteMessage.data.book);
 
-      console.log(`"${buyer.firstName}" muốn mua sách "${book.bookName}" của bạn`);
-    });
+  //     console.log(`"${buyer.firstName}" muốn mua sách "${book.bookName}" của bạn`);
+  //   });
 
-    return unsubscribe;
-  }, []);
+  //   return unsubscribe;
+  // }, []);
 
   return (
     <>

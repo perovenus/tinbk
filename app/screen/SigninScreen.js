@@ -1,17 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-  Dimensions,
-  Pressable,
-} from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import React from 'react';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import Tabs from './Tabs';

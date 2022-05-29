@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Alert,
   Modal,
   StyleSheet,
   Text,
-  Pressable,
   View,
   TextInput,
   Image,
@@ -12,10 +10,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import CheckBox from '@react-native-community/checkbox';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import MaskInput, {Masks} from 'react-native-mask-input';
 const Editmodal = (modalVisible, setModalVisible, user) => {

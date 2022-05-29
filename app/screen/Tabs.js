@@ -7,7 +7,6 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Home from './Home';
 import UserInfo from './Userinfo';
 import Notification from './Notification';
-import ProductScreen from './ProductInfo';
 import UploadProduct from './UploadProduct';
 const Tab = createBottomTabNavigator();
 

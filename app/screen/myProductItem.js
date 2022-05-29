@@ -1,4 +1,3 @@
-import { faAlignJustify } from '@fortawesome/free-solid-svg-icons'
 import firestore from '@react-native-firebase/firestore';
 import React, {useState} from 'react'
 
@@ -8,8 +7,6 @@ import {
     Image,
     TouchableOpacity,
     Text,
-    Modal,
-    Alert
 } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'

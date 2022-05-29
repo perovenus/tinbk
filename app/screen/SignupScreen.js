@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
-  TouchableHighlight
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import CheckBox from '@react-native-community/checkbox';
