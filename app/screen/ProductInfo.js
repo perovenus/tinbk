@@ -397,10 +397,10 @@ export default function ProductScreen(item) {
               Số điện thoại : {user.phoneNumber}
             </Text>
             <Text style={{color: 'black'}}>
-              Địa chỉ giao dịch : {user.address}
+              Địa chỉ giao dịch : {item.address}
             </Text>
             <Text style={{color: 'black'}}>
-              Mô tả : {user.description}
+              Mô tả : {item.description}
             </Text>
           </View>
         </View>
