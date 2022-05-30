@@ -1,4 +1,3 @@
-import { faAlignJustify } from '@fortawesome/free-solid-svg-icons'
 import firestore from '@react-native-firebase/firestore';
 import React, {useState} from 'react'
 
@@ -8,8 +7,6 @@ import {
     Image,
     TouchableOpacity,
     Text,
-    Modal,
-    Alert
 } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -56,14 +53,14 @@ export default MyProductItem;
 
 const styles = StyleSheet.create({
     container: {
+        borderRadius: 20,
         width: '100%',
         height: 140,
         marginTop: 5,
         marginHorizontal: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#F0F0F0',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#fff',
     },
     image: {
         width: '35%',

@@ -1,4 +1,3 @@
-import { faAlignJustify } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
 import {
@@ -43,14 +42,14 @@ export default Item;
 
 const styles = StyleSheet.create({
   container: {
+    borderRadius: 20,
     width: '100%',
     height: 140,
     marginTop: 5,
     marginHorizontal: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   image: {
     width: '35%',

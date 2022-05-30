@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Alert,
   Modal,
   StyleSheet,
   Text,
-  Pressable,
   View,
   TextInput,
   Image,
@@ -12,10 +10,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import CheckBox from '@react-native-community/checkbox';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import MaskInput, {Masks} from 'react-native-mask-input';
 const Editmodal = (modalVisible, setModalVisible, user) => {
@@ -187,8 +184,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    width: Dimensions.get('window').width,
-    height: 425,
+    width: Dimensions.get('window').width - 30,
+    height: 470,
   },
   closeButton: {
     position: 'absolute',
@@ -211,7 +208,7 @@ const styles = StyleSheet.create({
   textstyle: {
     fontWeight: 'bold',
     color: '#000000',
-    fontSize: 16,
+    fontSize: 20,
   },
   confirmButton: {
     borderRadius: 10,
@@ -236,11 +233,11 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: '70%',
-    height: 34,
+    height: 40,
     borderWidth: 1,
     borderRadius: 15,
     borderColor: '#000000',
-    fontSize: 13,
+    fontSize: 16,
     paddingHorizontal: 10,
     color: '#000',
   },

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import {
   SafeAreaView,
   TextInput,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -15,9 +14,6 @@ import { Actions } from 'react-native-router-flux';
 import ItemInHome from './ItemInHome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
-import storage from '@react-native-firebase/storage';
-import firebase from '@react-native-firebase/app';
 import Toast from 'react-native-toast-message';
 
 const Home = () => {
