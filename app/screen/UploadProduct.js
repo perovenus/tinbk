@@ -98,6 +98,7 @@ const UploadProduct = ({item}) => {
       setBookType('');
       setBookRegion('');
       setBookStatus('');
+      setDescription('');
       bookTypeRef.current.reset();
       bookRegionRef.current.reset();
       bookStatusRef.current.reset();
@@ -250,6 +251,7 @@ const UploadProduct = ({item}) => {
                 ]}
                 multiline={true}
                 numberOfLines={4}
+                value={description}
               />
             </View>
             <View
