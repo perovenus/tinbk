@@ -402,6 +402,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttondropdown: {
+    width: '60%',
     height: 40,
     marginBottom: 10,
     borderWidth: 1,
