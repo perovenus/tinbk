@@ -400,7 +400,7 @@ export default function ProductScreen(item) {
               Địa chỉ giao dịch : {item.address}
             </Text>
             <Text style={{color: 'black'}}>
-              Mô tả : {item.description}
+              Mô tả : {item.description == '' ? 'Không có mô tả' : item.description}
             </Text>
           </View>
         </View>
