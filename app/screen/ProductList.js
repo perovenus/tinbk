@@ -125,8 +125,8 @@ const ProductList = (props) => {
       })
   }
   const Search = async (data) => {
-    // console.log(data)
     console.log(data)
+    // console.log(data)
     temp_data = []
     await firestore()
       .collection('Books')
@@ -135,13 +135,13 @@ const ProductList = (props) => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           // console.log("research......")
-          if (temp.bookName.includes(data)) {
+          if (temp.bookName.toLowerCase().includes(data.toLowerCase())) {
             // console.log(temp)
             temp['id'] = documentSnapshot.id
             temp_data.push(temp)
           }
         })
-
+        console.log(temp_data)
         setDatalist(() => temp_data)
 
 
