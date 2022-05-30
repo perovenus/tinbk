@@ -15,7 +15,7 @@ import {
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -165,34 +165,21 @@ const UploadProduct = ({item}) => {
               value={bookName}
               placeholder="Nhập tên sách (5 đến 50 ký tự)"
             />
-            <View style={styles.soluongvagia}>
-              <View style={styles.soluong}>
-                <Text style={styles.text}>
-                  Số lượng <Text style={{color: 'red'}}>*</Text>
-                </Text>
-                <TextInput
-                  ref={quantityRef}
-                  onChangeText={text => setQuantity(text)}
-                  style={styles.textinput}
-                  keyboardType="numeric"
-                  value={quantity}
-                  placeholder="1 - 100"
-                />
-              </View>
-              <View style={styles.gia}>
-                <Text style={styles.text}>
-                  Giá <Text style={{color: 'red'}}>*</Text>
-                </Text>
-                <TextInput
-                  ref={priceRef}
-                  onChangeText={text => setPrice(text)}
-                  style={styles.textinput}
-                  keyboardType="numeric"
-                  value={price}
-                  placeholder="0 - 10.000.000"
-                />
-              </View>
+
+            <View style={styles.gia}>
+              <Text style={styles.text}>
+                Giá <Text style={{color: 'red'}}>*</Text>
+              </Text>
+              <TextInput
+                ref={priceRef}
+                onChangeText={text => setPrice(text)}
+                style={styles.textinputgia}
+                keyboardType="numeric"
+                value={price}
+                placeholder="0 - 10.000.000"
+              />
             </View>
+
             <View style={styles.domoi}>
               <Text style={styles.text}>
                 Độ mới <Text style={{color: 'red'}}>*</Text>
@@ -365,7 +352,7 @@ const styles = StyleSheet.create({
   textinput: {
     width: '100%',
     height: 40,
-    marginBottom: 10,
+    marginBottom: 20,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#2F80ED',
@@ -373,13 +360,26 @@ const styles = StyleSheet.create({
     color: '#000000',
     paddingHorizontal: 15,
   },
-  soluongvagia: {
+  textinputgia: {
+    width: '60%',
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#2F80ED',
+    fontSize: 18,
+    color: '#000000',
+    paddingHorizontal: 20,
+    padding: 10,
+    textAlign: 'center',
+    alignItems: 'center',
+
+  },
+
+  gia: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
   },
-  soluong: {flex: 3, marginRight: 30},
-  gia: {flex: 5},
   domoi: {
     flexDirection: 'row',
     justifyContent: 'space-between',
