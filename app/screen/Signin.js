@@ -112,8 +112,20 @@ export default function Signin() {
             onChangeText={text => setPassword(text)}
           />
         </View>
-        <Pressable onPress={goToGetOTPScreen}>
-          {({pressed}) => (
+        <Pressable
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 150,
+          marginLeft: '58%',
+          marginTop: '4%'
+          // alignItems: 'center'
+        }}
+        onPress={goToGetOTPScreen}>
+          {
+          ({pressed}) => (
             <Text
               style={[
                 {textDecorationLine: pressed ? 'underline' : 'none'},
@@ -122,7 +134,8 @@ export default function Signin() {
               ]}>
               Quên mật khẩu?
             </Text>
-          )}
+          )
+          }
         </Pressable>
       </View>
       <View style={styles.signinWith}>
@@ -190,8 +203,7 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     alignSelf: 'flex-end',
-    marginTop: 20,
-    marginRight: 40,
+
     fontSize: 16,
     fontWeight: 'bold',
   },
