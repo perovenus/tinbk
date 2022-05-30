@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
 	SafeAreaView,
 	ScrollView,
@@ -8,75 +8,25 @@ import {
 	Image,
 	TouchableOpacity,
 	Dimensions,
-	Modal
+	Modal,
+  FlatList
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
-
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import ProcessingNoti from './ProcessingNoti';
 
 const Notification = () => {
-	var listData = [
-		{
-			id: 5,
-			type: 'time',
-			time: 'Hôm nay',
-			status: 5
-		},
-		{
-			id: 3,
-			author: "anh da đen",
-			price: "99.000 VNĐ",
-			book_name: "Cách uống nước",
-			type: 'notification',
-			status: 2
-		},
-		{
-			id: 2,
-			author: "Khánh pờ rồ",
-			book_name: "Vui vẻ cùng PPL",
-
-			type: 'notification',
-			price: "30.000 VNĐ",
-			status: 3
-		}
-		, {
-			id: 1,
-			author: "Hải dúi",
-			book_name: "Sách giải tỏa căng thẳng",
-			price: "0.000 VNĐ",
-			type: 'notification',
-			status: 0
-		},
-		{
-			id: 4,
-			author: "Hải dúi",
-			book_name: "Sách giải tỏa căng thẳng",
-			price: "0.000 VNĐ",
-			type: 'notification',
-			status: 1
-		},
-		{
-			id: 5,
-			type: 'time',
-			time: 'Hôm nay',
-			status: 5
-		},
-		{
-			id: 3,
-			author: "anh da vàng",
-			price: "99.000 VNĐ",
-			book_name: "Cách uống nước",
-			type: 'notification',
-			status: 2
-		},
-	]
 	const [modalVisible, setModalVisible] = useState(false);
 	var newstatus = {};
-	for (var i = 0; i < listData.length; i++) {
-		newstatus[listData[i]['id']] = listData[i]['status'];
+	// for (var i = 0; i < listData.length; i++) {
+	// 	newstatus[listData[i]['id']] = listData[i]['status'];
 
-	}
+	// }
 	const [listStatus, setListStatus] = useState(newstatus);
+  const [notificationList, setNotificationList] = useState([])
+
 	const handleClick = (idx, value) => {
 		let news = {
 			...listStatus
@@ -84,6 +34,21 @@ const Notification = () => {
 		news[idx] = value;
 		setListStatus(news);
 	}
+
+  const user = auth().currentUser
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Notifications')
+      .doc(user.uid)
+      .onSnapshot(documentSnapshot => {
+        setNotificationList(documentSnapshot.data().notifications);
+      });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [user.uid]);
+
 	return (
 		<SafeAreaView>
 
@@ -104,7 +69,7 @@ const Notification = () => {
 
 
 
-			<View>
+			{/* <View>
 				<Modal
 					animationType="slide"
 					transparent={true}
@@ -157,12 +122,17 @@ const Notification = () => {
 						</View>
 					</View>
 				</Modal>
-			</View>
+			</View> */}
 
 
 
 
 			<ScrollView style={styles.body}>
+        {
+          notificationList.map((notification) => {
+            return <ProcessingNoti notification={notification} />
+          })
+        }
 				{/* <View style={styles.time}>
 					<Text>
 						Hôm nay
@@ -181,7 +151,7 @@ const Notification = () => {
 						Hom kia
 					</Text>
 				</View> */}
-				{
+				{/* {
 					listData.map((data) => (
 						<View>
 							{
@@ -282,7 +252,7 @@ const Notification = () => {
 							}
 						</View>
 					))
-				}
+				} */}
 
 			</ScrollView>
 		</SafeAreaView>

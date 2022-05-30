@@ -105,6 +105,15 @@ export default function SignupScreen() {
               .then(() => {
                 console.log('User added!');
               });
+            firestore()
+              .collection('Notifications')
+              .doc(user.uid)
+              .set({
+                notifications: []
+              })
+              .then(() => {
+                console.log('Notification added!');
+              });
             auth().signOut().then(() => {
               goToSigninScreen()
             })

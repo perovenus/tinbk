@@ -24,7 +24,7 @@ const ItemInHome = ({item}) => {
   
   const user = auth().currentUser
   const sendMessage = () => {
-    fetch('https://tinbk.herokuapp.com/notifications', {
+    fetch('https://tinbk.herokuapp.com/buyer-notifications', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json' 
@@ -33,10 +33,46 @@ const ItemInHome = ({item}) => {
         buyerId: user.uid,
         book: item
       })
+    });
+    var today = new Date();
+    firestore().collection('Notifications').doc(user.uid).get().then(docSnapshot =>{
+      const notifications = docSnapshot.data().notifications
+      notifications.push({
+        id: item.id + user.uid,
+        kind: 'buyer',
+        type: 'processing',
+        bookId: item.id,
+        partner: item.seller,
+        date: String(today.getDate()).padStart(2, '0') + '/' 
+            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
+            + today.getFullYear()
+      })
+      firestore().collection('Notifications').doc(user.uid).update({
+        notifications: notifications
+      }).then(() => {
+        console.log('Buyer-notification added');
+      })
     })
-    
-
+    firestore().collection('Notifications').doc(item.seller).get().then(docSnapshot =>{
+      const notifications = docSnapshot.data().notifications
+      notifications.push({
+        id: item.id + item.seller,
+        kind: 'seller',
+        type: 'processing',
+        bookId: item.id,
+        partner: user.uid,
+        date: String(today.getDate()).padStart(2, '0') + '/' 
+            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
+            + today.getFullYear()
+      })
+      firestore().collection('Notifications').doc(item.seller).update({
+        notifications: notifications
+      }).then(() => {
+        console.log('Seller-notification added');
+      })
+    })
   }
+  
   return (
     // <View style={styles.itemInHome}>
       <TouchableOpacity
@@ -107,7 +143,7 @@ const styles = StyleSheet.create({
   },
   buybutton: {
     position: 'absolute',
-    left: 155,
-    top: 185,
+    left: '78%',
+    top: '82%',
   }
 })
