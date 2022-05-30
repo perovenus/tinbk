@@ -35,7 +35,6 @@ const UploadProduct = ({item}) => {
   };
 
   const bookNameRef = useRef(null);
-  const quantityRef = useRef(null);
   const priceRef = useRef(null);
   const descriptionRef = useRef(null);
   const bookTypeRef = useRef(null);
@@ -44,7 +43,6 @@ const UploadProduct = ({item}) => {
 
   const [image, setImage] = useState(null);
   const [bookName, setBookName] = useState('');
-  const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [bookType, setBookType] = useState('');
@@ -67,14 +65,7 @@ const UploadProduct = ({item}) => {
     } else if (bookName == '' || bookName.length < 5 || bookName.length > 50) {
       bookNameRef.current.focus();
       showToast('Tên sách không hợp lệ');
-    } else if (
-      quantity == '' ||
-      quantity == '0' ||
-      quantity < 1 ||
-      quantity > 100
-    ) {
-      quantityRef.current.focus();
-      showToast('Số lượng không hợp lệ');
+    
     } else if (price == '' || price < 0 || price > 10000000) {
       priceRef.current.focus();
       showToast('Giá không hợp lệ');
@@ -91,7 +82,6 @@ const UploadProduct = ({item}) => {
         .collection('Books')
         .add({
           bookName: bookName,
-          quantity: parseInt(quantity),
           price: parseInt(price),
           description: description,
           bookType: bookType,
@@ -103,7 +93,6 @@ const UploadProduct = ({item}) => {
 
       setImage(null);
       setBookName('');
-      setQuantity('');
       setPrice('');
       setDescription('');
       setBookType('');
