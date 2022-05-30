@@ -176,7 +176,7 @@ const ProductList = (props) => {
         <TouchableOpacity onPress={onOpen}>
           <FontAwesome5
             name='filter'
-            size={30}
+            size={20}
             color='#FFFFFF'
             style={styles.filterbutton} />
         </TouchableOpacity>
@@ -212,21 +212,25 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 65,
+    display: 'flex',
     backgroundColor: 'rgba(47,128,237,0.75)',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
   },
   searchbar: {
     backgroundColor: '#FFFFFF',
     marginVertical: 10,
     marginLeft: 15,
     paddingLeft: 25,
-    width: '75%',
+    width: '80%',
     borderRadius: 17,
     fontSize: 15,
   },
   filterbutton: {
-    marginLeft: 25
+    // marginLeft: 25,
+    marginRight: '5%'
   },
   filtermodal: {
     justifyContent: 'flex-end',
