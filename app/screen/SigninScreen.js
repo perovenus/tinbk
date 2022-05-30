@@ -5,12 +5,7 @@ import Tabs from './Tabs';
 import Signin from './Signin';
 export default function SigninScreen() {
   console.log('SigninScreen');
-  const showToast = message => {
-    Toast.show({
-      type: 'success',
-      text1: message,
-    });
-  };
+  
   const showmessage = message => {
     console.log(message);
     Toast.show({

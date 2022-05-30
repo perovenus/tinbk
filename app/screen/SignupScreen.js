@@ -199,6 +199,7 @@ export default function SignupScreen() {
             </Text>
             <TextInput
               ref={emailRef}
+              spellCheck={false}
               style={styles.inputText}
               onChangeText={(text) => setEmail(text)}
             />
