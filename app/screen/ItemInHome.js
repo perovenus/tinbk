@@ -76,21 +76,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   name: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '400',
     color: 'rgb(36, 36, 36)',
     marginBottom: 5,
     // numberofLines: 1,
   },
   price: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#303030',
     // bottom: 5,
   },
   buybutton: {
     position: 'absolute',
-    left: '78%',
-    top: '82%',
+    bottom: '2%',
+    right: '4%',
   }
 })

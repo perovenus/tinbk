@@ -227,26 +227,29 @@ const styles = StyleSheet.create({
   },
   category: {
     backgroundColor: '#FFFFFF',
-    height: 90,
+    height: 120,
     marginTop: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly'
   },
   booktype: {
-    height: 85,
+    height: 95,
     width: 80,
+    // marginTop: 5
   },
   categoryImages: {
     width: 60,
     height: 68,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: '5%'
   },
   typename: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     color: '#303030',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    // marginTop: '3%'
   },
   productlist: {
     height: Dimensions.get('window').height - 335,
