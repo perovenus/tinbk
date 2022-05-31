@@ -19,60 +19,6 @@ const ItemInHome = ({item}) => {
     Actions.ProductScreen(i)
   }
   
-  const user = auth().currentUser
-  const sendMessage = (type, price) => {
-    fetch('https://tinbk.herokuapp.com/buyer-notifications', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify({
-        sender: user.uid,
-        receiver: item.seller,
-        book: item.id,
-        type: type,
-        price: price,
-      })
-    });
-    var today = new Date();
-    firestore().collection('Notifications').doc(user.uid).get().then(docSnapshot =>{
-      const notifications = docSnapshot.data().notifications
-      notifications.push({
-        kind: 'buyer',
-        type: type,
-        price: price,
-        bookId: item.id,
-        partner: item.seller,
-        date: String(today.getDate()).padStart(2, '0') + '/' 
-            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
-            + today.getFullYear()
-      })
-      firestore().collection('Notifications').doc(user.uid).update({
-        notifications: notifications
-      }).then(() => {
-        console.log('Buyer-notification added');
-      })
-    })
-    firestore().collection('Notifications').doc(item.seller).get().then(docSnapshot =>{
-      const notifications = docSnapshot.data().notifications
-      notifications.push({
-        kind: 'seller',
-        type: type,
-        price: price,
-        bookId: item.id,
-        partner: user.uid,
-        date: String(today.getDate()).padStart(2, '0') + '/' 
-            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
-            + today.getFullYear()
-      })
-      firestore().collection('Notifications').doc(item.seller).update({
-        notifications: notifications
-      }).then(() => {
-        console.log('Seller-notification added');
-      })
-    })
-  }
-  
   return (
     // <View style={styles.itemInHome}>
       <TouchableOpacity
@@ -89,9 +35,9 @@ const ItemInHome = ({item}) => {
             <Text style={styles.price}>{item.price} đồng</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.buybutton} onPress={() => sendMessage('processing', item.price)}>
+        {/* <TouchableOpacity style={styles.buybutton} onPress={() => sendMessage('processing', item.price)}>
           <FontAwesome5 name='shopping-cart' size={22} color='rgba(47,128,237,0.85)'/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </TouchableOpacity>
     // </View>
   )

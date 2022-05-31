@@ -31,9 +31,9 @@ const Item = ({item}) => {
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buybutton}>
+      {/* <TouchableOpacity style={styles.buybutton}>
         <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   )
 }

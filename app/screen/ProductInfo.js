@@ -16,6 +16,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import {RadioButton} from 'react-native-paper';
 export default function ProductScreen(item) {
   // const goToSignupScreen = () => {
@@ -34,21 +35,25 @@ export default function ProductScreen(item) {
 
     return () => backHandler.remove();
   }, []);
-  const [user, setUser] = useState({});
-  console.log(item.seller);
+  const [seller, setUser] = useState({});
+
+  const [orderList, setOrderList] = useState([])
+
   useEffect(() => {
     const subscriber = firestore()
       .collection('Users')
       .doc(item.seller)
-      .onSnapshot(documentSnapshot => {
-        console.log('User data: ', documentSnapshot.data());
-        setUser(documentSnapshot.data());
+      .onSnapshot(userSnapshot => {
+        firestore().collection('Books').doc(item.id).onSnapshot(bookSnapshot =>{
+          setUser(userSnapshot.data());
+          setOrderList(bookSnapshot.data().orderList)
+        })
       });
 
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [item.seller]);
-  // console.log(item)
+  
   const ProductInfo = {
     name: 'Thanh gươm diệt quỷ chap 3345',
     price: '30000',
@@ -59,10 +64,7 @@ export default function ProductScreen(item) {
     imagelist: [require('../assets/t1.jpg')],
     sellerAvatar: require('../assets/jerry.png'),
   };
-  // const goToGetOTPScreen = () => {
-  //     Actions.getOTPScreen()
-  // }
-  // const [isModalVisible, setModalVisible] = useState(false);
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [payStatus, setPayStatus] = useState(false);
   const [number, onChangeNumber] = React.useState(null);
@@ -85,6 +87,96 @@ export default function ProductScreen(item) {
     Actions.pop();
     return true;
   };
+
+  const user = auth().currentUser
+  const registerToBuy = (type, price) => {
+    fetch('https://tinbk.herokuapp.com/buyer-notifications', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify({
+        sender: user.uid,
+        receiver: item.seller,
+        book: item.id,
+        type: type,
+        price: price,
+      })
+    });
+    var today = new Date();
+    firestore().collection('Notifications').doc(user.uid).get().then(docSnapshot =>{
+      const notifications = docSnapshot.data().notifications
+      notifications.push({
+        kind: 'buyer',
+        type: type,
+        price: price,
+        bookId: item.id,
+        partner: item.seller,
+        date: String(today.getDate()).padStart(2, '0') + '/' 
+            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
+            + today.getFullYear()
+      })
+      firestore().collection('Notifications').doc(user.uid).update({
+        notifications: notifications
+      }).then(() => {
+        console.log('Buyer-notification added');
+      })
+    })
+    firestore().collection('Notifications').doc(item.seller).get().then(docSnapshot =>{
+      const notifications = docSnapshot.data().notifications
+      notifications.push({
+        kind: 'seller',
+        type: type,
+        price: price,
+        bookId: item.id,
+        partner: user.uid,
+        date: String(today.getDate()).padStart(2, '0') + '/' 
+            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
+            + today.getFullYear()
+      })
+      firestore().collection('Notifications').doc(item.seller).update({
+        notifications: notifications
+      }).then(() => {
+        console.log('Seller-notification added');
+      })
+    })
+    firestore().collection('Books').doc(item.id).get().then(docSnapshot =>{
+      const orderList = docSnapshot.data().orderList
+      console.log('orderList:', orderList)
+      orderList.push(user.uid)
+      firestore().collection('Books').doc(item.id).update({
+        orderList: orderList
+      }).then(() => {
+        console.log('Order list updated')
+      })
+    })
+  }
+
+  const cancelRegister = () => {
+    fetch('https://tinbk.herokuapp.com/buyer-notifications', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify({
+        sender: user.uid,
+        receiver: item.seller,
+        book: item.id,
+        type: type,
+        price: price,
+      })
+    });
+    
+    firestore().collection('Books').doc(item.id).get().then(docSnapshot =>{
+      const orderList = docSnapshot.data().orderList
+      orderList.pop(user.uid)
+      firestore().collection('Books').doc(item.id).update({
+        orderList: orderList
+      }).then(() => {
+        console.log('Order list updated')
+      })
+    })
+  }
   return (
     <ImageBackground
       style={styles.background}
@@ -265,8 +357,8 @@ export default function ProductScreen(item) {
                       styles.DealColor,
                     ]}
                     onPress={() => {
-                      setPaymentConfirm(!PaymentConfirm);
-                      setPayStatus(true);
+                      registerToBuy('processing', item.price)
+                      setPaymentConfirm(false)
                     }}>
                     <Text style={styles.textStyle}>Có</Text>
                   </TouchableOpacity>
@@ -377,8 +469,8 @@ export default function ProductScreen(item) {
         <View style={styles.SellerInfoBlock}>
           <View style={styles.avatar}>
             {
-            user.image ? (
-              <Image style={styles.sellerImg} source={{uri: user.image}} />
+            seller.image ? (
+              <Image style={styles.sellerImg} source={{uri: seller.image}} />
             ) : (
               <Image
                 style={styles.sellerImg}
@@ -388,13 +480,12 @@ export default function ProductScreen(item) {
             }
 
           </View>
-
           <View style={styles.SellerInfo}>
             <Text style={{color: 'black'}}>
-              Chủ sở hữu : {user.middleName + ' ' + user.firstName}
+              Chủ sở hữu : {seller.middleName + ' ' + seller.firstName}
             </Text>
             <Text style={{color: 'black'}}>
-              Số điện thoại : {user.phoneNumber}
+              Số điện thoại : {seller.phoneNumber}
             </Text>
             <Text style={{color: 'black'}}>
               Địa chỉ giao dịch : {item.bookRegion}
@@ -407,7 +498,35 @@ export default function ProductScreen(item) {
         <View style={styles.line}></View>
 
         <View style={styles.ButtonBlock}>
-          {!payStatus && (
+          {
+            !orderList.includes(user.uid) ? (
+              <>
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
+                  <View style={[styles.PaymentButton, styles.DealColor]}>
+                    <Text style={{color: 'white'}}>Trả giá</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setPaymentConfirm(true)}>
+                <View style={[styles.PaymentButton, styles.PayColor]}>
+                  <Text style={{color: 'white'}}>Đăng ký mua</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+            )
+            : (
+              <TouchableOpacity
+                onPress={() => {
+                  setCancelModel(true);
+                }}>
+                <View style={[styles.PaymentButton, styles.CancelColor]}>
+                  <Text style={{color: 'white'}}>Hủy đăng ký</Text>
+                </View>
+              </TouchableOpacity>
+            )
+            
+          }
+          {/* {!payStatus && (
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={[styles.PaymentButton, styles.DealColor]}>
                 <Text style={{color: 'white'}}>Trả giá</Text>
@@ -416,9 +535,7 @@ export default function ProductScreen(item) {
           )}
           {!payStatus && (
             <TouchableOpacity
-              onPress={() => {
-                setPaymentConfirm(true);
-              }}>
+              onPress={() => sendMessage('processing', item.price)}>
               <View style={[styles.PaymentButton, styles.PayColor]}>
                 <Text style={{color: 'white'}}>Đăng ký mua</Text>
               </View>
@@ -433,36 +550,9 @@ export default function ProductScreen(item) {
                 <Text style={{color: 'white'}}>Hủy đăng ký</Text>
               </View>
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
       </ScrollView>
-      {/* <View style={styles.NavigationBotton}> */}
-      {/* <TouchableOpacity>
-                    <View style={styles.Navigationbtn}>
-                        <FontAwesome5 name='home' size={24} color='#757575' />
-                        <Text style={styles.Navtext}>Trang chủ</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <View style={styles.Navigationbtn}>
-                        <FontAwesome5 name='plus' size={24} color='#757575' />
-                        <Text>Đăng bán</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <View style={styles.Navigationbtn}>
-                        <FontAwesome5 name='bell' size={24} color='#757575' solid />
-                        <Text>Thông báo</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <View style={styles.Navigationbtn}>
-                        <FontAwesome5 name='user' size={24} color='#757575' solid />
-                        <Text>Cá nhân</Text>
-                    </View>
-                </TouchableOpacity> */}
-
-      {/* </View> */}
     </ImageBackground>
   );
 }

@@ -30,7 +30,6 @@ const ProcessingNoti = ({notification}) => {
       })
     });
     return () => subscriber();
-
   }, [])
   
   const date = new Date()
