@@ -134,7 +134,8 @@ const Notification = () => {
             if(notification.type == 'processing')
               return <ProcessingNoti notification={notification} />
             else if (notification.type == 'accepted')
-              return <AcceptedNoti />
+              return <AcceptedNoti notification={notification}/>
+            
           })
         }
 				{/* <View style={styles.time}>
