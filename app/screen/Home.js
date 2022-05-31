@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   typename: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     color: '#303030',
     alignSelf: 'center'
