@@ -25,7 +25,7 @@ const Item = ({item}) => {
             style={styles.image}
           />
           <View style={styles.details}>
-            <Text style={styles.name}>{item.bookName}</Text>
+            <Text numberOfLines={2} style={styles.name}>{item.bookName}</Text>
             <Text style={styles.price}>{item.price} đồng</Text>
             <Text style={styles.location}>{item.bookRegion}</Text>
           </View>
@@ -58,11 +58,13 @@ const styles = StyleSheet.create({
   details: {
     width: '65%',
     height: '90%',
+    marginLeft: '3%'
   },
   name: {
     fontSize: 17,
     fontWeight: '400',
     color: 'rgb(36, 36, 36)',
+    width: '90%'
   },
   price: {
     fontSize: 20,
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   },
   location: {
     fontSize: 15,
-    marginTop: 40,
+    // marginTop: 40,
     color: '#5A5A5A'
 
   },

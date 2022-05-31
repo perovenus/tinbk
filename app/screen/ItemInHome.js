@@ -85,7 +85,7 @@ const ItemInHome = ({item}) => {
             style={styles.image}
           />
           <View style={styles.details}>
-            <Text style={styles.name}>{item.bookName}</Text>
+            <Text numberOfLines={1} style={styles.name}>{item.bookName}</Text>
             <Text style={styles.price}>{item.price} đồng</Text>
           </View>
         </View>
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: 'rgb(36, 36, 36)',
     marginBottom: 5,
+    // numberofLines: 1,
   },
   price: {
     fontSize: 16,
