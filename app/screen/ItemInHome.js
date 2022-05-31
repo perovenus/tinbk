@@ -12,6 +12,7 @@ import {
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Actions } from 'react-native-router-flux'
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const ItemInHome = ({item}) => {
   const gotoProductInfo = (i) => {
@@ -19,24 +20,27 @@ const ItemInHome = ({item}) => {
   }
   
   const user = auth().currentUser
-  const sendMessage = () => {
+  const sendMessage = (type, price) => {
     fetch('https://tinbk.herokuapp.com/buyer-notifications', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json' 
       },
       body: JSON.stringify({
-        buyerId: user.uid,
-        book: item
+        sender: user.uid,
+        receiver: item.seller,
+        book: item.id,
+        type: type,
+        price: price,
       })
     });
     var today = new Date();
     firestore().collection('Notifications').doc(user.uid).get().then(docSnapshot =>{
       const notifications = docSnapshot.data().notifications
       notifications.push({
-        id: item.id + user.uid,
         kind: 'buyer',
-        type: 'processing',
+        type: type,
+        price: price,
         bookId: item.id,
         partner: item.seller,
         date: String(today.getDate()).padStart(2, '0') + '/' 
@@ -52,9 +56,9 @@ const ItemInHome = ({item}) => {
     firestore().collection('Notifications').doc(item.seller).get().then(docSnapshot =>{
       const notifications = docSnapshot.data().notifications
       notifications.push({
-        id: item.id + item.seller,
         kind: 'seller',
-        type: 'processing',
+        type: type,
+        price: price,
         bookId: item.id,
         partner: user.uid,
         date: String(today.getDate()).padStart(2, '0') + '/' 
@@ -85,7 +89,7 @@ const ItemInHome = ({item}) => {
             <Text style={styles.price}>{item.price} đồng</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.buybutton} onPress={sendMessage}>
+        <TouchableOpacity style={styles.buybutton} onPress={() => sendMessage('processing', item.price)}>
           <FontAwesome5 name='shopping-cart' size={24} color='rgba(47,128,237,0.85)'/>
         </TouchableOpacity>
       </TouchableOpacity>

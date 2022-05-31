@@ -6,14 +6,16 @@ import ConfirmOTPScreen from './app/screen/ConfirmOTPScreen';
 import ProductScreen from './app/screen/ProductInfo';
 import IntroductionScreen from './app/screen/Intro';
 import ProductList from './app/screen/ProductList';
+import Notification from './app/screen/Notification';
 import Tabs from './app/screen/Tabs';
 import ChangePassword from './app/screen/ChangePassword';
 import {Router, Scene} from 'react-native-router-flux';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import {LogBox, AsyncStorage} from 'react-native';
-// import messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import firestore from '@react-native-firebase/firestore';
 import MyProductScreen from './app/screen/myProduct';
+import PartnerInfo from './app/screen/PartnerInfo';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -70,17 +72,19 @@ export default function App(props) {
   //   });
   // }, []);
 
-  // useEffect(() => {
-  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
-  //     const seller = JSON.parse(remoteMessage.data.seller);
-  //     const buyer = JSON.parse(remoteMessage.data.buyer);
-  //     const book = JSON.parse(remoteMessage.data.book);
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      const seller = JSON.parse(remoteMessage.data.seller);
+      const buyer = JSON.parse(remoteMessage.data.buyer);
+      const book = JSON.parse(remoteMessage.data.book);
+      const price = JSON.parse(remoteMessage.data.price);
 
-  //     console.log(`"${buyer.firstName}" muốn mua sách "${book.bookName}" của bạn`);
-  //   });
+      console.log(`"${buyer.firstName}" muốn mua sách "${book.bookName}" của bạn với giá "${price}"`);
+    });
 
-  //   return unsubscribe;
-  // }, []);
+    return unsubscribe;
+  }, []);
+
 
   return (
     <>
@@ -140,7 +144,17 @@ export default function App(props) {
             key="changePassword"
             component={ChangePassword}
             title="ChangePassword"
-            hideNavBar={true}></Scene>
+            hideNavBar={true}/>
+          <Scene
+            key="partnerInfoScreen"
+            component={PartnerInfo}
+            title="PartnerInfo"
+            hideNavBar={true}/>
+          <Scene
+            key="notificationScreen"
+            component={Notification}
+            title="Notification"
+            hideNavBar={true}/>
         </Scene>
       </Router>
       <Toast config={toastConfig} />

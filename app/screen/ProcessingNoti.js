@@ -45,6 +45,30 @@ const ProcessingNoti = ({notification}) => {
   const gotoProductInfo = (i) => {
     Actions.ProductScreen(i)
   }
+
+  const gotoPartnerInfoScreen = (partnerInfo) => {
+    Actions.partnerInfoScreen(partnerInfo)
+  }
+
+  const sendMessage = (type,price) => {
+    fetch('https://tinbk.herokuapp.com/seller-notifications', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify({
+        sender: user.uid,
+		    receiver: notification.partner,
+        book: notification.bookId,
+        type: type,
+        price: price
+      })
+    });
+    
+  }
+
+  console.log(getData.bookInfo.id)
+
   if (notification.kind === 'buyer'){
     return (
       <>
@@ -61,49 +85,51 @@ const ProcessingNoti = ({notification}) => {
             <FontAwesome5 style={{ position: 'absolute' }} name='calendar-minus' size={18} color='white' solid />
           </TouchableOpacity>
           <Text style={styles.textContain}>
-            Bạn đã đăng ký mua {getData.bookInfo.bookName} của {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} với giá {getData.bookInfo.price} đ
+            Bạn đã đăng ký mua {getData.bookInfo.bookName} của {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} với giá {notification.price} đ
           </Text>
         </View>
       </>
     )
   }
   return (
-    <View style={styles.AlertNotification}>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => { setModalVisible(!modalVisible) }}
-          style={styles.notifiProcessingImg}>
-          <Image
-            style={{ width: '100%', height: '100%' }}
-            source={require('../assets/yellow.png')} />
-          <FontAwesome5 style={{ position: 'absolute' }} name='bell' size={18} color='white' solid />
-        </TouchableOpacity>
+    <>
+      <Text style={{marginLeft: 25}}>
+        {notification.date == today ? 'Hôm nay' : notification.date}
+      </Text>
+      <View style={styles.AlertNotification}>
+        <View style={styles.container}>
+          <TouchableOpacity
+            onPress={() => gotoPartnerInfoScreen(getData.partnerInfo)}
+            style={styles.notifiProcessingImg}>
+            <Image
+              style={{ width: '100%', height: '100%' }}
+              source={require('../assets/yellow.png')} />
+            <FontAwesome5 style={{ position: 'absolute' }} name='bell' size={18} color='white' solid />
+          </TouchableOpacity>
 
-        <Text style={styles.textContain}>
-          {/* {data.author} muốn mua sản phẩm {data.book_name} với giá {data.price}. bạn có đồng ý không ? */}
-        </Text>
-      </View>
-      <View style={styles.buttonlist}>
-        <TouchableOpacity
-          onPress={() => {
-            handleClick(data.id, 1)
-          }}>
-          <View style={[styles.PaymentButton, styles.PayColor]}>
-            <Text style={{ color: 'white', fontSize: 18, fontFamily: 'Nunito' }}>Đồng ý</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            handleClick(data.id, 2);
-          }}
+          <Text style={styles.textContain}>
+            {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} muốn mua sản phẩm {getData.bookInfo.bookName} với giá {notification.price}. Bạn có đồng ý không ?
+          </Text>
+        </View>
+        <View style={styles.buttonlist}>
+          <TouchableOpacity
+            onPress={() => sendMessage('accepted', notification.price)}
           >
-          <View style={[styles.PaymentButton, styles.CancelColor]}>
-            <Text style={{ color: 'white', fontSize: 18 }}>Từ chối</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+            <View style={[styles.PaymentButton, styles.PayColor]}>
+              <Text style={{ color: 'white', fontSize: 18, fontFamily: 'Nunito' }}>Đồng ý</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => sendMessage('rejected', notification.price)}
+          >
+            <View style={[styles.PaymentButton, styles.CancelColor]}>
+              <Text style={{ color: 'white', fontSize: 18 }}>Từ chối</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-    </View>
+      </View>
+    </>
   )
   
 }

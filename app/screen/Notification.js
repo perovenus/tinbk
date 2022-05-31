@@ -16,6 +16,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import ProcessingNoti from './ProcessingNoti';
+import AcceptedNoti from './AcceptedNoti';
 
 const Notification = () => {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -129,8 +130,11 @@ const Notification = () => {
 
 			<ScrollView style={styles.body}>
         {
-          notificationList.map((notification) => {
-            return <ProcessingNoti notification={notification} />
+          notificationList.reverse().map((notification) => {
+            if(notification.type == 'processing')
+              return <ProcessingNoti notification={notification} />
+            else if (notification.type == 'accepted')
+              return <AcceptedNoti />
           })
         }
 				{/* <View style={styles.time}>

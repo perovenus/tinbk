@@ -97,6 +97,7 @@ export default function SignupScreen() {
                 middleName: middleName,
                 firstName: firstName,
                 gender : male == true ? 'Male' : 'Female',
+                email: user.email,
                 phoneNumber: '',
                 birthday: '',
                 address: ''
