@@ -81,7 +81,7 @@ const RejectedNoti = ({notification}) => {
           <FontAwesome5 style={{ position: 'absolute' }} name='times-circle' size={18} color='white' solid />
         </TouchableOpacity>
         <Text style={styles.textContain}>
-          Bạn đã từ chối bán cho {data.author} sản phẩm {data.book_name} với giá {data.price}.
+          Bạn đã từ chối bán {getData.bookInfo.bookName} cho {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} với giá {notification.price} đ
         </Text>
       </View>
     </>

@@ -17,6 +17,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import ProcessingNoti from './ProcessingNoti';
 import AcceptedNoti from './AcceptedNoti';
+import RejectedNoti from './RejectedNoti';
 
 const Notification = () => {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -75,7 +76,8 @@ const Notification = () => {
               return <ProcessingNoti notification={notification} />
             else if (notification.type == 'accepted')
               return <AcceptedNoti notification={notification}/>
-            
+            else
+              return <RejectedNoti notification={notification}/>
           })
         }
 			</ScrollView>
