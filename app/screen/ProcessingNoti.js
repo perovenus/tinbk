@@ -33,8 +33,6 @@ const ProcessingNoti = ({notification}) => {
 
   }, [])
   
-  // console.log(getData.bookInfo.bookName)
-  
   const date = new Date()
 
   const today = String(date.getDate()).padStart(2, '0') + '/' 
@@ -72,7 +70,10 @@ const ProcessingNoti = ({notification}) => {
   if (notification.kind === 'buyer'){
     return (
       <>
-        <Text style={{marginLeft: 25}}>
+        <Text style={{
+          marginLeft: 25,
+          color: 'black'
+        }}>
           {notification.date == today ? 'Hôm nay' : notification.date}
         </Text>
         <View style={styles.ProcessingNotification}>
@@ -93,7 +94,10 @@ const ProcessingNoti = ({notification}) => {
   }
   return (
     <>
-      <Text style={{marginLeft: 25}}>
+      <Text style={{
+		    marginLeft: 25,
+        color: 'black'
+		  }}>
         {notification.date == today ? 'Hôm nay' : notification.date}
       </Text>
       <View style={styles.AlertNotification}>
@@ -228,7 +232,8 @@ const styles = StyleSheet.create({
 	},
 	textContain: {
 		width: '80%',
-		fontSize: 18
+		fontSize: 18,
+    color: 'black'
 	},
 	time: {
 		marginTop: 20,

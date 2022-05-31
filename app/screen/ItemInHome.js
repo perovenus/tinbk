@@ -90,7 +90,7 @@ const ItemInHome = ({item}) => {
           </View>
         </View>
         <TouchableOpacity style={styles.buybutton} onPress={() => sendMessage('processing', item.price)}>
-          <FontAwesome5 name='shopping-cart' size={24} color='rgba(47,128,237,0.85)'/>
+          <FontAwesome5 name='shopping-cart' size={22} color='rgba(47,128,237,0.85)'/>
         </TouchableOpacity>
       </TouchableOpacity>
     // </View>
@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   name: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '400',
     color: 'rgb(36, 36, 36)',
     marginBottom: 5,
     // numberofLines: 1,
   },
   price: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#303030',
     // bottom: 5,

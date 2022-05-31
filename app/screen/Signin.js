@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Dimensions,
   Pressable,
+  ScrollView
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -198,8 +199,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     borderColor: '#2F80ED',
-    fontSize: 18,
+    fontSize: 16,
     paddingHorizontal: 15,
+    color: 'black',
   },
   forgotPassword: {
     alignSelf: 'flex-end',
