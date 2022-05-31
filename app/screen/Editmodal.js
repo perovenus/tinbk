@@ -42,7 +42,6 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
     }
   };
   const uploadImage = async () => {
-    let img = image.split('/');
     const reference = storage().ref(`user_image/${auth().currentUser.uid}.jpg`);
     await reference.putFile(image);
     const url = await reference.getDownloadURL();
@@ -208,7 +207,7 @@ const styles = StyleSheet.create({
   textstyle: {
     fontWeight: 'bold',
     color: '#000000',
-    fontSize: 20,
+    fontSize: 15,
   },
   confirmButton: {
     borderRadius: 10,

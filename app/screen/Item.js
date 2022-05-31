@@ -42,10 +42,10 @@ export default Item;
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 20,
+    borderRadius: 2,
     width: '100%',
     height: 140,
-    marginTop: 5,
+    marginTop: 1,
     marginHorizontal: 5,
     flexDirection: 'row',
     alignItems: 'center',

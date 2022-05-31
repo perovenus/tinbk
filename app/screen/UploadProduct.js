@@ -15,7 +15,7 @@ import {
 import SelectDropdown from 'react-native-select-dropdown';
 import {ScrollView} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -35,7 +35,6 @@ const UploadProduct = ({item}) => {
   };
 
   const bookNameRef = useRef(null);
-  const quantityRef = useRef(null);
   const priceRef = useRef(null);
   const descriptionRef = useRef(null);
   const bookTypeRef = useRef(null);
@@ -44,7 +43,6 @@ const UploadProduct = ({item}) => {
 
   const [image, setImage] = useState(null);
   const [bookName, setBookName] = useState('');
-  const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [bookType, setBookType] = useState('');
@@ -67,14 +65,7 @@ const UploadProduct = ({item}) => {
     } else if (bookName == '' || bookName.length < 5 || bookName.length > 50) {
       bookNameRef.current.focus();
       showToast('Tên sách không hợp lệ');
-    } else if (
-      quantity == '' ||
-      quantity == '0' ||
-      quantity < 1 ||
-      quantity > 100
-    ) {
-      quantityRef.current.focus();
-      showToast('Số lượng không hợp lệ');
+    
     } else if (price == '' || price < 0 || price > 10000000) {
       priceRef.current.focus();
       showToast('Giá không hợp lệ');
@@ -91,7 +82,6 @@ const UploadProduct = ({item}) => {
         .collection('Books')
         .add({
           bookName: bookName,
-          quantity: parseInt(quantity),
           price: parseInt(price),
           description: description,
           bookType: bookType,
@@ -103,12 +93,12 @@ const UploadProduct = ({item}) => {
 
       setImage(null);
       setBookName('');
-      setQuantity('');
       setPrice('');
       setDescription('');
       setBookType('');
       setBookRegion('');
       setBookStatus('');
+      setDescription('');
       bookTypeRef.current.reset();
       bookRegionRef.current.reset();
       bookStatusRef.current.reset();
@@ -165,34 +155,21 @@ const UploadProduct = ({item}) => {
               value={bookName}
               placeholder="Nhập tên sách (5 đến 50 ký tự)"
             />
-            <View style={styles.soluongvagia}>
-              <View style={styles.soluong}>
-                <Text style={styles.text}>
-                  Số lượng <Text style={{color: 'red'}}>*</Text>
-                </Text>
-                <TextInput
-                  ref={quantityRef}
-                  onChangeText={text => setQuantity(text)}
-                  style={styles.textinput}
-                  keyboardType="numeric"
-                  value={quantity}
-                  placeholder="1 - 100"
-                />
-              </View>
-              <View style={styles.gia}>
-                <Text style={styles.text}>
-                  Giá <Text style={{color: 'red'}}>*</Text>
-                </Text>
-                <TextInput
-                  ref={priceRef}
-                  onChangeText={text => setPrice(text)}
-                  style={styles.textinput}
-                  keyboardType="numeric"
-                  value={price}
-                  placeholder="0 - 10.000.000"
-                />
-              </View>
+
+            <View style={styles.gia}>
+              <Text style={styles.text}>
+                Giá <Text style={{color: 'red'}}>*</Text>
+              </Text>
+              <TextInput
+                ref={priceRef}
+                onChangeText={text => setPrice(text)}
+                style={styles.textinputgia}
+                keyboardType="numeric"
+                value={price}
+                placeholder="0 - 10.000.000"
+              />
             </View>
+
             <View style={styles.domoi}>
               <Text style={styles.text}>
                 Độ mới <Text style={{color: 'red'}}>*</Text>
@@ -274,6 +251,7 @@ const UploadProduct = ({item}) => {
                 ]}
                 multiline={true}
                 numberOfLines={4}
+                value={description}
               />
             </View>
             <View
@@ -365,7 +343,7 @@ const styles = StyleSheet.create({
   textinput: {
     width: '100%',
     height: 40,
-    marginBottom: 10,
+    marginBottom: 20,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#2F80ED',
@@ -373,13 +351,26 @@ const styles = StyleSheet.create({
     color: '#000000',
     paddingHorizontal: 15,
   },
-  soluongvagia: {
+  textinputgia: {
+    width: '60%',
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#2F80ED',
+    fontSize: 18,
+    color: '#000000',
+    paddingHorizontal: 20,
+    padding: 10,
+    textAlign: 'center',
+    alignItems: 'center',
+
+  },
+
+  gia: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
   },
-  soluong: {flex: 3, marginRight: 30},
-  gia: {flex: 5},
   domoi: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -413,6 +404,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttondropdown: {
+    width: '60%',
     height: 40,
     marginBottom: 10,
     borderWidth: 1,

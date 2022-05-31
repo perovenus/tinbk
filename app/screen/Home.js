@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 40,
     alignItems: 'center',
-    paddingTop: 10,
+    // paddingTop: 10,
     paddingHorizontal: 15,
   },
   allProduct: {

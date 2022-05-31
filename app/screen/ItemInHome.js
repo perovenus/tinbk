@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     width: '44%',
     height: Dimensions.get('window').height*0.25,
     minHeight: 200,
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: '#DADADA',
     // elevation: 1, 
