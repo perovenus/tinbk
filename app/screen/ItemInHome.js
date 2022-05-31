@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   name: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '400',
     color: 'rgb(36, 36, 36)',
     marginBottom: 5,
