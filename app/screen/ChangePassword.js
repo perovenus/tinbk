@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React ,{useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
+  BackHandler,
   Image,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
@@ -57,8 +58,19 @@ const ChangePassword = () => {
       }
       
     }
-    const auth_and_change = () => {
-    }
+    useEffect(() => {
+      const backAction = () => {
+        Actions.pop();
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+  
+      return () => backHandler.remove();
+    }, []);
   return (
     <ImageBackground
       style={styles.background}
@@ -172,12 +184,12 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    height: 40,
+    height: 44,
     marginTop: 10,
     borderWidth: 1,
     borderRadius: 12,
     borderColor: '#2F80ED',
-    fontSize: 20,
+    fontSize: 18,
     paddingHorizontal: 15,
   },
   loginButton: {
