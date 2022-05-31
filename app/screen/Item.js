@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '35%',
-    height: '90%',
+    height: '80%',
   },
   details: {
     width: '65%',
     height: '90%',
-    marginLeft: '3%'
+    marginLeft: '2%'
   },
   name: {
     fontSize: 17,
