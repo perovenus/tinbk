@@ -18,6 +18,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {RadioButton} from 'react-native-paper';
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
 export default function ProductScreen(item) {
   // const goToSignupScreen = () => {
   //     Actions.signupScreen()
@@ -35,7 +36,9 @@ export default function ProductScreen(item) {
 
     return () => backHandler.remove();
   }, []);
-  const [seller, setUser] = useState({});
+  const [seller, setSeller] = useState({});
+  
+  const [userInfo, setUserInfo] = useState({})
 
   const [orderList, setOrderList] = useState([])
 
@@ -45,7 +48,7 @@ export default function ProductScreen(item) {
       .doc(item.seller)
       .onSnapshot(userSnapshot => {
         firestore().collection('Books').doc(item.id).onSnapshot(bookSnapshot =>{
-          setUser(userSnapshot.data());
+          setSeller(userSnapshot.data());
           setOrderList(bookSnapshot.data().orderList)
         })
       });
@@ -53,6 +56,18 @@ export default function ProductScreen(item) {
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [item.seller]);
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Users')
+      .doc(user.uid)
+      .onSnapshot(userSnapshot => {
+        setUserInfo(userSnapshot.data());
+      });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [user.uid]);
   
   const ProductInfo = {
     name: 'Thanh gươm diệt quỷ chap 3345',
@@ -97,10 +112,11 @@ export default function ProductScreen(item) {
       },
       body: JSON.stringify({
         sender: user.uid,
+        senderName: userInfo.middleName + ' ' + userInfo.firstName,
         receiver: item.seller,
+        receiverName: seller.middleName + ' ' + seller.firstName,
         book: item.id,
         bookName: item.bookName,
-        partnerName: seller.middleName + ' ' + seller.firstName, 
         type: type,
         price: price,
       })

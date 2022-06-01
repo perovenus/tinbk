@@ -37,16 +37,31 @@ const ProcessingNoti = ({notification}) => {
       },
       body: JSON.stringify({
         sender: user.uid,
+        senderName: userInfo.middleName + ' ' + userInfo.firstName,
 		    receiver: notification.partner,
+        receiverName: notification.senderName,
         book: notification.bookId,
         bookName: notification.bookName,
-        partnerName: notification.partnerName,
         type: type,
         price: price
       })
     });
     
   }
+
+  const [userInfo, setUserInfo] = useState({})
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Users')
+      .doc(user.uid)
+      .onSnapshot(userSnapshot => {
+        setUserInfo(userSnapshot.data());
+      });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [user.uid]);
 
   if (notification.kind === 'buyer'){
     return (
