@@ -23,6 +23,8 @@ export default function ProductScreen(item) {
   // const goToSignupScreen = () => {
   //     Actions.signupScreen()
   // }
+  const user = auth().currentUser
+  
   useEffect(() => {
     const backAction = () => {
       Actions.pop();
@@ -103,7 +105,6 @@ export default function ProductScreen(item) {
     return true;
   };
 
-  const user = auth().currentUser
   const sendMessage = (type, price) => {
     fetch('https://tinbk.herokuapp.com/buyer-notifications', {
       method: 'post',
