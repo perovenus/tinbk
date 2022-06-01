@@ -13,6 +13,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { Actions } from 'react-native-router-flux';
 const ProcessingNoti = ({notification}) => {
+  console.log(notification)
   const user = auth().currentUser
 
   const date = new Date()
@@ -39,7 +40,7 @@ const ProcessingNoti = ({notification}) => {
         sender: user.uid,
         senderName: userInfo.middleName + ' ' + userInfo.firstName,
 		    receiver: notification.partner,
-        receiverName: notification.senderName,
+        receiverName: notification.partnerName,
         book: notification.bookId,
         bookName: notification.bookName,
         type: type,
