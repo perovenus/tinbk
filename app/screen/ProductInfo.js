@@ -48,10 +48,10 @@ export default function ProductScreen(item) {
     const subscriber = firestore()
       .collection('Users')
       .doc(item.seller)
-      .onSnapshot(userSnapshot => {
-        firestore().collection('Books').doc(item.id).onSnapshot(bookSnapshot =>{
+      .onSnapshot(async(userSnapshot) => {
+         firestore().collection('Books').doc(item.id).onSnapshot( async(bookSnapshot) =>{
           setSeller(userSnapshot.data());
-          setOrderList(bookSnapshot.data().orderList)
+          setOrderList(await bookSnapshot.data().orderList)
         })
       });
 

@@ -23,7 +23,13 @@ const ProcessingNoti = ({notification}) => {
             + date.getFullYear()
 
   const gotoProductInfo = (i) => {
-    Actions.ProductScreen(i)
+	  console.log(i)
+	  let bookdata = {};
+	  firestore().collection('Books').doc(i.bookId).get().then(doc => {
+		  bookdata = doc.data()
+		  Actions.ProductScreen(bookdata)
+	  })
+    // Actions.ProductScreen(i)
   }
 
   const gotoPartnerInfoScreen = (partnerInfo) => {
@@ -75,7 +81,7 @@ const ProcessingNoti = ({notification}) => {
         </Text>
         <View style={styles.ProcessingNotification}>
           <TouchableOpacity
-            onPress={() => gotoProductInfo(getData.bookInfo)}
+            onPress={() => gotoProductInfo(notification)}
             style={styles.notifiProcessingImg}>
             <Image
               style={{ width: '100%', height: '100%' }}
