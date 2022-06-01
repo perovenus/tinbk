@@ -74,83 +74,10 @@ const ChangePassword = () => {
     <ImageBackground
       style={styles.background}
       source={require('../assets/changepassword.jpg')}>
-      <TouchableOpacity style={styles.gobackButton} onPress={goToUserInfo}>
-        <View>
-          <FontAwesome5 name="angle-left" color="white" size={28} />
-        </View>
-      </TouchableOpacity>
-      <View style={styles.container}>
-        <Text
-          style={{
-            // marginTop: 30,
-            marginBottom: 10,
-            fontSize: 24,
-            color: '#2F80ED',
-            marginLeft: 30,
-            fontWeight: 'bold',
-          }}>
-          Thay đổi mật khẩu
-        </Text>
-        <View style={{alignItems: 'center'}}>
-          <Image
-            style={{
-              width: 140,
-              height: 140,
-            }}
-            source={require('../assets/tinBK-logo-2.png')}
-          />
-        </View>
-        <View style={styles.accountInfo}>
-          <Text
-            style={{
-              fontSize: 16,
-              color: '#2F80ED',
-            }}>
-            Nhập mật khẩu cũ
-          </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setOld_pass(text);
-            }}
-            secureTextEntry={true}
-          />
-        </View>
-        <View style={styles.accountInfo}>
-          <Text
-            style={{
-              fontSize: 16,
-              color: '#2F80ED',
-            }}>
-            Nhập mật khẩu mới
-          </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setNew_pass(text);
-            }}
-            secureTextEntry={true}
-          />
-        </View>
-        <View style={styles.accountInfo}>
-          <Text
-            style={{
-              fontSize: 16,
-              color: '#2F80ED',
-            }}>
-            Xác nhận mật khẩu
-          </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setRenew_pass(text);
-            }}
-            secureTextEntry={true}
-          />
-        </View>
-        <TouchableOpacity onPress={printText}>
-          <View style={[styles.loginButton, styles.elevation]}>
-            <Text style={{fontSize: 20, color: 'white'}}>Hoàn thành</Text>
+      <ScrollView>
+        <TouchableOpacity style={styles.gobackButton} onPress={goToUserInfo}>
+          <View>
+            <FontAwesome5 name="angle-left" color="white" size={28} />
           </View>
         </TouchableOpacity>
         <View style={styles.container}>
@@ -228,7 +155,7 @@ const ChangePassword = () => {
             </View>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -254,12 +181,12 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    height: 40,
+    height: 44,
     marginTop: 10,
     borderWidth: 1,
     borderRadius: 12,
     borderColor: '#2F80ED',
-    fontSize: 16,
+    fontSize: 18,
     paddingHorizontal: 15,
     color: '#000',
   },

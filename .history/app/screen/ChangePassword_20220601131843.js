@@ -82,7 +82,7 @@ const ChangePassword = () => {
       <View style={styles.container}>
         <Text
           style={{
-            // marginTop: 30,
+            marginTop: 50,
             marginBottom: 10,
             fontSize: 24,
             color: '#2F80ED',
@@ -108,12 +108,12 @@ const ChangePassword = () => {
             }}>
             Nhập mật khẩu cũ
           </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setOld_pass(text);
-            }}
-            secureTextEntry={true}
+          <TextInput style={styles.input}
+          onChangeText= {
+            text => {
+            setOld_pass(text)
+          }}
+          secureTextEntry={true}
           />
         </View>
         <View style={styles.accountInfo}>
@@ -124,12 +124,13 @@ const ChangePassword = () => {
             }}>
             Nhập mật khẩu mới
           </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setNew_pass(text);
-            }}
-            secureTextEntry={true}
+          <TextInput style={styles.input}
+          onChangeText={
+            text => {
+              setNew_pass(text)
+            }
+          }
+          secureTextEntry={true}
           />
         </View>
         <View style={styles.accountInfo}>
@@ -140,15 +141,18 @@ const ChangePassword = () => {
             }}>
             Xác nhận mật khẩu
           </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setRenew_pass(text);
-            }}
-            secureTextEntry={true}
+          <TextInput style={styles.input} 
+          onChangeText= {
+            text => {
+              setRenew_pass(text)
+            }
+          }
+          secureTextEntry={true}
           />
         </View>
-        <TouchableOpacity onPress={printText}>
+        <TouchableOpacity
+        onPress={printText}
+        >
           <View style={[styles.loginButton, styles.elevation]}>
             <Text style={{fontSize: 20, color: 'white'}}>Hoàn thành</Text>
           </View>
@@ -228,7 +232,7 @@ const ChangePassword = () => {
             </View>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -261,7 +265,11 @@ const styles = StyleSheet.create({
     borderColor: '#2F80ED',
     fontSize: 16,
     paddingHorizontal: 15,
+<<<<<<< HEAD
     color: '#000',
+=======
+    color: 'black'
+>>>>>>> aefefa6b4c330dda4c79f89a85b88b0db58c55fd
   },
   loginButton: {
     marginTop: 10,

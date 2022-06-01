@@ -82,7 +82,7 @@ const ChangePassword = () => {
       <View style={styles.container}>
         <Text
           style={{
-            // marginTop: 30,
+            marginTop: 50,
             marginBottom: 10,
             fontSize: 24,
             color: '#2F80ED',
