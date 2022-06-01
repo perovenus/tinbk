@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React ,{useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,67 +9,69 @@ import {
   Dimensions,
   BackHandler,
   Image,
-  ScrollView,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
+mport { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 const ChangePassword = () => {
-  const goToUserInfo = () => {
-    Actions.pop();
-  };
-
-  const showToast = message => {
-    Toast.show({
-      type: 'success',
-      text1: message,
-    });
-  };
-  const showToastErr = message => {
-    Toast.show({
-      type: 'error',
-      text1: message,
-    });
-  };
-  const [old_pass, setOld_pass] = useState('');
-  const [new_pass, setNew_pass] = useState('');
-  const [renew_pass, setRenew_pass] = useState('');
-
-  const printText = async () => {
-    console.log(old_pass);
-    console.log(new_pass);
-    console.log(renew_pass);
-    const user = auth().currentUser;
-    const cred = await auth.EmailAuthProvider.credential(user.email, old_pass);
-    try {
-      if (new_pass != renew_pass) {
-        showToastErr('Mật khẩu mới không khớp !!, Mời bạn nhập lại');
-      } else {
-        await user.reauthenticateWithCredential(cred);
-        await user.updatePassword(new_pass);
-        showToast('Cập nhật thành công');
-        goToUserInfo();
-      }
-    } catch (e) {
-      // console.log(e.code, e.message)
-      showToastErr('Sai mật khẩu !!, Mời bạn nhập lại');
-      // Could be incorrect credentials
+    const goToUserInfo = () => {
+        Actions.pop();
     }
-  };
-  useEffect(() => {
-    const backAction = () => {
-      Actions.pop();
-      return true;
+
+    const showToast = message => {
+      Toast.show({
+        type: 'success',
+        text1: message,
+      });
     };
+    const showToastErr = message => {
+      Toast.show({
+        type: 'error',
+        text1: message,
+      });
+    };
+    const [old_pass, setOld_pass] = useState('');
+    const [new_pass, setNew_pass] = useState('')
+    const [renew_pass, setRenew_pass] = useState('')
 
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, []);
+    const printText = async () => {
+      console.log(old_pass)
+      console.log(new_pass)
+      console.log(renew_pass)
+      const user = auth().currentUser
+      const cred =await auth.EmailAuthProvider.credential(user.email, old_pass);
+      try {
+        if (new_pass != renew_pass){
+          showToastErr('Mật khẩu mới không khớp !!, Mời bạn nhập lại')
+        }
+        else{
+          await user.reauthenticateWithCredential(cred);
+          await user.updatePassword(new_pass)
+          showToast('Cập nhật thành công')
+          goToUserInfo()
+        }
+      } catch (e) {
+        // console.log(e.code, e.message)
+        showToastErr('Sai mật khẩu !!, Mời bạn nhập lại')
+        // Could be incorrect credentials
+      }
+      
+    }
+    useEffect(() => {
+      const backAction = () => {
+        Actions.pop();
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+  
+      return () => backHandler.remove();
+    }, []);
   return (
     <ImageBackground
       style={styles.background}
@@ -108,12 +110,12 @@ const ChangePassword = () => {
             }}>
             Nhập mật khẩu cũ
           </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setOld_pass(text);
-            }}
-            secureTextEntry={false}
+          <TextInput style={styles.input}
+          onChangeText= {
+            text => {
+            setOld_pass(text)
+          }}
+          secureTextEntry={true}
           />
         </View>
         <View style={styles.accountInfo}>
@@ -124,12 +126,13 @@ const ChangePassword = () => {
             }}>
             Nhập mật khẩu mới
           </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setNew_pass(text);
-            }}
-            secureTextEntry={true}
+          <TextInput style={styles.input}
+          onChangeText={
+            text => {
+              setNew_pass(text)
+            }
+          }
+          secureTextEntry={true}
           />
         </View>
         <View style={styles.accountInfo}>
@@ -140,15 +143,18 @@ const ChangePassword = () => {
             }}>
             Xác nhận mật khẩu
           </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              setRenew_pass(text);
-            }}
-            secureTextEntry={true}
+          <TextInput style={styles.input} 
+          onChangeText= {
+            text => {
+              setRenew_pass(text)
+            }
+          }
+          secureTextEntry={true}
           />
         </View>
-        <TouchableOpacity onPress={printText}>
+        <TouchableOpacity
+        onPress={printText}
+        >
           <View style={[styles.loginButton, styles.elevation]}>
             <Text style={{fontSize: 20, color: 'white'}}>Hoàn thành</Text>
           </View>
@@ -161,15 +167,14 @@ const ChangePassword = () => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    marginTop: 45,
+    marginTop: 120,
   },
   background: {
     position: 'absolute',
     left: 0,
     top: 0,
     width: Dimensions.get('window').width,
-    height: '100%',
-    resizeMode: 'stretch',
+    height: Dimensions.get('window').height,
   },
   containerForm: {
     marginTop: 150,
@@ -187,7 +192,6 @@ const styles = StyleSheet.create({
     borderColor: '#2F80ED',
     fontSize: 18,
     paddingHorizontal: 15,
-    color: '#000',
   },
   loginButton: {
     marginTop: 10,

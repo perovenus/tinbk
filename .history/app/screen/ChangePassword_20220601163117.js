@@ -9,12 +9,12 @@ import {
   Dimensions,
   BackHandler,
   Image,
-  ScrollView,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
+
 const ChangePassword = () => {
   const goToUserInfo = () => {
     Actions.pop();
@@ -113,7 +113,7 @@ const ChangePassword = () => {
             onChangeText={text => {
               setOld_pass(text);
             }}
-            secureTextEntry={false}
+            secureTextEntry={true}
           />
         </View>
         <View style={styles.accountInfo}>
@@ -161,15 +161,14 @@ const ChangePassword = () => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    marginTop: 45,
+    marginTop: 120,
   },
   background: {
     position: 'absolute',
     left: 0,
     top: 0,
     width: Dimensions.get('window').width,
-    height: '100%',
-    resizeMode: 'stretch',
+    height: Dimensions.get('window').height,
   },
   containerForm: {
     marginTop: 150,
@@ -187,7 +186,6 @@ const styles = StyleSheet.create({
     borderColor: '#2F80ED',
     fontSize: 18,
     paddingHorizontal: 15,
-    color: '#000',
   },
   loginButton: {
     marginTop: 10,
