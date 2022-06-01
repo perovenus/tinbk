@@ -708,6 +708,7 @@ const styles = StyleSheet.create({
   angleleft: {
     marginLeft: 20,
     marginTop: 20,
+    width: 20,
   },
   centeredView: {
     // flex: 1,
