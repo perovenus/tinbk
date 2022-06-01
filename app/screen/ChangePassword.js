@@ -232,7 +232,7 @@ const ChangePassword = () => {
             </View>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </ImageBackground>
   );
 };
