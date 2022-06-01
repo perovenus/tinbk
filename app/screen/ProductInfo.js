@@ -18,13 +18,13 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {RadioButton} from 'react-native-paper';
-import { useSafeAreaFrame } from 'react-native-safe-area-context';
+import {useSafeAreaFrame} from 'react-native-safe-area-context';
 export default function ProductScreen(item) {
   // const goToSignupScreen = () => {
   //     Actions.signupScreen()
   // }
-  const user = auth().currentUser
-  
+  const user = auth().currentUser;
+
   useEffect(() => {
     const backAction = () => {
       Actions.pop();
@@ -39,20 +39,23 @@ export default function ProductScreen(item) {
     return () => backHandler.remove();
   }, []);
   const [seller, setSeller] = useState({});
-  
-  const [userInfo, setUserInfo] = useState({})
 
-  const [orderList, setOrderList] = useState([])
+  const [userInfo, setUserInfo] = useState({});
+
+  const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
     const subscriber = firestore()
       .collection('Users')
       .doc(item.seller)
-      .onSnapshot(async(userSnapshot) => {
-         firestore().collection('Books').doc(item.id).onSnapshot( async(bookSnapshot) =>{
-          setSeller(userSnapshot.data());
-          setOrderList(await bookSnapshot.data().orderList)
-        })
+      .onSnapshot(async userSnapshot => {
+        firestore()
+          .collection('Books')
+          .doc(item.id)
+          .onSnapshot(async bookSnapshot => {
+            setSeller(userSnapshot.data());
+            setOrderList(await bookSnapshot.data().orderList);
+          });
       });
 
     // Stop listening for updates when no longer required
@@ -70,18 +73,17 @@ export default function ProductScreen(item) {
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [user.uid]);
-  
-  const ProductInfo = {
-    name: 'Thanh gươm diệt quỷ chap 3345',
-    price: '30000',
-    status: 'Like new (99.9%)',
-    seller: 'Nguyễn Đăng Hải',
-    phone: '0836585244',
-    address: 'tòa nhà A20 KTX khu A',
-    imagelist: [require('../assets/t1.jpg')],
-    sellerAvatar: require('../assets/jerry.png'),
-  };
-  
+  // const ProductInfo = {
+  //   name: 'Thanh gươm diệt quỷ chap 3345',
+  //   price: '30000',
+  //   status: 'Like new (99.9%)',
+  //   seller: 'Nguyễn Đăng Hải',
+  //   phone: '0836585244',
+  //   address: 'tòa nhà A20 KTX khu A',
+  //   imagelist: [require('../assets/t1.jpg')],
+  //   sellerAvatar: require('../assets/jerry.png'),
+  // };
+
   const [modalVisible, setModalVisible] = useState(false);
   const [payStatus, setPayStatus] = useState(false);
   const [number, onChangeNumber] = React.useState(null);
@@ -109,7 +111,7 @@ export default function ProductScreen(item) {
     fetch('https://tinbk.herokuapp.com/buyer-notifications', {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json' 
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         sender: user.uid,
@@ -120,9 +122,9 @@ export default function ProductScreen(item) {
         bookName: item.bookName,
         type: type,
         price: price,
-      })
+      }),
     });
-  }
+  };
 
   return (
     <ImageBackground
@@ -163,9 +165,8 @@ export default function ProductScreen(item) {
               style={{
                 ...styles.centeredView,
                 height: 200,
-                marginTop: 0
-                }
-              }>
+                marginTop: 0,
+              }}>
               <View style={styles.modalView}>
                 <Text style={styles.initPrice}>
                   Giá khởi điểm:
@@ -186,7 +187,7 @@ export default function ProductScreen(item) {
                 <TouchableOpacity
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => {
-                    sendMessage('register', number)
+                    sendMessage('register', number);
                     setModalVisible(!modalVisible);
                     setNotification(!notificationPayment);
                   }}>
@@ -231,7 +232,7 @@ export default function ProductScreen(item) {
                     fontSize: 20,
                     marginBottom: 20,
                     textAlign: 'center',
-                    color: 'black'
+                    color: 'black',
                   }}>
                   Bạn có chắc muốn hủy đăng ký không ?
                 </Text>
@@ -243,7 +244,7 @@ export default function ProductScreen(item) {
                       styles.CancelColor,
                     ]}
                     onPress={() => {
-                      sendMessage('cancel', item.price)
+                      sendMessage('cancel', item.price);
                       setCancelModel(!cancelModel);
                     }}>
                     <Text style={styles.textStyle}>Có</Text>
@@ -299,7 +300,7 @@ export default function ProductScreen(item) {
                     fontSize: 20,
                     textAlign: 'center',
                     marginBottom: 20,
-                    color: 'black'
+                    color: 'black',
                   }}>
                   Bạn có chắc muốn đăng ký mua sản phẩm không ?
                 </Text>
@@ -311,8 +312,8 @@ export default function ProductScreen(item) {
                       styles.DealColor,
                     ]}
                     onPress={() => {
-                      sendMessage('register', item.price)
-                      setPaymentConfirm(false)
+                      sendMessage('register', item.price);
+                      setPaymentConfirm(false);
                     }}>
                     <Text style={styles.textStyle}>Có</Text>
                   </TouchableOpacity>
@@ -401,7 +402,7 @@ export default function ProductScreen(item) {
             }
           </ScrollView>
         </View>
-        <View style={styles.radioList}>
+        {/* <View style={styles.radioList}>
           {Array.from(
             {length: ProductInfo['imagelist'].length},
             (v, k) => k,
@@ -411,7 +412,7 @@ export default function ProductScreen(item) {
               color="black"
             />
           ))}
-        </View>
+        </View> */}
         <View style={styles.ProductInfoBlock}>
           <Text style={styles.ProductTitle}>{item.bookName}</Text>
           <Text style={styles.ProductPrice}>Giá : {item.price} VNĐ</Text>
@@ -423,17 +424,14 @@ export default function ProductScreen(item) {
 
         <View style={styles.SellerInfoBlock}>
           <View style={styles.avatar}>
-            {
-            seller.image ? (
+            {seller.image ? (
               <Image style={styles.sellerImg} source={{uri: seller.image}} />
             ) : (
               <Image
                 style={styles.sellerImg}
                 source={require('../assets/user.png')}
               />
-            )
-            }
-
+            )}
           </View>
           <View style={styles.SellerInfo}>
             <Text style={{color: 'black'}}>
@@ -446,50 +444,45 @@ export default function ProductScreen(item) {
               Địa chỉ giao dịch : {item.bookRegion}
             </Text>
             <Text style={{color: 'black'}}>
-              Mô tả : {item.description == '' ? 'Không có mô tả' : item.description}
+              Mô tả :{' '}
+              {item.description == '' ? 'Không có mô tả' : item.description}
             </Text>
           </View>
         </View>
         <View style={styles.line}></View>
 
         <View style={styles.ButtonBlock}>
-          {
-            item.quantity == 0 ? (
-              <Text 
+          {item.quantity == 0 ? (
+            <Text
               style={{
                 color: 'red',
                 fontSize: 22,
-              }}
-              >Đã bán</Text>
-            ) : (
-              !orderList.includes(user.uid) ? (
-                <>
-                  <TouchableOpacity onPress={() => setModalVisible(true)}>
-                    <View style={[styles.PaymentButton, styles.DealColor]}>
-                      <Text style={{color: 'white'}}>Trả giá</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => setPaymentConfirm(true)}>
-                  <View style={[styles.PaymentButton, styles.PayColor]}>
-                    <Text style={{color: 'white'}}>Đăng ký mua</Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-              )
-              : (
-                <TouchableOpacity
-                  onPress={() => {
-                    setCancelModel(true);
-                  }}>
-                  <View style={[styles.PaymentButton, styles.CancelColor]}>
-                    <Text style={{color: 'white'}}>Hủy đăng ký</Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            )
-            
-          }
+              }}>
+              Đã bán
+            </Text>
+          ) : item.orderList.includes(user.uid) ? (
+            <TouchableOpacity
+              onPress={() => {
+                setCancelModel(true);
+              }}>
+              <View style={[styles.PaymentButton, styles.CancelColor]}>
+                <Text style={{color: 'white'}}>Hủy đăng ký</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <>
+              <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <View style={[styles.PaymentButton, styles.DealColor]}>
+                  <Text style={{color: 'white'}}>Trả giá</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setPaymentConfirm(true)}>
+                <View style={[styles.PaymentButton, styles.PayColor]}>
+                  <Text style={{color: 'white'}}>Đăng ký mua</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </ScrollView>
     </ImageBackground>
@@ -543,7 +536,7 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    color: 'black'
+    color: 'black',
   },
   ProductStatus: {
     color: 'black',
@@ -584,7 +577,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexDirection: 'column',
     color: '#000',
-    width: '65%'
+    width: '65%',
   },
   ButtonBlock: {
     display: 'flex',
