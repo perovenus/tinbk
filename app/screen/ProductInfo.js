@@ -89,7 +89,7 @@ export default function ProductScreen(item) {
   };
 
   const user = auth().currentUser
-  const registerToBuy = (type, price) => {
+  const sendMessage = (type, price) => {
     fetch('https://tinbk.herokuapp.com/buyer-notifications', {
       method: 'post',
       headers: {
@@ -103,53 +103,52 @@ export default function ProductScreen(item) {
         price: price,
       })
     });
-    var today = new Date();
-    firestore().collection('Notifications').doc(user.uid).get().then(docSnapshot =>{
-      const notifications = docSnapshot.data().notifications
-      notifications.push({
-        kind: 'buyer',
-        type: type,
-        price: price,
-        bookId: item.id,
-        partner: item.seller,
-        date: String(today.getDate()).padStart(2, '0') + '/' 
-            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
-            + today.getFullYear()
-      })
-      firestore().collection('Notifications').doc(user.uid).update({
-        notifications: notifications
-      }).then(() => {
-        console.log('Buyer-notification added');
-      })
-    })
-    firestore().collection('Notifications').doc(item.seller).get().then(docSnapshot =>{
-      const notifications = docSnapshot.data().notifications
-      notifications.push({
-        kind: 'seller',
-        type: type,
-        price: price,
-        bookId: item.id,
-        partner: user.uid,
-        date: String(today.getDate()).padStart(2, '0') + '/' 
-            + String(today.getMonth() + 1).padStart(2, '0') + '/' 
-            + today.getFullYear()
-      })
-      firestore().collection('Notifications').doc(item.seller).update({
-        notifications: notifications
-      }).then(() => {
-        console.log('Seller-notification added');
-      })
-    })
-    firestore().collection('Books').doc(item.id).get().then(docSnapshot =>{
-      const orderList = docSnapshot.data().orderList
-      console.log('orderList:', orderList)
-      orderList.push(user.uid)
-      firestore().collection('Books').doc(item.id).update({
-        orderList: orderList
-      }).then(() => {
-        console.log('Order list updated')
-      })
-    })
+    // firestore().collection('Notifications').doc(user.uid).get().then(docSnapshot =>{
+    //   const notifications = docSnapshot.data().notifications
+    //   notifications.push({
+    //     kind: 'buyer',
+    //     type: type,
+    //     price: price,
+    //     bookId: item.id,
+    //     partner: item.seller,
+    //     date: String(today.getDate()).padStart(2, '0') + '/' 
+    //         + String(today.getMonth() + 1).padStart(2, '0') + '/' 
+    //         + today.getFullYear()
+    //   })
+    //   firestore().collection('Notifications').doc(user.uid).update({
+    //     notifications: notifications
+    //   }).then(() => {
+    //     console.log('Buyer-notification added');
+    //   })
+    // })
+    // firestore().collection('Notifications').doc(item.seller).get().then(docSnapshot =>{
+    //   const notifications = docSnapshot.data().notifications
+    //   notifications.push({
+    //     kind: 'seller',
+    //     type: type,
+    //     price: price,
+    //     bookId: item.id,
+    //     partner: user.uid,
+    //     date: String(today.getDate()).padStart(2, '0') + '/' 
+    //         + String(today.getMonth() + 1).padStart(2, '0') + '/' 
+    //         + today.getFullYear()
+    //   })
+    //   firestore().collection('Notifications').doc(item.seller).update({
+    //     notifications: notifications
+    //   }).then(() => {
+    //     console.log('Seller-notification added');
+    //   })
+    // })
+    // firestore().collection('Books').doc(item.id).get().then(docSnapshot =>{
+    //   const orderList = docSnapshot.data().orderList
+    //   console.log('orderList:', orderList)
+    //   orderList.push(user.uid)
+    //   firestore().collection('Books').doc(item.id).update({
+    //     orderList: orderList
+    //   }).then(() => {
+    //     console.log('Order list updated')
+    //   })
+    // })
   }
 
   const cancelRegister = () => {
@@ -234,8 +233,8 @@ export default function ProductScreen(item) {
                 <TouchableOpacity
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => {
+                    sendMessage('register', number)
                     setModalVisible(!modalVisible);
-                    setPayStatus(!payStatus);
                     setNotification(!notificationPayment);
                   }}>
                   <Text style={styles.textStyle}>Gửi yêu cầu</Text>
@@ -290,8 +289,8 @@ export default function ProductScreen(item) {
                       styles.CancelColor,
                     ]}
                     onPress={() => {
+                      sendMessage('cancel', item.price)
                       setCancelModel(!cancelModel);
-                      setPayStatus(false);
                     }}>
                     <Text style={styles.textStyle}>Có</Text>
                   </TouchableOpacity>
@@ -357,7 +356,7 @@ export default function ProductScreen(item) {
                       styles.DealColor,
                     ]}
                     onPress={() => {
-                      registerToBuy('processing', item.price)
+                      sendMessage('register', item.price)
                       setPaymentConfirm(false)
                     }}>
                     <Text style={styles.textStyle}>Có</Text>
