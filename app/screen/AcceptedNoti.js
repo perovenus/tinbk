@@ -16,68 +16,83 @@ import firestore from '@react-native-firebase/firestore';
 import { Actions } from 'react-native-router-flux';
 
 
-const AcceptedNoti = ({notification}) => {
-  const user = auth().currentUser
+const AcceptedNoti = ({ notification }) => {
+	const user = auth().currentUser
 
-  const date = new Date()
+	const date = new Date()
 
-  const today = String(date.getDate()).padStart(2, '0') + '/' 
-            + String(date.getMonth() + 1).padStart(2, '0') + '/' 
-            + date.getFullYear()
+	const today = String(date.getDate()).padStart(2, '0') + '/'
+		+ String(date.getMonth() + 1).padStart(2, '0') + '/'
+		+ date.getFullYear()
 
-  const gotoPartnerInfoScreen = (partnerInfo) => {
-    Actions.partnerInfoScreen(partnerInfo)
-  }
+	const gotoPartnerInfoScreen =async (partnerInfo) => {
+		console.log(partnerInfo)
+		let temp_data = await firestore().collection('Users').doc(partnerInfo.partner).get().then(async (doc) => {
+			// console.log(doc.data())
+			let temp_data = doc.data()
+			// await Actions.partnerInfoScreen(await doc.data())
+			return temp_data
+		})
+		console.log(temp_data)
+		Actions.partnerInfoScreen(temp_data)
+		// Actions.partnerInfoScreen(partnerInfo)
+	}
 
-  const gotoProductInfo = (i) => {
-    Actions.ProductScreen(i)
-  }
+	const gotoProductInfo = async(i) => {
+		let temp_data = await firestore().collection('Books').doc(i.bookId).get().then(doc => {
+			console.log(doc.data())
+			//   Actions.ProductScreen(doc.data())
+			return doc.data()
+		})
+		Actions.ProductScreen(temp_data)
+		// Actions.ProductScreen(i)
+	}
 
-  if(notification.kind == 'buyer') {
-    return(
-      <>
-        <Text style={{
-          marginLeft: 25,
-          color: 'black'
-        }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
-        <View style={styles.ProcessingNotification}>
-          <TouchableOpacity
-            onPress={() => gotoProductInfo(bookInfo)}
-            style={styles.notifiProcessingImg}>
-            <Image
-              style={{ width: '100%', height: '100%' }}
-              source={require('../assets/blue.png')} />
-            <FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
-          </TouchableOpacity>
-          <Text style={styles.textContain}>
-            {notification.partnerName} đã đồng ý bán {notification.bookName} cho bạn với giá {notification.price} đ
-          </Text>
-        </View>
-      </>
-      
-    )
-  }
-  return (
-    <>
-      <Text style={{
-          marginLeft: 25,
-          color: 'black'
-        }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
-      <View style={styles.ProcessingNotification}>
-        <TouchableOpacity
-          onPress={() => gotoPartnerInfoScreen(partnerInfo)}
-          style={styles.notifiProcessingImg}>
-          <Image
-            style={{ width: '100%', height: '100%' }}
-            source={require('../assets/blue.png')} />
-          <FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
-        </TouchableOpacity>
-        <Text style={styles.textContain}>
-          Bạn đã đồng ý bán {notification.bookName} cho {notification.partnerName} với giá {notification.price} đ
-        </Text>
-      </View>
-    </>
-  )
+	if (notification.kind == 'buyer') {
+		return (
+			<>
+				<Text style={{
+					marginLeft: 25,
+					color: 'black'
+				}}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
+				<View style={styles.ProcessingNotification}>
+					<TouchableOpacity
+						onPress={() => gotoProductInfo(notification)}
+						style={styles.notifiProcessingImg}>
+						<Image
+							style={{ width: '100%', height: '100%' }}
+							source={require('../assets/blue.png')} />
+						<FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
+					</TouchableOpacity>
+					<Text style={styles.textContain}>
+						{notification.partnerName} đã đồng ý bán {notification.bookName} cho bạn với giá {notification.price} đ
+					</Text>
+				</View>
+			</>
+
+		)
+	}
+	return (
+		<>
+			<Text style={{
+				marginLeft: 25,
+				color: 'black'
+			}}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
+			<View style={styles.ProcessingNotification}>
+				<TouchableOpacity
+					onPress={() => gotoPartnerInfoScreen(notification)}
+					style={styles.notifiProcessingImg}>
+					<Image
+						style={{ width: '100%', height: '100%' }}
+						source={require('../assets/blue.png')} />
+					<FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
+				</TouchableOpacity>
+				<Text style={styles.textContain}>
+					Bạn đã đồng ý bán {notification.bookName} cho {notification.partnerName} với giá {notification.price} đ
+				</Text>
+			</View>
+		</>
+	)
 }
 
 export default AcceptedNoti;
@@ -175,7 +190,7 @@ const styles = StyleSheet.create({
 	textContain: {
 		width: '80%',
 		fontSize: 18,
-    color: 'black'
+		color: 'black'
 	},
 	time: {
 		marginTop: 20,
