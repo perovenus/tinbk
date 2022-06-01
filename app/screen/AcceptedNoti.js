@@ -19,72 +19,6 @@ import { Actions } from 'react-native-router-flux';
 const AcceptedNoti = ({notification}) => {
   const user = auth().currentUser
 
-  // const[userInfo, setUserInfo] = useState({})
-  const[partnerInfo, setPartnerInfo] = useState({})
-  const[bookInfo, setBookInfo] = useState({})
-
-  const [initRender, setInitRender] = useState(true)
-
-
-  firestore().collection('Users').doc(notification.partner).get()
-    .then(userSnapshot => {
-      firestore().collection('Books').doc(notification.bookId).get()
-        .then(bookSnapshot => {
-          if (initRender) {
-            setInitRender(false)
-            setBookInfo(bookSnapshot.data())
-            setPartnerInfo(userSnapshot.data())
-          }
-        })
-    })
-
-  console.log(partnerInfo, bookInfo)
-
-  // firestore().collection('Books').doc(notification.bookId).get()
-  // .then(bookSnapshot => {
-  //   setBookInfo(bookSnapshot.data())
-  // })
-
-//   useEffect(async () => {
-//     const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
-//       setUserInfo(userSnapshot.data())
-//     });
-//     return () => subscriber();
-//   }, [])
-
-//   useEffect(async () => {
-//     const subscriber = firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
-//       setPartnerInfo(partnerSnapshot.data())
-//     });
-//     return () => subscriber();
-//   }, [])
-
-//   useEffect(async () => {
-//     const subscriber = firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
-//       let bookData = bookSnapshot.data()
-//       bookData['id'] = notification.bookId
-//       setBookInfo(bookData)
-//     });
-//     return () => subscriber();
-//   }, [])
-
-  // useEffect(async () => {
-  //   const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
-  //     firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
-  //       firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
-  //         bookData = bookSnapshot.data()
-  //         bookData['id'] = notification.bookId
-  //         setGetData({
-  //           userInfo: userSnapshot.data(), 
-  //           partnerInfo: partnerSnapshot.data(), 
-  //           bookInfo: bookData
-  //         })
-  //       })
-  //     })
-  //   });
-  //   return () => subscriber();
-  // }, [])
-
   const date = new Date()
 
   const today = String(date.getDate()).padStart(2, '0') + '/' 
@@ -116,7 +50,7 @@ const AcceptedNoti = ({notification}) => {
             <FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
           </TouchableOpacity>
           <Text style={styles.textContain}>
-            {partnerInfo.middleName+' '+partnerInfo.firstName} đã đồng ý bán {bookInfo.bookName} cho bạn với giá {notification.price} đ
+            {notification.partnerName} đã đồng ý bán {notification.bookName} cho bạn với giá {notification.price} đ
           </Text>
         </View>
       </>
@@ -139,7 +73,7 @@ const AcceptedNoti = ({notification}) => {
           <FontAwesome5 style={{ position: 'absolute' }} name='check-circle' size={18} color='white' solid />
         </TouchableOpacity>
         <Text style={styles.textContain}>
-          Bạn đã đồng ý bán {bookInfo.bookName} cho {partnerInfo.middleName+' '+partnerInfo.firstName} với giá {notification.price} đ
+          Bạn đã đồng ý bán {notification.bookName} cho {notification.partnerName} với giá {notification.price} đ
         </Text>
       </View>
     </>

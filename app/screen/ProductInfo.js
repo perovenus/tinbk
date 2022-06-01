@@ -99,6 +99,8 @@ export default function ProductScreen(item) {
         sender: user.uid,
         receiver: item.seller,
         book: item.id,
+        bookName: item.bookName,
+        partnerName: seller.middleName + ' ' + seller.firstName, 
         type: type,
         price: price,
       })
