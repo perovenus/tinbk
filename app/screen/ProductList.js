@@ -135,13 +135,14 @@ const ProductList = (props) => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           // console.log("research......")
-          if (temp.bookName.toLowerCase().includes(data.toLowerCase())) {
+          if (temp.bookName.toLowerCase().includes(data.toLowerCase()) && temp_data.some(el => el.id == documentSnapshot.id) == false) {
             // console.log(temp)
+            console.log(temp_data.some(el => el.id == documentSnapshot.id))
             temp['id'] = documentSnapshot.id
             temp_data.push(temp)
           }
         })
-        console.log(temp_data)
+        // console.log(temp_data)
         setDatalist(() => temp_data)
 
 

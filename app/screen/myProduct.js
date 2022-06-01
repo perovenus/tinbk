@@ -64,21 +64,6 @@ const MyProductScreen = (props) => {
         <MyProductItem item={item} />
     );
 
-    const [query, setQuery] = useState('')
-
-    const handleSearch = (text) => {
-        setQuery(text)
-    }
-
-    const modalRef = useRef(null);
-
-    const onOpen = () => {
-        modalRef.current?.open();
-    }
-
-    const onClose = () => {
-        modalRef.current?.close();
-    };
 
     return (
         <SafeAreaView style={styles.productlistscreen}>
