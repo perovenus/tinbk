@@ -283,6 +283,7 @@ export default function ProductScreen(item) {
                     fontSize: 20,
                     marginBottom: 20,
                     textAlign: 'center',
+                    color: 'black'
                   }}>
                   Bạn có chắc muốn hủy đăng ký không ?
                 </Text>
