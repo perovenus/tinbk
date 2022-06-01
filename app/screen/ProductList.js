@@ -18,7 +18,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { PortalProvider } from "@gorhom/portal";
 import { Actions } from 'react-native-router-flux';
 import firestore from '@react-native-firebase/firestore';
-
+import auth from '@react-native-firebase/auth';
 
 const ProductList = (props) => {
   const [datalist, setDatalist] = useState([]);
@@ -37,15 +37,23 @@ const ProductList = (props) => {
 
     return () => backHandler.remove();
   }, []);
-
+  const user = auth().currentUser;
   let temp_data = []
   useEffect(() => {
     const ref = firestore()
       .collection('Books')
+      // seller != user.uid and quanlity > 0
+      .where('seller', '!=', user.uid)
+      // .where('quantity', '>', 0)
+
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
+          
           let temp = documentSnapshot.data();
+          if (temp.quantity == 0){
+            return;
+          }
           // console.log(documentSnapshot.id)
           if (props.search != undefined) {
             if (temp.bookName.toLowerCase().includes(props.data.toLowerCase())) {

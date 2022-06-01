@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { Text, View, StyleSheet, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Home from './Home';
@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 
 export default function Tabs() {
   return (
-    <NavigationContainer style={{backgroundColor: 'black'}}>
+    <NavigationContainer style={{ backgroundColor: 'black' }}>
       <Tab.Navigator
         screenOptions={{
           tabBarActiveTintColor: '#DC4B4B',
@@ -28,26 +28,43 @@ export default function Tabs() {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
-          
+
         }}>
         <Tab.Screen
           name="Trang chủ"
           component={Home}
           options={{
-            tabBarIcon: ({focused}) => (
+            tabBarIcon: ({ focused }) => (
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                   top: 5,
                 }}>
+                {
+                  focused ?
+                  <View style={{
+                    width: 40,
+                    height: 2,
+                    backgroundColor: '#2F80ED',
+                    borderRadius: 4,
+                    position: 'absolute',
+                    top: -10,
+                    // right: 0
+                  }}>
+                  </View>
+                  :
+                  <View>
+
+                  </View>
+                }
                 <Entypo
                   name="home"
                   size={24}
-                  style={{color: focused ? '#2F80ED' : '#757575'}}
+                  style={{ color: focused ? '#2F80ED' : '#757575' }}
                 />
 
-                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
+                <Text style={{ color: focused ? '#2F80ED' : 'gray', fontSize: 12 }}>
                   Trang chủ
                 </Text>
               </View>
@@ -58,20 +75,37 @@ export default function Tabs() {
           name="Đăng bán"
           component={UploadProduct}
           options={{
-            tabBarIcon: ({focused}) => (
+            tabBarIcon: ({ focused }) => (
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                   top: 5,
                 }}>
+                {
+                  focused ?
+                  <View style={{
+                    width: 40,
+                    height: 2,
+                    backgroundColor: '#2F80ED',
+                    borderRadius: 4,
+                    position: 'absolute',
+                    top: -10,
+                    // right: 0
+                  }}>
+                  </View>
+                  :
+                  <View>
+
+                  </View>
+                }
                 <FontAwesome5
                   name="plus-circle"
                   size={24}
-                  style={{color: focused ? '#2F80ED' : '#757575'}}
+                  style={{ color: focused ? '#2F80ED' : '#757575' }}
                 />
 
-                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
+                <Text style={{ color: focused ? '#2F80ED' : 'gray', fontSize: 12 }}>
                   Đăng bán
                 </Text>
               </View>
@@ -82,21 +116,38 @@ export default function Tabs() {
           name="Yêu thích"
           component={Notification}
           options={{
-            tabBarIcon: ({focused}) => (
+            tabBarIcon: ({ focused }) => (
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                   top: 5,
                 }}>
+                {
+                  focused ?
+                  <View style={{
+                    width: 40,
+                    height: 2,
+                    backgroundColor: '#2F80ED',
+                    borderRadius: 4,
+                    position: 'absolute',
+                    top: -10,
+                    // right: 0
+                  }}>
+                  </View>
+                  :
+                  <View>
+
+                  </View>
+                }
                 <FontAwesome5
                   name="bell"
                   size={24}
-                  style={{color: focused ? '#2F80ED' : '#757575'}}
+                  style={{ color: focused ? '#2F80ED' : '#757575' }}
                   solid
                 />
 
-                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
+                <Text style={{ color: focused ? '#2F80ED' : 'gray', fontSize: 12 }}>
                   Thông báo
                 </Text>
               </View>
@@ -107,23 +158,41 @@ export default function Tabs() {
           name="Cá nhân"
           component={UserInfo}
           options={{
-            tabBarIcon: ({focused}) => (
+            tabBarIcon: ({ focused }) => (
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                   top: 5,
                 }}>
+                {
+                  focused ?
+                    <View style={{
+                      width: 40,
+                      height: 2,
+                      backgroundColor: '#2F80ED',
+                      borderRadius: 4,
+                      position: 'absolute',
+                      top: -10,
+                      // right: 0
+                    }}>
+                    </View>
+                    :
+                    <View>
+
+                    </View>
+                }
                 <FontAwesome5
                   name="user"
                   size={24}
-                  style={{color: focused ? '#2F80ED' : '#757575'}}
+                  style={{ color: focused ? '#2F80ED' : '#757575' }}
                   solid
                 />
-
-                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
+                
+                <Text style={{ color: focused ? '#2F80ED' : 'gray', fontSize: 12 }}>
                   Cá nhân
                 </Text>
+                
               </View>
             ),
           }}

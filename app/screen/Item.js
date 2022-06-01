@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import auth from '@react-native-firebase/auth'
 import { Actions } from 'react-native-router-flux'
 const Item = ({item}) => {
   const gotoProductInfo = (i) => {
@@ -31,9 +32,18 @@ const Item = ({item}) => {
           </View>
         </View>
       </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.buybutton}>
+      {
+        item.orderList.includes(auth().currentUser.uid) ?
+        <View style={styles.buybutton}>
         <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/>
-      </TouchableOpacity> */}
+        </View>
+        : 
+        <View></View>
+      }
+      
+      {/* <View style={styles.buybutton}>
+        <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/>
+      </View> */}
     </View>
   )
 }
@@ -71,7 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     color: '#303030',
-    marginTop: 5,
+    // marginTop: 5,
   },
   location: {
     fontSize: 15,
