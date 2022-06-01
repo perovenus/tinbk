@@ -66,7 +66,7 @@ const UploadProduct = ({item}) => {
       bookNameRef.current.focus();
       showToast('Tên sách không hợp lệ');
     
-    } else if (price == '' || price < 0 || price > 10000000) {
+    } else if (price == '' || price < 0 || price > 1000000) {
       priceRef.current.focus();
       showToast('Giá không hợp lệ');
     } else if (bookType == '') {
@@ -168,7 +168,7 @@ const UploadProduct = ({item}) => {
                 style={styles.textinputgia}
                 keyboardType="numeric"
                 value={price}
-                placeholder="0 - 10.000.000"
+                placeholder="0 - 1.000.000"
               />
             </View>
 
