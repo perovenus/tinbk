@@ -58,7 +58,7 @@ const Editmodal = (modalVisible, setModalVisible, user) => {
         birthday: userInfo ? userInfo.birthday : '',
         phoneNumber: userInfo ? userInfo.phoneNumber : '',
         address: userInfo ? userInfo.address : '',
-        image: image ? await uploadImage() : '',
+        image: image ? await uploadImage() : userInfo.image,
       })
       .then(() => setModalVisible(!modalVisible));
   };

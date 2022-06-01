@@ -9,7 +9,7 @@ import {
   ImageBackground,
   Dimensions,
   Pressable,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -73,99 +73,200 @@ export default function Signin() {
     <ImageBackground
       style={styles.background}
       source={require('../assets/signin-background.jpg')}>
-      <View style={styles.accountInfoContainer}>
-        <Text
-          style={{
-            fontSize: 28,
-            color: '#2F80ED',
-            marginLeft: 30,
-            fontWeight: 'bold',
-          }}>
-          Đăng nhập
-        </Text>
-        <View style={styles.accountInfo}>
+      {/* <ScrollView >
+        <View style={styles.accountInfoContainer}>
           <Text
             style={{
-              fontSize: 16,
+              fontSize: 28,
               color: '#2F80ED',
+              marginLeft: 30,
+              fontWeight: 'bold',
             }}>
-            Email
+            Đăng nhập
           </Text>
-          <TextInput
-            ref={emailRef}
-            style={styles.input}
-            onChangeText={text => setEmail(text)}
-          />
+          <View style={styles.accountInfo}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: '#2F80ED',
+              }}>
+              Email
+            </Text>
+            <TextInput
+              ref={emailRef}
+              style={styles.input}
+              onChangeText={text => setEmail(text)}
+            />
 
-          <Text
+            <Text
+              style={{
+                marginTop: 30,
+                fontSize: 15,
+                color: '#2F80ED',
+                fontSize: 18,
+              }}>
+              Mật khẩu
+            </Text>
+            <TextInput
+              ref={passwordRef}
+              style={styles.input}
+              secureTextEntry={true}
+              onChangeText={text => setPassword(text)}
+            />
+          </View>
+          <Pressable
             style={{
-              marginTop: 30,
-              fontSize: 16,
-              color: '#2F80ED',
-            }}>
-            Mật khẩu
-          </Text>
-          <TextInput
-            ref={passwordRef}
-            style={styles.input}
-            secureTextEntry={true}
-            onChangeText={text => setPassword(text)}
-          />
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 150,
+              marginLeft: '58%',
+              marginTop: '4%',
+              // alignItems: 'center'
+            }}
+            onPress={goToGetOTPScreen}>
+            {({pressed}) => (
+              <Text
+                style={[
+                  {textDecorationLine: pressed ? 'underline' : 'none'},
+                  {color: pressed ? '#6c5ce7' : '#2F80ED'},
+                  styles.forgotPassword,
+                ]}>
+                Quên mật khẩu?
+              </Text>
+            )}
+          </Pressable>
         </View>
-        <Pressable
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: 150,
-          marginLeft: '58%',
-          marginTop: '4%'
-          // alignItems: 'center'
-        }}
-        onPress={goToGetOTPScreen}>
-          {
-          ({pressed}) => (
+        <View style={styles.signinWith}>
+          <View style={[styles.singinWithButton, styles.elevation]}>
+            <Image
+              style={styles.googleImage}
+              source={require('../assets/google.png')}
+            />
+          </View>
+          <View style={[styles.singinWithButton, styles.elevation]}>
+            <FontAwesome5 name="facebook-square" size={30} color="#395185" />
+          </View>
+        </View>
+        <TouchableOpacity style={styles.loginButton} onPress={handleSignIn}>
+          <Text style={{fontSize: 24, color: 'white'}}>Đăng nhập</Text>
+        </TouchableOpacity>
+        <View style={styles.signup}>
+          <Text style={styles.signupButton}>Chưa có tài khoản? </Text>
+          <TouchableOpacity onPress={goToSignupScreen}>
             <Text
               style={[
-                {textDecorationLine: pressed ? 'underline' : 'none'},
-                {color: pressed ? '#6c5ce7' : '#2F80ED'},
-                styles.forgotPassword,
+                styles.signupButton,
+                {
+                  textDecorationLine: 'underline',
+                  fontWeight: 'bold',
+                },
               ]}>
-              Quên mật khẩu?
+              Đăng ký
             </Text>
-          )
-          }
-        </Pressable>
-      </View>
-      <View style={styles.signinWith}>
-        <View style={[styles.singinWithButton, styles.elevation]}>
-          <Image
-            style={styles.googleImage}
-            source={require('../assets/google.png')}
-          />
+          </TouchableOpacity>
         </View>
-        <View style={[styles.singinWithButton, styles.elevation]}>
-          <FontAwesome5 name="facebook-square" size={30} color="#395185" />
+      </ScrollView> */}
+      <Text
+        style={{
+          fontSize: 28,
+          color: '#2F80ED',
+          marginLeft: 30,
+          fontWeight: 'bold',
+          top: '25%',
+        }}>
+        Đăng nhập
+      </Text>
+      <View style={styles.scrollView}>
+        <View>
+          <View>
+            <View style={styles.accountInfo}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: '#2F80ED',
+                }}>
+                Email
+              </Text>
+              <TextInput
+                ref={emailRef}
+                style={styles.input}
+                onChangeText={text => setEmail(text)}
+              />
+
+              <Text
+                style={{
+                  marginTop: 30,
+                  fontSize: 15,
+                  color: '#2F80ED',
+                  fontSize: 18,
+                }}>
+                Mật khẩu
+              </Text>
+              <TextInput
+                ref={passwordRef}
+                style={styles.input}
+                secureTextEntry={true}
+                onChangeText={text => setPassword(text)}
+              />
+            </View>
+            <Pressable
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 150,
+                marginLeft: '58%',
+                marginTop: '4%',
+                // alignItems: 'center'
+              }}
+              onPress={goToGetOTPScreen}>
+              {({pressed}) => (
+                <Text
+                  style={[
+                    {textDecorationLine: pressed ? 'underline' : 'none'},
+                    {color: pressed ? '#6c5ce7' : '#2F80ED'},
+                    styles.forgotPassword,
+                  ]}>
+                  Quên mật khẩu?
+                </Text>
+              )}
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.signinWith}>
+          <View style={[styles.singinWithButton, styles.elevation]}>
+            <Image
+              style={styles.googleImage}
+              source={require('../assets/google.png')}
+            />
+          </View>
+          <View style={[styles.singinWithButton, styles.elevation]}>
+            <FontAwesome5 name="facebook-square" size={30} color="#395185" />
+          </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={handleSignIn}>
-        <Text style={{fontSize: 24, color: 'white'}}>Đăng nhập</Text>
-      </TouchableOpacity>
-      <View style={styles.signup}>
-        <Text style={styles.signupButton}>Chưa có tài khoản? </Text>
-        <TouchableOpacity onPress={goToSignupScreen}>
-          <Text
-            style={[
-              styles.signupButton,
-              {
-                textDecorationLine: 'underline',
-                fontWeight: 'bold',
-              },
-            ]}>
-            Đăng ký
-          </Text>
+      <View>
+        <TouchableOpacity style={styles.loginButton} onPress={handleSignIn}>
+          <Text style={{fontSize: 24, color: 'white'}}>Đăng nhập</Text>
         </TouchableOpacity>
+        <View style={styles.signup}>
+          <Text style={styles.signupButton}>Chưa có tài khoản? </Text>
+          <TouchableOpacity onPress={goToSignupScreen}>
+            <Text
+              style={[
+                styles.signupButton,
+                {
+                  textDecorationLine: 'underline',
+                  fontWeight: 'bold',
+                },
+              ]}>
+              Đăng ký
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -173,23 +274,19 @@ export default function Signin() {
 const styles = StyleSheet.create({
   background: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    flex: 1,
-    justifyContent: 'flex-end',
-    position: 'absolute',
-    // justifyContent: 'space-between'
-    // justifyContent: 'center',
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   accountInfoContainer: {
-    position: 'absolute',
     width: '100%',
-    top: '30%',
+    paddingTop: '35%',
+    // backgroundColor: 'black',
   },
   accountInfo: {
     marginHorizontal: 40,
     marginTop: 30,
     // height: 155,
-    // backgroundColor: 'red'
   },
   input: {
     width: '100%',
@@ -204,8 +301,7 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     alignSelf: 'flex-end',
-
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   signinWith: {
@@ -213,7 +309,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 110,
-    bottom: '25%',
+    marginTop: '15%',
   },
   googleImage: {
     width: 30,
@@ -225,12 +321,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    backgroundColor: 'white',
     marginLeft: 30,
+    backgroundColor: 'white',
   },
   elevation: {
     elevation: 20,
     shadowColor: '#52006A',
+    backgroundColor: 'white',
   },
   loginButton: {
     width: 145,
@@ -242,18 +339,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    right: '4%',
-    bottom: '8%',
+    marginRight: '5%',
+    marginBottom: '8%',
   },
   signup: {
-    left: '2%',
-    bottom: '5%',
+    marginBottom: '10%',
+    marginLeft: '5%',
     flexDirection: 'row',
-    width: 220,
+    width: '60%',
     justifyContent: 'space-between',
   },
   signupButton: {
     color: 'white',
     fontSize: 15,
+  },
+  scrollView: {
+    width: '100%',
+    height: '50%',
+    marginTop: '45%',
   },
 });

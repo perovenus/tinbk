@@ -1,4 +1,4 @@
-import React ,{useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,68 +9,67 @@ import {
   Dimensions,
   BackHandler,
   Image,
+  ScrollView,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 const ChangePassword = () => {
-    const goToUserInfo = () => {
-        Actions.pop();
-    }
+  const goToUserInfo = () => {
+    Actions.pop();
+  };
 
-    const showToast = message => {
-      Toast.show({
-        type: 'success',
-        text1: message,
-      });
-    };
-    const showToastErr = message => {
-      Toast.show({
-        type: 'error',
-        text1: message,
-      });
-    };
-    const [old_pass, setOld_pass] = useState('');
-    const [new_pass, setNew_pass] = useState('')
-    const [renew_pass, setRenew_pass] = useState('')
+  const showToast = message => {
+    Toast.show({
+      type: 'success',
+      text1: message,
+    });
+  };
+  const showToastErr = message => {
+    Toast.show({
+      type: 'error',
+      text1: message,
+    });
+  };
+  const [old_pass, setOld_pass] = useState('');
+  const [new_pass, setNew_pass] = useState('');
+  const [renew_pass, setRenew_pass] = useState('');
 
-    const printText = async () => {
-      console.log(old_pass)
-      console.log(new_pass)
-      console.log(renew_pass)
-      const user = auth().currentUser
-      const cred = await auth.EmailAuthProvider.credential(user.email, old_pass);
-      try {
-        if (new_pass != renew_pass){
-          showToastErr('Mật khẩu mới không khớp !!, Mời bạn nhập lại')
-        }
-        else{
-          await user.reauthenticateWithCredential(cred);
-          await user.updatePassword(new_pass)
-          showToast('Cập nhật thành công')
-          goToUserInfo()
-        }
-      } catch (e) {
-        // console.log(e.code, e.message)
-        showToastErr('Sai mật khẩu !!, Mời bạn nhập lại')
-        // Could be incorrect credentials
+  const printText = async () => {
+    console.log(old_pass);
+    console.log(new_pass);
+    console.log(renew_pass);
+    const user = auth().currentUser;
+    const cred = await auth.EmailAuthProvider.credential(user.email, old_pass);
+    try {
+      if (new_pass != renew_pass) {
+        showToastErr('Mật khẩu mới không khớp !!, Mời bạn nhập lại');
+      } else {
+        await user.reauthenticateWithCredential(cred);
+        await user.updatePassword(new_pass);
+        showToast('Cập nhật thành công');
+        goToUserInfo();
       }
-      
+    } catch (e) {
+      // console.log(e.code, e.message)
+      showToastErr('Sai mật khẩu !!, Mời bạn nhập lại');
+      // Could be incorrect credentials
     }
-    useEffect(() => {
-      const backAction = () => {
-        Actions.pop();
-        return true;
-      };
-  
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
-  
-      return () => backHandler.remove();
-    }, []);
+  };
+  useEffect(() => {
+    const backAction = () => {
+      Actions.pop();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <ImageBackground
       style={styles.background}
@@ -158,7 +157,82 @@ const ChangePassword = () => {
             <Text style={{fontSize: 20, color: 'white'}}>Hoàn thành</Text>
           </View>
         </TouchableOpacity>
-      </View>
+        <View style={styles.container}>
+          <Text
+            style={{
+              marginTop: 50,
+              marginBottom: 10,
+              fontSize: 28,
+              color: '#2F80ED',
+              marginLeft: 30,
+              fontWeight: 'bold',
+            }}>
+            Thay đổi mật khẩu
+          </Text>
+          <View style={{alignItems: 'center'}}>
+            <Image
+              style={{
+                width: 150,
+                height: 150,
+              }}
+              source={require('../assets/tinBK-logo-2.png')}
+            />
+          </View>
+          <View style={styles.accountInfo}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: '#2F80ED',
+              }}>
+              Nhập mật khẩu cũ
+            </Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => {
+                setOld_pass(text);
+              }}
+              secureTextEntry={false}
+            />
+          </View>
+          <View style={styles.accountInfo}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: '#2F80ED',
+              }}>
+              Nhập mật khẩu mới
+            </Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => {
+                setNew_pass(text);
+              }}
+              secureTextEntry={true}
+            />
+          </View>
+          <View style={styles.accountInfo}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: '#2F80ED',
+              }}>
+              Xác nhận mật khẩu
+            </Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => {
+                setRenew_pass(text);
+              }}
+              secureTextEntry={true}
+            />
+          </View>
+          <TouchableOpacity onPress={printText}>
+            <View style={[styles.loginButton, styles.elevation]}>
+              <Text style={{fontSize: 20, color: 'white'}}>Hoàn thành</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -166,14 +240,14 @@ const ChangePassword = () => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    marginTop: 120,
+    marginTop: 45,
   },
   background: {
     position: 'absolute',
     left: 0,
     top: 0,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: '100%',
   },
   containerForm: {
     marginTop: 150,
@@ -191,7 +265,7 @@ const styles = StyleSheet.create({
     borderColor: '#2F80ED',
     fontSize: 16,
     paddingHorizontal: 15,
-    color: 'black'
+    color: '#000',
   },
   loginButton: {
     marginTop: 10,
