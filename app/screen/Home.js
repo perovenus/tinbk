@@ -39,7 +39,6 @@ const Home = () => {
   useEffect(() => {
     const ref = firestore()
       .collection('Books')
-      .limit(6)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
@@ -175,10 +174,24 @@ const Home = () => {
           <View styles={styles.productlistContainer}>
             <FlatList
               numColumns={2}
-              data={datalist.filter(
-                item =>
-                  item.quantity > 0 && item.seller != auth().currentUser.uid,
-              )}
+              data={
+                datalist.filter(
+                  item =>
+                    item.quantity > 0 && item.seller != auth().currentUser.uid,
+                ).length > 6
+                  ? datalist
+                      .filter(
+                        item =>
+                          item.quantity > 0 &&
+                          item.seller != auth().currentUser.uid,
+                      )
+                      .slice(0, 6)
+                  : datalist.filter(
+                      item =>
+                        item.quantity > 0 &&
+                        item.seller != auth().currentUser.uid,
+                    )
+              }
               renderItem={renderItem}
               keyExtractor={item => item.id}
             />
