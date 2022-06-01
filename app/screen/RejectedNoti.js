@@ -21,32 +21,48 @@ const RejectedNoti = ({notification}) => {
 
   // const [getData, setGetData] = useState({userInfo: {}, partnerInfo: {}, bookInfo: {}})
 
-	const[userInfo, setUserInfo] = useState({})
+	// const[userInfo, setUserInfo] = useState({})
   const[partnerInfo, setPartnerInfo] = useState({})
   const[bookInfo, setBookInfo] = useState({})
 
-  useEffect(async () => {
-    const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
-      setUserInfo(userSnapshot.data())
-    });
-    return () => subscriber();
-  }, [])
+  const [initRender, setInitRender] = useState(true)
 
-  useEffect(async () => {
-    const subscriber = firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
-      setPartnerInfo(partnerSnapshot.data())
-    });
-    return () => subscriber();
-  }, [])
 
-  useEffect(async () => {
-    const subscriber = firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
-      let bookData = bookSnapshot.data()
-      bookData['id'] = notification.bookId
-      setBookInfo(bookData)
-    });
-    return () => subscriber();
-  }, [])
+  firestore().collection('Users').doc(notification.partner).get()
+    .then(userSnapshot => {
+      firestore().collection('Books').doc(notification.bookId).get()
+        .then(bookSnapshot => {
+          if (initRender) {
+            setInitRender(false)
+            setBookInfo(bookSnapshot.data())
+            setPartnerInfo(userSnapshot.data())
+          }
+        })
+    })
+
+  console.log(partnerInfo, bookInfo)
+//   useEffect(async () => {
+//     const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
+//       setUserInfo(userSnapshot.data())
+//     });
+//     return () => subscriber();
+//   }, [])
+
+//   useEffect(async () => {
+//     const subscriber = firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
+//       setPartnerInfo(partnerSnapshot.data())
+//     });
+//     return () => subscriber();
+//   }, [])
+
+//   useEffect(async () => {
+//     const subscriber = firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
+//       let bookData = bookSnapshot.data()
+//       bookData['id'] = notification.bookId
+//       setBookInfo(bookData)
+//     });
+//     return () => subscriber();
+//   }, [])
 
   // useEffect(async () => {
   //   const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
