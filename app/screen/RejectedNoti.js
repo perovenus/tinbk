@@ -19,24 +19,51 @@ import { Actions } from 'react-native-router-flux';
 const RejectedNoti = ({notification}) => {
   const user = auth().currentUser
 
-  const [getData, setGetData] = useState({userInfo: {}, partnerInfo: {}, bookInfo: {}})
+  // const [getData, setGetData] = useState({userInfo: {}, partnerInfo: {}, bookInfo: {}})
+
+	const[userInfo, setUserInfo] = useState({})
+  const[partnerInfo, setPartnerInfo] = useState({})
+  const[bookInfo, setBookInfo] = useState({})
 
   useEffect(async () => {
     const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
-      firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
-        firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
-          bookData = bookSnapshot.data()
-          bookData['id'] = notification.bookId
-          setGetData({
-            userInfo: userSnapshot.data(), 
-            partnerInfo: partnerSnapshot.data(), 
-            bookInfo: bookData
-          })
-        })
-      })
+      setUserInfo(userSnapshot.data())
     });
     return () => subscriber();
   }, [])
+
+  useEffect(async () => {
+    const subscriber = firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
+      setPartnerInfo(partnerSnapshot.data())
+    });
+    return () => subscriber();
+  }, [])
+
+  useEffect(async () => {
+    const subscriber = firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
+      let bookData = bookSnapshot.data()
+      bookData['id'] = notification.bookId
+      setBookInfo(bookData)
+    });
+    return () => subscriber();
+  }, [])
+
+  // useEffect(async () => {
+  //   const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
+  //     firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
+  //       firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
+  //         bookData = bookSnapshot.data()
+  //         bookData['id'] = notification.bookId
+  //         setGetData({
+  //           userInfo: userSnapshot.data(), 
+  //           partnerInfo: partnerSnapshot.data(), 
+  //           bookInfo: bookData
+  //         })
+  //       })
+  //     })
+  //   });
+  //   return () => subscriber();
+  // }, [])
 
   const date = new Date()
 
@@ -61,7 +88,7 @@ const RejectedNoti = ({notification}) => {
         }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
         <View style={styles.ProcessingNotification}>
           <TouchableOpacity
-            onPress={() => gotoProductInfo(getData.bookInfo)}
+            onPress={() => gotoProductInfo(bookInfo)}
             style={styles.notifiProcessingImg}>
             <Image
               style={{ width: '100%', height: '100%' }}
@@ -69,7 +96,7 @@ const RejectedNoti = ({notification}) => {
             <FontAwesome5 style={{ position: 'absolute' }} name='times-circle' size={18} color='white' solid />
           </TouchableOpacity>
           <Text style={styles.textContain}>
-            {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} đã từ chối bán {getData.bookInfo.bookName} cho bạn với giá {notification.price} đ
+            {partnerInfo.middleName+' '+partnerInfo.firstName} đã từ chối bán {bookInfo.bookName} cho bạn với giá {notification.price} đ
           </Text>
         </View>
       </>
@@ -84,7 +111,7 @@ const RejectedNoti = ({notification}) => {
         }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
       <View style={styles.ProcessingNotification}>
         <TouchableOpacity
-          onPress={() => gotoPartnerInfoScreen(getData.partnerInfo)}
+          onPress={() => gotoPartnerInfoScreen(partnerInfo)}
           style={styles.notifiProcessingImg}>
           <Image
             style={{ width: '100%', height: '100%' }}
@@ -92,7 +119,7 @@ const RejectedNoti = ({notification}) => {
           <FontAwesome5 style={{ position: 'absolute' }} name='times-circle' size={18} color='white' solid />
         </TouchableOpacity>
         <Text style={styles.textContain}>
-          Bạn đã từ chối bán {getData.bookInfo.bookName} cho {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} với giá {notification.price} đ
+          Bạn đã từ chối bán {bookInfo.bookName} cho {partnerInfo.middleName+' '+partnerInfo.firstName} với giá {notification.price} đ
         </Text>
       </View>
     </>

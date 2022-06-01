@@ -14,7 +14,7 @@ import {Actions} from 'react-native-router-flux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
-mport { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 const ChangePassword = () => {
     const goToUserInfo = () => {
         Actions.pop();

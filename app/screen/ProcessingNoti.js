@@ -15,25 +15,36 @@ import { Actions } from 'react-native-router-flux';
 const ProcessingNoti = ({notification}) => {
   const user = auth().currentUser
 
-  const [getData, setGetData] = useState({userInfo: {}, partnerInfo: {}, bookInfo: {}})
+  // const [getData, setGetData] = useState({userInfo: {}, partnerInfo: {}, bookInfo: {}})
+
+  const[userInfo, setUserInfo] = useState({})
+  const[partnerInfo, setPartnerInfo] = useState({})
+  const[bookInfo, setBookInfo] = useState({})
 
   useEffect(async () => {
     const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
-      firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
-        firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
-          bookData = bookSnapshot.data()
-          bookData['id'] = notification.bookId
-          setGetData({
-            userInfo: userSnapshot.data(), 
-            partnerInfo: partnerSnapshot.data(), 
-            bookInfo: bookData
-          })
-        })
-      })
+      setUserInfo(userSnapshot.data())
     });
     return () => subscriber();
   }, [])
-  
+
+  useEffect(async () => {
+    const subscriber = firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
+      setPartnerInfo(partnerSnapshot.data())
+    });
+    return () => subscriber();
+  }, [])
+
+  useEffect(async () => {
+    const subscriber = firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
+      let bookData = bookSnapshot.data()
+      bookData['id'] = notification.bookId
+      setBookInfo(bookData)
+    });
+    return () => subscriber();
+  }, [])
+
+
   const date = new Date()
 
   const today = String(date.getDate()).padStart(2, '0') + '/' 
@@ -65,7 +76,7 @@ const ProcessingNoti = ({notification}) => {
     
   }
 
-  console.log(getData.bookInfo.id)
+  // console.log(getData.bookInfo.id)
 
   if (notification.kind === 'buyer'){
     return (
@@ -86,7 +97,7 @@ const ProcessingNoti = ({notification}) => {
             <FontAwesome5 style={{ position: 'absolute' }} name='calendar-minus' size={18} color='white' solid />
           </TouchableOpacity>
           <Text style={styles.textContain}>
-            Bạn đã đăng ký mua {getData.bookInfo.bookName} của {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} với giá {notification.price} đ
+            Bạn đã đăng ký mua {bookInfo.bookName} của {partnerInfo.middleName+' '+partnerInfo.firstName} với giá {notification.price} đ
           </Text>
         </View>
       </>
@@ -103,7 +114,7 @@ const ProcessingNoti = ({notification}) => {
       <View style={styles.AlertNotification}>
         <View style={styles.container}>
           <TouchableOpacity
-            onPress={() => gotoPartnerInfoScreen(getData.partnerInfo)}
+            onPress={() => gotoPartnerInfoScreen(partnerInfo)}
             style={styles.notifiProcessingImg}>
             <Image
               style={{ width: '100%', height: '100%' }}
@@ -112,7 +123,7 @@ const ProcessingNoti = ({notification}) => {
           </TouchableOpacity>
 
           <Text style={styles.textContain}>
-            {getData.partnerInfo.middleName+' '+getData.partnerInfo.firstName} muốn mua sản phẩm {getData.bookInfo.bookName} với giá {notification.price}. Bạn có đồng ý không ?
+            {partnerInfo.middleName+' '+partnerInfo.firstName} muốn mua sản phẩm {bookInfo.bookName} với giá {notification.price}. Bạn có đồng ý không ?
           </Text>
         </View>
         <View style={styles.buttonlist}>
