@@ -213,7 +213,12 @@ export default function ProductScreen(item) {
               onTouchEnd={e => {
                 e.stopPropagation();
               }}
-              style={styles.centeredView}>
+              style={{
+                ...styles.centeredView,
+                height: 200,
+                marginTop: 0
+                }
+              }>
               <View style={styles.modalView}>
                 <Text style={styles.initPrice}>
                   Giá khởi điểm:
@@ -346,6 +351,7 @@ export default function ProductScreen(item) {
                     fontSize: 20,
                     textAlign: 'center',
                     marginBottom: 20,
+                    color: 'black'
                   }}>
                   Bạn có chắc muốn đăng ký mua sản phẩm không ?
                 </Text>
@@ -411,8 +417,9 @@ export default function ProductScreen(item) {
                 <Text
                   style={{
                     fontSize: 20,
-                    marginTop: '15%',
+                    // marginTop: '15%',
                     marginBottom: 20,
+                    color: 'black',
                   }}>
                   Đăng ký thành công !!!
                 </Text>
@@ -718,7 +725,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     justifyContent: 'center',
-    paddingTop: 30,
+    // paddingTop: 30
+    alignItems: 'center',
     width: '80%',
     height: '100%',
     backgroundColor: 'white',
@@ -763,7 +771,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     color: 'black',
-    marginTop: 10,
+    // marginTop: 10,
   },
   inputcontainer: {
     display: 'flex',
