@@ -40,6 +40,10 @@ const ChangePassword = () => {
     console.log(old_pass);
     console.log(new_pass);
     console.log(renew_pass);
+    if (old_pass == '' || new_pass == '' || renew_pass == '') {
+      showToastErr('Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
     const user = auth().currentUser;
     const cred = await auth.EmailAuthProvider.credential(user.email, old_pass);
     try {
