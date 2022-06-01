@@ -50,7 +50,7 @@ const Home = () => {
         if (isInitialRender) {
           setIsInitialRender(false);
           setDatalist(() => temp_data);
-        }
+        } else setDatalist(() => temp_data);
       });
     // return () => temp_data
   }, [temp_data, isInitialRender]);
