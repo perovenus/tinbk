@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import {
   View,
@@ -6,54 +6,59 @@ import {
   Image,
   TouchableOpacity,
   Text,
-  Dimensions
-} from 'react-native'
+  Dimensions,
+} from 'react-native';
 
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Actions } from 'react-native-router-flux'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {Actions} from 'react-native-router-flux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 const ItemInHome = ({item}) => {
-  const gotoProductInfo = (i) => {
-    Actions.ProductScreen(i)
-  }
-  
+  const gotoProductInfo = i => {
+    Actions.ProductScreen(i);
+  };
   return (
     // <View style={styles.itemInHome}>
-      <TouchableOpacity
+    <TouchableOpacity
       onPress={() => gotoProductInfo(item)}
       style={styles.itemInHome}>
-        <View style={styles.container}>
-          <Image
-            resizeMode='contain'
-            source={{uri : item.image}} 
-            style={styles.image}
-          />
-          <View style={styles.details}>
-            <Text numberOfLines={1} style={styles.name}>{item.bookName}</Text>
-            <Text style={styles.price}>{item.price} đ</Text>
-          </View>
+      <View style={styles.container}>
+        <Image
+          resizeMode="contain"
+          source={{uri: item.image}}
+          style={styles.image}
+        />
+        <View style={styles.details}>
+          <Text numberOfLines={1} style={styles.name}>
+            {item.bookName}
+          </Text>
+          <Text style={styles.price}>{item.price} đ</Text>
         </View>
-        {/* <TouchableOpacity style={styles.buybutton} onPress={() => sendMessage('processing', item.price)}>
-          <FontAwesome5 name='shopping-cart' size={22} color='rgba(47,128,237,0.85)'/>
-        </TouchableOpacity> */}
-      </TouchableOpacity>
+      </View>
+      <View style={styles.register}>
+        {item.orderList.includes(auth().currentUser.uid) ? (
+          <Text style={styles.footer}>Đang chờ</Text>
+        ) : (
+          <Text></Text>
+        )}
+      </View>
+    </TouchableOpacity>
     // </View>
-  )
-}
+  );
+};
 
 export default ItemInHome;
 
 const styles = StyleSheet.create({
   itemInHome: {
     width: '44%',
-    height: Dimensions.get('window').height*0.25,
+    height: Dimensions.get('window').height * 0.25,
     minHeight: 200,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#DADADA',
-    // elevation: 1, 
+    // elevation: 1,
     // marginLeft: (Dimensions.get('window').width - 165*2) / 3,
     marginLeft: '4%',
     marginVertical: 5,
@@ -73,7 +78,7 @@ const styles = StyleSheet.create({
     // width: '65%',
     // height: '90%',
     height: 65,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   name: {
     fontSize: 14,
@@ -88,9 +93,18 @@ const styles = StyleSheet.create({
     color: '#303030',
     // bottom: 5,
   },
-  buybutton: {
+  register: {
     position: 'absolute',
+    width: '35%',
     bottom: '2%',
     right: '4%',
-  }
-})
+    // backgroundColor: 'yellow',
+    color: '#000',
+  },
+  footer: {
+    fontSize: 13,
+    fontWeight: '400',
+    color: 'orange',
+    marginBottom: 5,
+  },
+});
