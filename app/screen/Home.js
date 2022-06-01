@@ -217,7 +217,8 @@ const styles = StyleSheet.create({
   appName: {
     backgroundColor: '#FFFFFF',
     height: 35,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   appname: {
     color: '#2f80ed',
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
   },
   category: {
     backgroundColor: '#FFFFFF',
-    height: 120,
+    height: 110,
     marginTop: 5,
     flexDirection: 'row',
     alignItems: 'center',
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     // marginTop: '3%'
   },
   productlist: {
-    height: Dimensions.get('window').height - 340,
+    height: Dimensions.get('window').height - 325,
     marginTop: 5,
     backgroundColor: '#FFFFFF',
   },

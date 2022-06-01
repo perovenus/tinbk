@@ -103,79 +103,8 @@ export default function ProductScreen(item) {
         price: price,
       })
     });
-    // firestore().collection('Notifications').doc(user.uid).get().then(docSnapshot =>{
-    //   const notifications = docSnapshot.data().notifications
-    //   notifications.push({
-    //     kind: 'buyer',
-    //     type: type,
-    //     price: price,
-    //     bookId: item.id,
-    //     partner: item.seller,
-    //     date: String(today.getDate()).padStart(2, '0') + '/' 
-    //         + String(today.getMonth() + 1).padStart(2, '0') + '/' 
-    //         + today.getFullYear()
-    //   })
-    //   firestore().collection('Notifications').doc(user.uid).update({
-    //     notifications: notifications
-    //   }).then(() => {
-    //     console.log('Buyer-notification added');
-    //   })
-    // })
-    // firestore().collection('Notifications').doc(item.seller).get().then(docSnapshot =>{
-    //   const notifications = docSnapshot.data().notifications
-    //   notifications.push({
-    //     kind: 'seller',
-    //     type: type,
-    //     price: price,
-    //     bookId: item.id,
-    //     partner: user.uid,
-    //     date: String(today.getDate()).padStart(2, '0') + '/' 
-    //         + String(today.getMonth() + 1).padStart(2, '0') + '/' 
-    //         + today.getFullYear()
-    //   })
-    //   firestore().collection('Notifications').doc(item.seller).update({
-    //     notifications: notifications
-    //   }).then(() => {
-    //     console.log('Seller-notification added');
-    //   })
-    // })
-    // firestore().collection('Books').doc(item.id).get().then(docSnapshot =>{
-    //   const orderList = docSnapshot.data().orderList
-    //   console.log('orderList:', orderList)
-    //   orderList.push(user.uid)
-    //   firestore().collection('Books').doc(item.id).update({
-    //     orderList: orderList
-    //   }).then(() => {
-    //     console.log('Order list updated')
-    //   })
-    // })
   }
 
-  const cancelRegister = () => {
-    fetch('https://tinbk.herokuapp.com/buyer-notifications', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify({
-        sender: user.uid,
-        receiver: item.seller,
-        book: item.id,
-        type: type,
-        price: price,
-      })
-    });
-    
-    firestore().collection('Books').doc(item.id).get().then(docSnapshot =>{
-      const orderList = docSnapshot.data().orderList
-      orderList.pop(user.uid)
-      firestore().collection('Books').doc(item.id).update({
-        orderList: orderList
-      }).then(() => {
-        console.log('Order list updated')
-      })
-    })
-  }
   return (
     <ImageBackground
       style={styles.background}
@@ -506,58 +435,37 @@ export default function ProductScreen(item) {
 
         <View style={styles.ButtonBlock}>
           {
-            !orderList.includes(user.uid) ? (
-              <>
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
-                  <View style={[styles.PaymentButton, styles.DealColor]}>
-                    <Text style={{color: 'white'}}>Trả giá</Text>
+            item.quantity == 0 ? (
+              <Text>Đã bán</Text>
+            ) : (
+              !orderList.includes(user.uid) ? (
+                <>
+                  <TouchableOpacity onPress={() => setModalVisible(true)}>
+                    <View style={[styles.PaymentButton, styles.DealColor]}>
+                      <Text style={{color: 'white'}}>Trả giá</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setPaymentConfirm(true)}>
+                  <View style={[styles.PaymentButton, styles.PayColor]}>
+                    <Text style={{color: 'white'}}>Đăng ký mua</Text>
                   </View>
                 </TouchableOpacity>
+              </>
+              )
+              : (
                 <TouchableOpacity
-                  onPress={() => setPaymentConfirm(true)}>
-                <View style={[styles.PaymentButton, styles.PayColor]}>
-                  <Text style={{color: 'white'}}>Đăng ký mua</Text>
-                </View>
-              </TouchableOpacity>
-            </>
-            )
-            : (
-              <TouchableOpacity
-                onPress={() => {
-                  setCancelModel(true);
-                }}>
-                <View style={[styles.PaymentButton, styles.CancelColor]}>
-                  <Text style={{color: 'white'}}>Hủy đăng ký</Text>
-                </View>
-              </TouchableOpacity>
+                  onPress={() => {
+                    setCancelModel(true);
+                  }}>
+                  <View style={[styles.PaymentButton, styles.CancelColor]}>
+                    <Text style={{color: 'white'}}>Hủy đăng ký</Text>
+                  </View>
+                </TouchableOpacity>
+              )
             )
             
           }
-          {/* {!payStatus && (
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <View style={[styles.PaymentButton, styles.DealColor]}>
-                <Text style={{color: 'white'}}>Trả giá</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          {!payStatus && (
-            <TouchableOpacity
-              onPress={() => sendMessage('processing', item.price)}>
-              <View style={[styles.PaymentButton, styles.PayColor]}>
-                <Text style={{color: 'white'}}>Đăng ký mua</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          {payStatus && (
-            <TouchableOpacity
-              onPress={() => {
-                setCancelModel(true);
-              }}>
-              <View style={[styles.PaymentButton, styles.CancelColor]}>
-                <Text style={{color: 'white'}}>Hủy đăng ký</Text>
-              </View>
-            </TouchableOpacity>
-          )} */}
         </View>
       </ScrollView>
     </ImageBackground>
@@ -611,6 +519,7 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    color: 'black'
   },
   ProductStatus: {
     color: 'black',

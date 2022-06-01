@@ -21,10 +21,12 @@ const ProcessingNoti = ({notification}) => {
     const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
       firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
         firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
+          bookData = bookSnapshot.data()
+          bookData['id'] = notification.bookId
           setGetData({
             userInfo: userSnapshot.data(), 
             partnerInfo: partnerSnapshot.data(), 
-            bookInfo: bookSnapshot.data()
+            bookInfo: bookData
           })
         })
       })
@@ -37,7 +39,6 @@ const ProcessingNoti = ({notification}) => {
   const today = String(date.getDate()).padStart(2, '0') + '/' 
             + String(date.getMonth() + 1).padStart(2, '0') + '/' 
             + date.getFullYear()
-
 
   const gotoProductInfo = (i) => {
     Actions.ProductScreen(i)

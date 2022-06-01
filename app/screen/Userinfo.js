@@ -142,7 +142,7 @@ const UserInfo = () => {
             <FontAwesome name="power-off" size={24} color="red" />
           </View>
           <View>
-            <Text style={styles.cardtext}>Đăng xuất</Text>
+            <Text style={[styles.cardtext, {color: 'red'}]}>Đăng xuất</Text>
           </View>
         </TouchableOpacity>
       </ScrollView>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   userinfoscreen: {
     // flex: 1,
     backgroundColor: '#FFFFFF',
-    height: Dimensions.get('window').height - 70,
+    height: Dimensions.get('window').height - 65,
   },
   appbar: {
     backgroundColor: 'rgba(47,128,237,0.76)',

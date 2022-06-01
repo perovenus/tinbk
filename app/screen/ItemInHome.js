@@ -32,7 +32,7 @@ const ItemInHome = ({item}) => {
           />
           <View style={styles.details}>
             <Text numberOfLines={1} style={styles.name}>{item.bookName}</Text>
-            <Text style={styles.price}>{item.price} đồng</Text>
+            <Text style={styles.price}>{item.price} đ</Text>
           </View>
         </View>
         {/* <TouchableOpacity style={styles.buybutton} onPress={() => sendMessage('processing', item.price)}>

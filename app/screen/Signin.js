@@ -86,7 +86,7 @@ export default function Signin() {
         <View style={styles.accountInfo}>
           <Text
             style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED',
             }}>
             Email
@@ -100,9 +100,8 @@ export default function Signin() {
           <Text
             style={{
               marginTop: 30,
-              fontSize: 15,
+              fontSize: 16,
               color: '#2F80ED',
-              fontSize: 18,
             }}>
             Mật khẩu
           </Text>
@@ -206,7 +205,7 @@ const styles = StyleSheet.create({
   forgotPassword: {
     alignSelf: 'flex-end',
 
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   signinWith: {
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 110,
-    bottom: '20%',
+    bottom: '25%',
   },
   googleImage: {
     width: 30,
@@ -243,18 +242,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    marginRight: '4%',
+    right: '4%',
     bottom: '8%',
   },
   signup: {
-    marginLeft: '5%',
+    left: '2%',
+    bottom: '5%',
     flexDirection: 'row',
-    bottom: '10%',
-    width: 210,
+    width: 220,
     justifyContent: 'space-between',
   },
   signupButton: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 15,
   },
 });

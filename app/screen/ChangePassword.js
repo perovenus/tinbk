@@ -40,7 +40,7 @@ const ChangePassword = () => {
       console.log(new_pass)
       console.log(renew_pass)
       const user = auth().currentUser
-      const cred =await auth.EmailAuthProvider.credential(user.email, old_pass);
+      const cred = await auth.EmailAuthProvider.credential(user.email, old_pass);
       try {
         if (new_pass != renew_pass){
           showToastErr('Mật khẩu mới không khớp !!, Mời bạn nhập lại')
@@ -85,7 +85,7 @@ const ChangePassword = () => {
           style={{
             marginTop: 50,
             marginBottom: 10,
-            fontSize: 28,
+            fontSize: 24,
             color: '#2F80ED',
             marginLeft: 30,
             fontWeight: 'bold',
@@ -95,8 +95,8 @@ const ChangePassword = () => {
         <View style={{alignItems: 'center'}}>
           <Image
             style={{
-              width: 150,
-              height: 150,
+              width: 140,
+              height: 140,
             }}
             source={require('../assets/tinBK-logo-2.png')}
           />
@@ -104,7 +104,7 @@ const ChangePassword = () => {
         <View style={styles.accountInfo}>
           <Text
             style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED',
             }}>
             Nhập mật khẩu cũ
@@ -120,7 +120,7 @@ const ChangePassword = () => {
         <View style={styles.accountInfo}>
           <Text
             style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED',
             }}>
             Nhập mật khẩu mới
@@ -137,7 +137,7 @@ const ChangePassword = () => {
         <View style={styles.accountInfo}>
           <Text
             style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED',
             }}>
             Xác nhận mật khẩu
@@ -184,13 +184,14 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    height: 44,
+    height: 40,
     marginTop: 10,
     borderWidth: 1,
     borderRadius: 12,
     borderColor: '#2F80ED',
-    fontSize: 18,
+    fontSize: 16,
     paddingHorizontal: 15,
+    color: 'black'
   },
   loginButton: {
     marginTop: 10,

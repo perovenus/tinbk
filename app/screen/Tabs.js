@@ -22,7 +22,7 @@ export default function Tabs() {
             position: 'absolute',
             bottom: 0,
             zIndex: 4,
-            height: 70,
+            height: 65,
             ...styles.shadow,
           },
           headerShown: false,
@@ -44,10 +44,10 @@ export default function Tabs() {
                 <Entypo
                   name="home"
                   size={24}
-                  style={{color: focused ? '#DC4B4B' : '#757575'}}
+                  style={{color: focused ? '#2F80ED' : '#757575'}}
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
+                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
                   Trang chủ
                 </Text>
               </View>
@@ -68,10 +68,10 @@ export default function Tabs() {
                 <FontAwesome5
                   name="plus-circle"
                   size={24}
-                  style={{color: focused ? '#DC4B4B' : '#757575'}}
+                  style={{color: focused ? '#2F80ED' : '#757575'}}
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
+                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
                   Đăng bán
                 </Text>
               </View>
@@ -92,11 +92,11 @@ export default function Tabs() {
                 <FontAwesome5
                   name="bell"
                   size={24}
-                  style={{color: focused ? '#DC4B4B' : '#757575'}}
+                  style={{color: focused ? '#2F80ED' : '#757575'}}
                   solid
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
+                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
                   Thông báo
                 </Text>
               </View>
@@ -117,11 +117,11 @@ export default function Tabs() {
                 <FontAwesome5
                   name="user"
                   size={24}
-                  style={{color: focused ? '#DC4B4B' : '#757575'}}
+                  style={{color: focused ? '#2F80ED' : '#757575'}}
                   solid
                 />
 
-                <Text style={{color: focused ? '#DC4B4B' : 'gray', fontSize: 12}}>
+                <Text style={{color: focused ? '#2F80ED' : 'gray', fontSize: 12}}>
                   Cá nhân
                 </Text>
               </View>
