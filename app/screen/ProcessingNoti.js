@@ -22,18 +22,26 @@ const ProcessingNoti = ({notification}) => {
             + String(date.getMonth() + 1).padStart(2, '0') + '/' 
             + date.getFullYear()
 
-  const gotoProductInfo = (i) => {
+  const gotoProductInfo = async (i) => {
 	  console.log(i)
-	  let bookdata = {};
-	  firestore().collection('Books').doc(i.bookId).get().then(doc => {
-		  bookdata = doc.data()
-		  Actions.ProductScreen(bookdata)
+	  let bookdata = await firestore().collection('Books').doc(i.bookId).get().then(doc => {
+		//   bookdata = doc.data()
+		//   Actions.ProductScreen(bookdata)
+		return doc.data()
 	  })
-    // Actions.ProductScreen(i)
+    Actions.ProductScreen(bookdata)
   }
 
-  const gotoPartnerInfoScreen = (partnerInfo) => {
-    Actions.partnerInfoScreen(partnerInfo)
+  const gotoPartnerInfoScreen =async (partnerInfo) => {
+    // Actions.partnerInfoScreen(partnerInfo)
+	let temp_data = await firestore().collection('Users').doc(partnerInfo.partner).get().then(async(doc) => {
+		// console.log(doc.data())
+		let temp_data = doc.data()
+		// await Actions.partnerInfoScreen(await doc.data())
+		return temp_data
+	})
+	console.log(temp_data)
+	Actions.partnerInfoScreen(temp_data)
   }
 
   const sendMessage = (type,price) => {
@@ -106,7 +114,7 @@ const ProcessingNoti = ({notification}) => {
       <View style={styles.AlertNotification}>
         <View style={styles.container}>
           <TouchableOpacity
-            onPress={() => gotoPartnerInfoScreen(partnerInfo)}
+            onPress={() => gotoPartnerInfoScreen(notification)}
             style={styles.notifiProcessingImg}>
             <Image
               style={{ width: '100%', height: '100%' }}
