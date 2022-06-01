@@ -34,7 +34,7 @@ const MyProductItem = ({ item }) => {
                         style={styles.image}
                     />
                     <View style={styles.details}>
-                        <Text style={styles.name}>{item.bookName}</Text>
+                        <Text numberOfLines={2} style={styles.name}>{item.bookName}</Text>
                         <Text style={styles.price}>{item.price} đồng</Text>
                         <Text style={styles.location}>{item.bookRegion}</Text>
                     </View>
@@ -53,22 +53,23 @@ export default MyProductItem;
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 20,
+        borderRadius: 5,
         width: '100%',
         height: 140,
-        marginTop: 5,
+        marginTop: 2,
         marginHorizontal: 5,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
     },
     image: {
-        width: '35%',
-        height: '90%',
+        width: '30%',
+        height: '80%',
     },
     details: {
-        width: '65%',
+        width: '60%',
         height: '90%',
+        marginLeft: '5%'
     },
     name: {
         fontSize: 17,
@@ -79,11 +80,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         color: '#303030',
-        marginTop: 5,
+        // marginTop: 5,
     },
     location: {
         fontSize: 15,
-        marginTop: 40,
+        // marginTop: 40,
         color: '#5A5A5A'
 
     },

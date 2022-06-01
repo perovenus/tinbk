@@ -108,7 +108,7 @@ const Home = () => {
       </View>
       <View style={styles.body}>
         <View style={styles.appName}>
-          <Text style={styles.appname}>tinBK</Text>
+          <Text style={styles.appname}>TinBK</Text>
         </View>
 
         <View style={styles.category}>
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     // marginTop: '3%'
   },
   productlist: {
-    height: Dimensions.get('window').height - 335,
+    height: Dimensions.get('window').height - 340,
     marginTop: 5,
     backgroundColor: '#FFFFFF',
   },
