@@ -25,12 +25,27 @@ const RejectedNoti = ({notification}) => {
             + String(date.getMonth() + 1).padStart(2, '0') + '/' 
             + date.getFullYear()
 
-  const gotoPartnerInfoScreen = (partnerInfo) => {
-    Actions.partnerInfoScreen(partnerInfo)
+  const gotoPartnerInfoScreen =async (partnerInfo) => {
+	  console.log(partnerInfo)
+	let temp_data = await firestore().collection('Users').doc(partnerInfo.partner).get().then(async(doc) => {
+		// console.log(doc.data())
+		let temp_data = doc.data()
+		// await Actions.partnerInfoScreen(await doc.data())
+		return temp_data
+	})
+	console.log(temp_data)
+	Actions.partnerInfoScreen(temp_data)
+    // Actions.partnerInfoScreen(partnerInfo)
   }
 
-  const gotoProductInfo = (i) => {
-    Actions.ProductScreen(i)
+  const gotoProductInfo = async (i) => {
+	//   console.log(i)
+	let temp_data = await firestore().collection('Books').doc(i.bookId).get().then(doc => {
+		  console.log(doc.data())
+		//   Actions.ProductScreen(doc.data())
+		return doc.data()
+	  })
+    Actions.ProductScreen(temp_data)
   }
 
   if(notification.kind == 'buyer') {
@@ -42,7 +57,7 @@ const RejectedNoti = ({notification}) => {
         }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
         <View style={styles.ProcessingNotification}>
           <TouchableOpacity
-            onPress={() => gotoProductInfo(bookInfo)}
+            onPress={() => gotoProductInfo(notification)}
             style={styles.notifiProcessingImg}>
             <Image
               style={{ width: '100%', height: '100%' }}
@@ -65,7 +80,7 @@ const RejectedNoti = ({notification}) => {
         }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
       <View style={styles.ProcessingNotification}>
         <TouchableOpacity
-          onPress={() => gotoPartnerInfoScreen(partnerInfo)}
+          onPress={() => gotoPartnerInfoScreen(notification)}
           style={styles.notifiProcessingImg}>
           <Image
             style={{ width: '100%', height: '100%' }}

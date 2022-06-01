@@ -455,7 +455,12 @@ export default function ProductScreen(item) {
         <View style={styles.ButtonBlock}>
           {
             item.quantity == 0 ? (
-              <Text>Đã bán</Text>
+              <Text 
+              style={{
+                color: 'red',
+                fontSize: 22,
+              }}
+              >Đã bán</Text>
             ) : (
               !orderList.includes(user.uid) ? (
                 <>
