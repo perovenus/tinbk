@@ -175,7 +175,10 @@ const Home = () => {
           <View styles={styles.productlistContainer}>
             <FlatList
               numColumns={2}
-              data={datalist.filter(item => item.quantity > 0)}
+              data={datalist.filter(
+                item =>
+                  item.quantity > 0 && item.seller != auth().currentUser.uid,
+              )}
               renderItem={renderItem}
               keyExtractor={item => item.id}
             />
