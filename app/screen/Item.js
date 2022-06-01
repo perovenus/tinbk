@@ -35,7 +35,10 @@ const Item = ({item}) => {
       {
         item.orderList.includes(auth().currentUser.uid) ?
         <View style={styles.buybutton}>
-        <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/>
+        {/* <FontAwesome5 name='shopping-cart' size={24} color='#2f80ed'/> */}
+        <Text style={{
+          color: 'orange',
+        }}>Đang chờ</Text>
         </View>
         : 
         <View></View>
@@ -92,6 +95,7 @@ const styles = StyleSheet.create({
   buybutton: {
     position: 'absolute',
     top: '75%',
-    left: '86%',
+    // left: '80%',
+    right: 20
   }
 })
