@@ -89,6 +89,8 @@ const UploadProduct = ({item}) => {
           bookStatus: bookStatus,
           image: link_img,
           seller: auth().currentUser.uid,
+          quantity: 1,
+          orderList: [],
         });
 
       setImage(null);
