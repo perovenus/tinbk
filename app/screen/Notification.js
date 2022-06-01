@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		backgroundColor: 'white',
 		display: 'flex',
-		height: Dimensions.get('window').height - 70 - 66,
+		height: Dimensions.get('window').height - 65 - 66,
 	},
 	footer: {
 		width: '100%',

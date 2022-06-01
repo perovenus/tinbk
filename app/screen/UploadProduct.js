@@ -130,7 +130,7 @@ const UploadProduct = ({item}) => {
       <ImageBackground
         style={styles.backgroundImage}
         source={require('../assets/upload-background.jpg')}>
-        <Text style={styles.header}>Đăng ký gửi bán</Text>
+        <Text style={styles.header}>Đăng ký bán</Text>
         <View style={styles.viewimage}>
           {!image && (
             <Image
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   scrollview: {
-    marginTop: 100,
+    marginTop: 60,
     marginBottom: 70,
   },
   viewimage: {
@@ -392,15 +392,14 @@ const styles = StyleSheet.create({
   button: {
     width: '50%',
     alignItems: 'center',
-    backgroundColor: '#2F80ED',
-    padding: 10,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(47,128,237,0.9)',
     borderRadius: 10,
-    paddingHorizontal: 20,
+    height: 60,
   },
   textbutton: {
     color: '#FFFFFF',
     fontWeight: 'bold',
-    paddingHorizontal: 20,
     fontSize: 18,
   },
   buttondropdown: {

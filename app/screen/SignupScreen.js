@@ -166,7 +166,7 @@ export default function SignupScreen() {
           >
             <View style={[styles.input, { width: '60%' }]}>
               <Text style={{
-                fontSize: 18,
+                fontSize: 16,
                 color: '#2F80ED'
               }}>
                 Họ và tên đệm
@@ -179,7 +179,7 @@ export default function SignupScreen() {
             </View>
             <View style={[styles.input, { width: '30%' }]}>
               <Text style={{
-                fontSize: 18,
+                fontSize: 16,
                 color: '#2F80ED'
               }}>
                 Tên
@@ -193,7 +193,7 @@ export default function SignupScreen() {
           </View>
           <View style={styles.input}>
             <Text style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED'
             }}>
               Email
@@ -206,7 +206,7 @@ export default function SignupScreen() {
           </View>
           <View style={styles.input}>
             <Text style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED'
             }}>
               Mật khẩu
@@ -219,7 +219,7 @@ export default function SignupScreen() {
           </View>
           <View style={styles.input}>
             <Text style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED'
             }}>
               Nhập lại mật khẩu
@@ -240,7 +240,7 @@ export default function SignupScreen() {
               onValueChange={(newValue) => handaleMaleCheckBox(newValue)}
             />
             <Text style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED',
               fontWeight: 'bold'
             }}
@@ -256,7 +256,7 @@ export default function SignupScreen() {
               onValueChange={(newValue) => handleFemaleCheckBox(newValue)}
             />
             <Text style={{
-              fontSize: 18,
+              fontSize: 16,
               color: '#2F80ED',
               fontWeight: 'bold'
             }}
@@ -275,6 +275,24 @@ export default function SignupScreen() {
             <FontAwesome5 name='facebook-square' size={30} color='#395185' />
           </View>
         </View>
+      </View>
+      <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
+        <Text style={{fontSize: 24, color: 'white'}}>Đăng ký</Text>
+      </TouchableOpacity>
+      <View style={styles.signin}>
+        <Text style={styles.signinButton}>Đã có tài khoản?</Text>
+        <TouchableOpacity onPress={goToSigninScreen}>
+          <Text
+            style={[
+              styles.signinButton,
+              {
+                textDecorationLine: 'underline',
+                fontWeight: 'bold'
+              }
+            ]}>
+            Đăng nhập
+          </Text>
+        </TouchableOpacity>
       </View>
       {/* <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
         <Text style={{ fontSize: 24, color: 'white' }}>Đăng ký</Text>
@@ -295,7 +313,7 @@ export default function SignupScreen() {
         </TouchableOpacity>
       </View> */}
     </ImageBackground>
-      <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
+      {/* <TouchableOpacity style={styles.registerButton} onPress={handleSignUpInfo}>
         <Text style={{fontSize: 24, color: 'white'}}>Đăng ký</Text>
       </TouchableOpacity>
       <View style={styles.signin}>
@@ -312,7 +330,7 @@ export default function SignupScreen() {
             Đăng nhập
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </>
   )
 }
@@ -321,10 +339,13 @@ const styles = StyleSheet.create({
   background: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    position: 'absolute'
   },
   userInfoContainer: {
     width: '100%',
+    position: 'absolute',
+    top: '15%'
   },
   userInfo: {
     marginHorizontal: 40,
@@ -389,22 +410,27 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    top: '85%',
-    right: '5%',
+    // position: 'absolute',
+    // top: '85%',
+    // right: '5%',
+    right: '4%',
+    bottom: '8%',
     alignSelf: 'flex-end',
   },
   signin: {
     flexDirection: 'row',
-    width: 210,
-    position: 'absolute',
+    width: 220,
     justifyContent: 'space-between',
-    top: '95%',
-    left: '5%'
+    // position: 'absolute',
+    // top: '95%',
+    // left: '5%'
+    left: '2%',
+    bottom: '5%'
+
   },
   signinButton: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 15,
   },
   gobackButton: {
     position: 'absolute',

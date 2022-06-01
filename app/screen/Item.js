@@ -26,7 +26,7 @@ const Item = ({item}) => {
           />
           <View style={styles.details}>
             <Text numberOfLines={2} style={styles.name}>{item.bookName}</Text>
-            <Text style={styles.price}>{item.price} đồng</Text>
+            <Text style={styles.price}>{item.price} đ</Text>
             <Text style={styles.location}>{item.bookRegion}</Text>
           </View>
         </View>
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   details: {
     width: '65%',
     height: '90%',
-    marginLeft: '2%'
+    marginLeft: '2%',
+    justifyContent: 'space-evenly'
   },
   name: {
     fontSize: 17,

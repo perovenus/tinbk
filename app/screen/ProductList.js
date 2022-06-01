@@ -227,7 +227,8 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     width: '80%',
     borderRadius: 17,
-    fontSize: 15,
+    fontSize: 14,
+    color: 'black'
   },
   filterbutton: {
     // marginLeft: 25,

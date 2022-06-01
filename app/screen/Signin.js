@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 15,
   },
   scrollView: {
     width: '100%',

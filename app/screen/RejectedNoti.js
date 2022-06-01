@@ -13,6 +13,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { Actions } from 'react-native-router-flux';
 
 
 const RejectedNoti = ({notification}) => {
@@ -24,16 +25,17 @@ const RejectedNoti = ({notification}) => {
     const subscriber = firestore().collection('Users').doc(user.uid).onSnapshot(userSnapshot =>{
       firestore().collection('Users').doc(notification.partner).onSnapshot(partnerSnapshot =>{
         firestore().collection('Books').doc(notification.bookId).onSnapshot(bookSnapshot =>{
+          bookData = bookSnapshot.data()
+          bookData['id'] = notification.bookId
           setGetData({
             userInfo: userSnapshot.data(), 
             partnerInfo: partnerSnapshot.data(), 
-            bookInfo: bookSnapshot.data()
+            bookInfo: bookData
           })
         })
       })
     });
     return () => subscriber();
-
   }, [])
 
   const date = new Date()
@@ -41,6 +43,14 @@ const RejectedNoti = ({notification}) => {
   const today = String(date.getDate()).padStart(2, '0') + '/' 
             + String(date.getMonth() + 1).padStart(2, '0') + '/' 
             + date.getFullYear()
+
+  const gotoPartnerInfoScreen = (partnerInfo) => {
+    Actions.partnerInfoScreen(partnerInfo)
+  }
+
+  const gotoProductInfo = (i) => {
+    Actions.ProductScreen(i)
+  }
 
   if(notification.kind == 'buyer') {
     return(
@@ -51,6 +61,7 @@ const RejectedNoti = ({notification}) => {
         }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
         <View style={styles.ProcessingNotification}>
           <TouchableOpacity
+            onPress={() => gotoProductInfo(getData.bookInfo)}
             style={styles.notifiProcessingImg}>
             <Image
               style={{ width: '100%', height: '100%' }}
@@ -73,6 +84,7 @@ const RejectedNoti = ({notification}) => {
         }}>{notification.date == today ? 'Hôm nay' : notification.date}</Text>
       <View style={styles.ProcessingNotification}>
         <TouchableOpacity
+          onPress={() => gotoPartnerInfoScreen(getData.partnerInfo)}
           style={styles.notifiProcessingImg}>
           <Image
             style={{ width: '100%', height: '100%' }}
