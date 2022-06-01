@@ -69,7 +69,7 @@ const Notification = () => {
 
 			</View>
 
-			<ScrollView style={styles.body}>
+		<ScrollView style={styles.body}>
         {
           notificationList.reverse().map((notification) => {
             if(notification.type == 'processing')
