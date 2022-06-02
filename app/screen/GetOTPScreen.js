@@ -49,7 +49,7 @@ export default function GetOTPScreen() {
           <TextInput style={styles.input} />
         </View>
         <TouchableOpacity onPress={goToConfirmOTPScreen}>
-          <View style={[styles.loginButton, styles.elevation]}>
+          <View style={[styles.loginButton]}>
             <Text style={{fontSize: 20, color: 'white'}}>Nhận mã OTP</Text>
           </View>
         </TouchableOpacity>

@@ -39,7 +39,7 @@ export default function ConfirmOTPScreen() {
         <View style={styles.accountInfo}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 18,
               color: '#2F80ED',
             }}>
             Chúng tôi đã gửi mã OTP, vui lòng đợi và kiểm tra mail của bạn
@@ -54,7 +54,7 @@ export default function ConfirmOTPScreen() {
           </View>
         </View>
         <TouchableOpacity>
-          <View style={[styles.loginButton, styles.elevation]}>
+          <View style={styles.loginButton}>
             <Text style={{fontSize: 20, color: 'white'}}>Xác nhận</Text>
           </View>
         </TouchableOpacity>
@@ -77,7 +77,7 @@ export default function ConfirmOTPScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 80,
+    marginTop: '15%',
     marginHorizontal: 10,
   },
   background: {
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   resendotp: {
     alignSelf: 'center',
-    fontSize: 18,
+    fontSize: 14,
     marginTop: 15,
     fontWeight: 'bold',
   },
