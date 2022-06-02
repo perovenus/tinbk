@@ -270,7 +270,7 @@ const UploadProduct = ({item}) => {
                 }}>
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Gửi bán thành công</Text>
+                    <Text style={styles.modalText}>Đăng ký bán thành công</Text>
                     <Pressable
                       style={[styles.buttonmodal, styles.buttonClose]}
                       onPress={() => setModalVisible(!modalVisible)}>
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#2F80ED',
     fontWeight: '400',
-    fontSize: 18,
+    fontSize: 16,
   },
   textinput: {
     width: '100%',
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#2F80ED',
-    fontSize: 18,
+    fontSize: 14,
     color: '#000000',
     paddingHorizontal: 15,
   },
