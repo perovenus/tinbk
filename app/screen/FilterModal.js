@@ -309,7 +309,8 @@ const styles = StyleSheet.create({
     width: '30%',
     height: 38,
     backgroundColor: '#FFFFFF',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'black'
   },
   textstyle: {
     fontSize: 15,

@@ -111,13 +111,13 @@ const ProductList = props => {
       .collection('Books')
       .where('price', '<=', data.priceTo)
       .where('price', '>=', data.priceFrom)
-      .where('seller', '!=', user.uid)
+      // .where('seller', '!=', user.uid)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-          if (temp.quantity == 0){
-            return;
-          }
+          // if (temp.quantity == 0){
+          //   return;
+          // }
           let temp = documentSnapshot.data();
           if (
             (temp.bookRegion.includes(data.location) || data.location == '') &&
@@ -139,13 +139,13 @@ const ProductList = props => {
     temp_data = [];
     await firestore()
       .collection('Books')
-      .where('seller', '!=', user.uid)
+      // .where('seller', '!=', user.uid)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-          if (temp.quantity == 0){
-            return;
-          }
+          // if (temp.quantity == 0){
+          //   return ;
+          // }
           let temp = documentSnapshot.data();
           // console.log("research......")
           if (
