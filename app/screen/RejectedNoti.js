@@ -158,7 +158,6 @@ const styles = StyleSheet.create({
 		height: 35,
 		justifyContent: 'space-between',
 		textAlign: "center",
-		// borderRadius: 17.5,
 		backgroundColor: 'black'
 	},
 	navbarText: {

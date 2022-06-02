@@ -74,16 +74,6 @@ export default function ProductScreen(item) {
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [user.uid]);
-  // const ProductInfo = {
-  //   name: 'Thanh gươm diệt quỷ chap 3345',
-  //   price: '30000',
-  //   status: 'Like new (99.9%)',
-  //   seller: 'Nguyễn Đăng Hải',
-  //   phone: '0836585244',
-  //   address: 'tòa nhà A20 KTX khu A',
-  //   imagelist: [require('../assets/t1.jpg')],
-  //   sellerAvatar: require('../assets/jerry.png'),
-  // };
 
   const [modalVisible, setModalVisible] = useState(false);
   const [payStatus, setPayStatus] = useState(false);

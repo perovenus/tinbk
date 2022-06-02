@@ -410,9 +410,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    // position: 'absolute',
-    // top: '85%',
-    // right: '5%',
     right: '4%',
     bottom: '8%',
     alignSelf: 'flex-end',
@@ -421,9 +418,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 220,
     justifyContent: 'space-between',
-    // position: 'absolute',
-    // top: '95%',
-    // left: '5%'
     left: '2%',
     bottom: '5%'
 

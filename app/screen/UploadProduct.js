@@ -274,13 +274,6 @@ const UploadProduct = ({item}) => {
                   </View>
                 </View>
               </Modal>
-              {/* <Pressable
-                style={styles.button}
-                onPress={() => {
-                  handleUploadProduct();
-                }}>
-                <Text style={styles.textbutton}>Xác nhận</Text>
-              </Pressable> */}
               <TouchableOpacity
                 onPress={handleUploadProduct}
                 style={styles.button}>
