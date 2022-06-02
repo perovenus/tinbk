@@ -65,7 +65,6 @@ const UploadProduct = ({item}) => {
     } else if (bookName == '' || bookName.length < 5 || bookName.length > 50) {
       bookNameRef.current.focus();
       showToast('Tên sách không hợp lệ');
-    
     } else if (price == '' || price < 0 || price > 1000000) {
       priceRef.current.focus();
       showToast('Giá không hợp lệ');
@@ -181,10 +180,6 @@ const UploadProduct = ({item}) => {
                 buttonStyle={styles.buttondropdown}
                 buttonTextStyle={styles.textdropdown}
                 dropdownStyle={styles.dropdown}
-                rowTextStyle={{
-                  textAlign: 'left',
-                  paddingLeft: 20,
-                }}
                 data={domoi}
                 onSelect={(selectedItem, index) => {
                   setBookStatus(selectedItem);
@@ -365,7 +360,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#2F80ED',
-    fontSize: 18,
+    fontSize: 16,
     color: '#000000',
     paddingHorizontal: 20,
     padding: 10,
