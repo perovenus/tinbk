@@ -42,7 +42,7 @@ export default function ProductScreen(item) {
 
   const [userInfo, setUserInfo] = useState({});
 
-  const [orderList, setOrderList] = useState([]);
+  const [orderList, setOrderList] = useState(item.orderList);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -55,6 +55,7 @@ export default function ProductScreen(item) {
           .onSnapshot(async bookSnapshot => {
             setSeller(userSnapshot.data());
             setOrderList(await bookSnapshot.data().orderList);
+            console.log(orderList)
           });
       });
 
@@ -452,7 +453,8 @@ export default function ProductScreen(item) {
         <View style={styles.line}></View>
 
         <View style={styles.ButtonBlock}>
-          {item.quantity == 0 ? (
+          {
+          item.quantity == 0 ? 
             <Text
               style={{
                 color: 'red',
@@ -460,7 +462,7 @@ export default function ProductScreen(item) {
               }}>
               Đã bán
             </Text>
-          ) : item.orderList.includes(user.uid) ? (
+           : orderList.includes(user.uid) ? (
             <TouchableOpacity
               onPress={() => {
                 setCancelModel(true);
