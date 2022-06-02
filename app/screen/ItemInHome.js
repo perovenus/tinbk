@@ -37,8 +37,12 @@ const ItemInHome = ({item}) => {
         </View>
       </View>
       <View style={styles.register}>
-        {item.orderList.includes(auth().currentUser.uid) ? (
-          <Text style={styles.footer}>Đang chờ</Text>
+        {auth().currentUser ? (
+          item.orderList.includes(auth().currentUser.uid) ? (
+            <Text style={styles.footer}>Đang chờ</Text>
+          ) : (
+            <Text></Text>
+          )
         ) : (
           <Text></Text>
         )}
