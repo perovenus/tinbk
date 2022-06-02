@@ -37,8 +37,12 @@ const ItemInHome = ({item}) => {
         </View>
       </View>
       <View style={styles.register}>
-        {item.orderList.includes(auth().currentUser.uid) ? (
-          <Text style={styles.footer}>Đang chờ</Text>
+        {auth().currentUser ? (
+          item.orderList.includes(auth().currentUser.uid) ? (
+            <Text style={styles.footer}>Đang chờ</Text>
+          ) : (
+            <Text></Text>
+          )
         ) : (
           <Text></Text>
         )}
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   footer: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '400',
     color: 'orange',
     marginBottom: 5,
