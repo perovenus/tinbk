@@ -79,7 +79,7 @@ export default function Signin() {
           color: '#2F80ED',
           marginLeft: 30,
           fontWeight: 'bold',
-          top: '25%',
+          top: '27%',
         }}>
         Đăng nhập
       </Text>
@@ -102,7 +102,7 @@ export default function Signin() {
 
               <Text
                 style={{
-                  marginTop: 30,
+                  marginTop: 20,
                   fontSize: 15,
                   color: '#2F80ED',
                   fontSize: 18,
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   },
   accountInfo: {
     marginHorizontal: 40,
-    marginTop: 30,
+    marginTop: 50,
     // height: 155,
   },
   input: {
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 110,
-    marginTop: '15%',
+    marginTop: '10%',
   },
   googleImage: {
     width: 30,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     marginBottom: '10%',
     marginLeft: '5%',
     flexDirection: 'row',
-    width: '60%',
+    width: '53%',
     justifyContent: 'space-between',
   },
   signupButton: {
