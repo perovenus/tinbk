@@ -270,7 +270,7 @@ const UploadProduct = ({item}) => {
                 }}>
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Gửi bán thành công</Text>
+                    <Text style={styles.modalText}>Đăng ký bán thành công</Text>
                     <Pressable
                       style={[styles.buttonmodal, styles.buttonClose]}
                       onPress={() => setModalVisible(!modalVisible)}>
