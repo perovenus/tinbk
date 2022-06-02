@@ -29,7 +29,7 @@ const UploadProduct = ({item}) => {
 
   const showToast = message => {
     Toast.show({
-      type: 'success',
+      type: 'error',
       text1: message,
     });
   };
@@ -76,6 +76,7 @@ const UploadProduct = ({item}) => {
     } else if (bookStatus == '') {
       showToast('Bạn chưa chọn trạng thái sách');
     } else {
+      setModalVisible(true);
       let link_img = await uploadImage();
       let img = image.split('/');
       firestore()
@@ -104,7 +105,6 @@ const UploadProduct = ({item}) => {
       bookTypeRef.current.reset();
       bookRegionRef.current.reset();
       bookStatusRef.current.reset();
-      setModalVisible(true);
     }
   };
 
@@ -266,27 +266,33 @@ const UploadProduct = ({item}) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                  Alert.alert('Modal has been closed.');
                   setModalVisible(!modalVisible);
                 }}>
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
                     <Text style={styles.modalText}>Gửi bán thành công</Text>
                     <Pressable
-                      style={[styles.button, styles.buttonClose]}
+                      style={[styles.buttonmodal, styles.buttonClose]}
                       onPress={() => setModalVisible(!modalVisible)}>
                       <Text style={styles.textStyle}>Xác nhận</Text>
                     </Pressable>
                   </View>
                 </View>
               </Modal>
-              <Pressable
+              {/* <Pressable
                 style={styles.button}
                 onPress={() => {
                   handleUploadProduct();
                 }}>
                 <Text style={styles.textbutton}>Xác nhận</Text>
-              </Pressable>
+              </Pressable> */}
+              <TouchableOpacity
+                onPress={handleUploadProduct}
+                style={styles.button}>
+                <View>
+                  <Text style={styles.textbutton}>Xác nhận</Text>
+                </View>
+              </TouchableOpacity>
               <View style={{height: 70}}></View>
             </View>
           </View>
@@ -365,7 +371,6 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     alignItems: 'center',
-
   },
 
   gia: {
@@ -399,6 +404,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 60,
   },
+  buttonmodal: {
+    width: '65%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(47,128,237,0.9)',
+    borderRadius: 10,
+    height: 50,
+  },
   textbutton: {
     color: '#FFFFFF',
     fontWeight: 'bold',
@@ -422,11 +435,13 @@ const styles = StyleSheet.create({
   },
   dropdown: {borderWidth: 0, borderRadius: 10, backgroundColor: 'white'},
   modalView: {
+    width: '80%',
+    height: '20%',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 30,
-    paddingHorizontal: 40,
+    padding: 20,
+    paddingHorizontal: 30,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -448,7 +463,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#2F80ED',
     fontWeight: 'bold',
-    fontSize: 28,
+    fontSize: 26,
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
