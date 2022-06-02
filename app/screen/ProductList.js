@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,19 +8,19 @@ import {
   Dimensions,
   TouchableOpacity,
   BackHandler,
-  Text
-} from 'react-native'
+  Text,
+} from 'react-native';
 
 import Item from './Item';
 // import filter from 'lodash.filter'
 import FilterModal from './FilterModal';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { PortalProvider } from "@gorhom/portal";
-import { Actions } from 'react-native-router-flux';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {PortalProvider} from '@gorhom/portal';
+import {Actions} from 'react-native-router-flux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const ProductList = (props) => {
+const ProductList = props => {
   const [datalist, setDatalist] = useState([]);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
@@ -31,14 +31,14 @@ const ProductList = (props) => {
     };
 
     const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
+      'hardwareBackPress',
+      backAction,
     );
 
     return () => backHandler.remove();
   }, []);
   const user = auth().currentUser;
-  let temp_data = []
+  let temp_data = [];
   useEffect(() => {
     const ref = firestore()
       .collection('Books')
@@ -49,55 +49,54 @@ const ProductList = (props) => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-          
           let temp = documentSnapshot.data();
-          if (temp.quantity == 0){
+          if (temp.quantity == 0) {
             return;
           }
           // console.log(documentSnapshot.id)
           if (props.search != undefined) {
-            if (temp.bookName.toLowerCase().includes(props.data.toLowerCase())) {
+            if (
+              temp.bookName.toLowerCase().includes(props.data.toLowerCase())
+            ) {
               // console.log(temp)
-              temp['id'] = documentSnapshot.id
-              temp_data.push(temp)
+              temp['id'] = documentSnapshot.id;
+              temp_data.push(temp);
             }
-          }
-          else if ((props.data == 'tham_khao' && temp.bookType == 'Tham khảo') || (props.data == 'bai_tap' && temp.bookType == 'Bài tập') || (props.data == 'giao_trinh' && temp.bookType == 'Giáo trình') || (props.data == 'manga' && temp.bookType == 'Truyện')) {
+          } else if (
+            (props.data == 'tham_khao' && temp.bookType == 'Tham khảo') ||
+            (props.data == 'bai_tap' && temp.bookType == 'Bài tập') ||
+            (props.data == 'giao_trinh' && temp.bookType == 'Giáo trình') ||
+            (props.data == 'manga' && temp.bookType == 'Truyện')
+          ) {
             // console.log(temp)
-            temp['id'] = documentSnapshot.id
-            temp_data.push(temp)
+            temp['id'] = documentSnapshot.id;
+            temp_data.push(temp);
           }
         });
         if (isInitialRender) {
           setIsInitialRender(false);
-          setDatalist(() => temp_data)
+          setDatalist(() => temp_data);
         }
-
       });
     // return () => ''
-  }, [temp_data, isInitialRender])
+  }, [temp_data, isInitialRender]);
 
+  const renderItem = ({item}) => <Item item={item} />;
 
-  const renderItem = ({ item }) => (
-    <Item item={item} />
-  );
+  const [query, setQuery] = useState(props.search ? props.data : '');
 
-  const [query, setQuery] = useState(props.search ? props.data : '')
-
-
-
-  const handleSearch = (text) => {
-    setQuery(text)
-  }
-  const filter = async (data) => {
+  const handleSearch = text => {
+    setQuery(text);
+  };
+  const filter = async data => {
     // temp_data = []
     console.log(data);
     // console.log(datalist);
     // temp_data = []
     // for (let i of datalist){
     //   // console.log(i)
-    //   if (i.price <= data.priceTo && 
-    //     i.price >= data.priceFrom && 
+    //   if (i.price <= data.priceTo &&
+    //     i.price >= data.priceFrom &&
     //     (i.bookRegion.includes(data.location) || data.location == '') &&
     //     (i.bookType.includes(data.bookType) || data.bookType == '') &&
     //     (i.bookStatus.includes(data.status) || data.status == '')){
@@ -107,8 +106,7 @@ const ProductList = (props) => {
     // }
     // setDatalist(() => temp_data)
 
-
-    temp_data = []
+    temp_data = [];
     await firestore()
       .collection('Books')
       .where('price', '<=', data.priceTo)
@@ -117,25 +115,24 @@ const ProductList = (props) => {
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
-          if ((temp.bookRegion.includes(data.location) || data.location == '') &&
+          if (
+            (temp.bookRegion.includes(data.location) || data.location == '') &&
             (temp.bookType.includes(data.bookType) || data.bookType == '') &&
-            (temp.bookStatus.includes(data.status) || data.status == '')) {
-            temp['id'] = documentSnapshot.id
-            temp_data.push(temp)
-            console.log(temp)
+            (temp.bookStatus.includes(data.status) || data.status == '')
+          ) {
+            temp['id'] = documentSnapshot.id;
+            temp_data.push(temp);
+            console.log(temp);
           }
-
-        })
-        console.log(temp_data)
-        setDatalist(() => temp_data)
-
-
-      })
-  }
-  const Search = async (data) => {
-    console.log(data)
+        });
+        console.log(temp_data);
+        setDatalist(() => temp_data);
+      });
+  };
+  const Search = async data => {
+    console.log(data);
     // console.log(data)
-    temp_data = []
+    temp_data = [];
     await firestore()
       .collection('Books')
       .get()
@@ -143,24 +140,25 @@ const ProductList = (props) => {
         querySnapshot.forEach(documentSnapshot => {
           let temp = documentSnapshot.data();
           // console.log("research......")
-          if (temp.bookName.toLowerCase().includes(data.toLowerCase()) && temp_data.some(el => el.id == documentSnapshot.id) == false) {
+          if (
+            temp.bookName.toLowerCase().includes(data.toLowerCase()) &&
+            temp_data.some(el => el.id == documentSnapshot.id) == false
+          ) {
             // console.log(temp)
-            console.log(temp_data.some(el => el.id == documentSnapshot.id))
-            temp['id'] = documentSnapshot.id
-            temp_data.push(temp)
+            console.log(temp_data.some(el => el.id == documentSnapshot.id));
+            temp['id'] = documentSnapshot.id;
+            temp_data.push(temp);
           }
-        })
+        });
         // console.log(temp_data)
-        setDatalist(() => temp_data)
-
-
-      })
-  }
+        setDatalist(() => temp_data);
+      });
+  };
   const modalRef = useRef(null);
 
   const onOpen = () => {
     modalRef.current?.open();
-  }
+  };
 
   const onClose = () => {
     modalRef.current?.close();
@@ -170,42 +168,41 @@ const ProductList = (props) => {
     <SafeAreaView style={styles.productlistscreen}>
       <View style={styles.header}>
         <TextInput
-          autoCapitalize='none'
+          autoCapitalize="none"
           autoCorrect={false}
-          clearButtonMode='always'
+          clearButtonMode="always"
           value={query}
-          onChangeText={(queryText) => handleSearch(queryText)}
-          placeholder='Bạn muốn tìm gì'
+          onChangeText={queryText => handleSearch(queryText)}
+          placeholder="Bạn muốn tìm gì"
           style={styles.searchbar}
           onSubmitEditing={() => {
-            Search(query)
+            Search(query);
           }}
         />
 
         <TouchableOpacity onPress={onOpen}>
           <FontAwesome5
-            name='filter'
+            name="filter"
             size={20}
-            color='#FFFFFF'
-            style={styles.filterbutton} />
+            color="#FFFFFF"
+            style={styles.filterbutton}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
-        {
-          datalist.length == 0 ?
-            <View>
-              <Text>Không tìm thấy sản phẩm</Text>
-            </View> :
-            <FlatList
-              data={datalist}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-            />
-        }
-
+        {datalist.length == 0 ? (
+          <View>
+            <Text style={{color: 'orange'}}>Không tìm thấy sản phẩm</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={datalist}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
+        )}
       </View>
-      <View style={styles.menubar}>
-      </View>
+      <View style={styles.menubar}></View>
       <PortalProvider>
         <View style={styles.container1}>
           <FilterModal modalRef={modalRef} onClose={onClose} filter={filter} />
@@ -213,7 +210,7 @@ const ProductList = (props) => {
       </PortalProvider>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   productlistscreen: {
@@ -226,7 +223,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-
   },
   searchbar: {
     backgroundColor: '#FFFFFF',
@@ -236,11 +232,11 @@ const styles = StyleSheet.create({
     width: '80%',
     borderRadius: 17,
     fontSize: 14,
-    color: 'black'
+    color: 'black',
   },
   filterbutton: {
     // marginLeft: 25,
-    marginRight: '5%'
+    marginRight: '5%',
   },
   filtermodal: {
     justifyContent: 'flex-end',
@@ -249,7 +245,7 @@ const styles = StyleSheet.create({
   categories: {
     height: '5%',
     width: '80%',
-    backgroundColor: 'red'
+    backgroundColor: 'red',
   },
   container: {
     height: Dimensions.get('window').height - 65,
@@ -257,7 +253,7 @@ const styles = StyleSheet.create({
   },
   detail: {
     marginLeft: 20,
-    width: '70%'
+    width: '70%',
   },
   menubar: {
     height: 65,
@@ -265,11 +261,10 @@ const styles = StyleSheet.create({
   },
   container1: {
     flex: 1,
-    backgroundColor: "#C9D6DF",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#C9D6DF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
 });
 
 export default ProductList;

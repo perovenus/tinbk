@@ -85,6 +85,7 @@ const Home = () => {
           clearButtonMode="always"
           value={query}
           onChangeText={queryText => handleSearch(queryText)}
+          placeholderTextColor="#000"
           placeholder="Tìm kiếm..."
           style={styles.searchbar}
           onSubmitEditing={() => {
@@ -95,6 +96,7 @@ const Home = () => {
                 data: query,
                 search: true,
               });
+              setQuery('');
             }
           }}
         />
@@ -175,22 +177,25 @@ const Home = () => {
             <FlatList
               numColumns={2}
               data={
-                datalist.filter(
-                  item =>
-                    item.quantity > 0 && item.seller != auth().currentUser.uid,
-                ).length > 6
-                  ? datalist
-                      .filter(
+                auth().currentUser != null
+                  ? datalist.filter(
+                      item =>
+                        item.quantity > 0 &&
+                        item.seller != auth().currentUser.uid,
+                    ).length > 6
+                    ? datalist
+                        .filter(
+                          item =>
+                            item.quantity > 0 &&
+                            item.seller != auth().currentUser.uid,
+                        )
+                        .slice(0, 6)
+                    : datalist.filter(
                         item =>
                           item.quantity > 0 &&
                           item.seller != auth().currentUser.uid,
                       )
-                      .slice(0, 6)
-                  : datalist.filter(
-                      item =>
-                        item.quantity > 0 &&
-                        item.seller != auth().currentUser.uid,
-                    )
+                  : datalist
               }
               renderItem={renderItem}
               keyExtractor={item => item.id}
@@ -212,6 +217,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#000',
   },
   searchbar: {
     backgroundColor: '#FFFFFF',
@@ -220,6 +226,7 @@ const styles = StyleSheet.create({
     width: '88%',
     borderRadius: 17,
     fontSize: 15,
+    color: '#000',
   },
   body: {
     backgroundColor: '#EEEEEE',
