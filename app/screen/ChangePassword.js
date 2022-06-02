@@ -118,7 +118,7 @@ const ChangePassword = () => {
               onChangeText={text => {
                 setOld_pass(text);
               }}
-              secureTextEntry={false}
+              secureTextEntry={true}
             />
           </View>
           <View style={styles.accountInfo}>
